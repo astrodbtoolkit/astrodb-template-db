@@ -3,6 +3,7 @@
 from sqlalchemy import Column, Float, ForeignKey, Integer, String, Enum, DateTime, ForeignKeyConstraint
 import enum
 from astrodbkit2.astrodb import Base
+from sqlalchemy.orm import Mapped
 
 # todo: make "tabulardata" or "physicaldata" abstract classes.
 # -------------------------------------------------------------------------------------------------------------------
@@ -47,8 +48,8 @@ class PhotometryFilters(Base):
     """
     __tablename__ = 'PhotometryFilters'
     band = Column(String(30), primary_key=True, nullable=False)  # of the form instrument.filter (see SVO)
-    instrument = Column(String(30), ForeignKey('Instruments.name', onupdate='cascade'), primary_key=True)
-    telescope = Column(String(30), ForeignKey('Telescopes.name', onupdate='cascade'), primary_key=True)
+    instrument = Column(String(30), ForeignKey('Instruments.instrument', onupdate='cascade'), primary_key=True)
+    telescope = Column(String(30), ForeignKey('Telescopes.telescope', onupdate='cascade'), primary_key=True)
     effective_wavelength = Column(Float, nullable=False)
     width = Column(Float)
 
@@ -96,7 +97,7 @@ class Sources(Base):
     epoch = Column(Float)  # decimal year
     equinox = Column(String(10))  # eg, J2000
     shortname = Column(String(30))  # not needed?
-    # reference = Column(String(30), ForeignKey('Publications.publication', onupdate='cascade'), nullable=False)
+    reference = Column(String(30), ForeignKey('Publications.reference', onupdate='cascade'), nullable=False)
     other_references = Column(String(100))
     comments = Column(String(1000))
 
@@ -109,51 +110,34 @@ class Names(Base):
 
 # todo: make "tabulardata" or "physicaldata" abstract classes.
 
-
-class DataPointerTable(Base):
-    # don't want that table to be written! maybe it'll just get written anyways. but just an object.
+class DataPointerTable:
     # __tablename__ = 'DataPointerTable'
-    # don't take base here. try just have columns. multiple inheritance!
+    # source = Column(String(100),
+    #                 nullable=False, primary_key=True)
+    data = Column(String(100))
+    reference = Column(String(30), ForeignKey('Publications.reference', onupdate='cascade'))
+    comments = Column(String(1000))
     data_type = Column(String(32), nullable=False)
-    # Table to store references to data. like spectra, or light curves.
+    # Other columns common to all child tables
+
+class Spectra(DataPointerTable, Base):
+    __tablename__ = 'Spectra'
     source = Column(String(100), ForeignKey('Sources.source', ondelete='cascade', onupdate='cascade'),
                     nullable=False, primary_key=True)
-
     # Data
     spectrum = Column(String(1000), nullable=False)  # URL of spectrum location
-    original_spectrum = Column(String(1000)) # URL of original spectrum location, if applicable
+    original_spectrum = Column(String(1000))  # URL of original spectrum location, if applicable
     local_spectrum = Column(String(1000))  # local directory (via environment variable) of spectrum location
-
-    # Common metadata
-    comments = Column(String(1000))
-    reference = Column(String(30), ForeignKey('Publications.publication', onupdate='cascade'), primary_key=True)
-    other_references = Column(String(100))
-    # __mapper_args__ = {'polymorphic_on': data_type}
-
-
-class Spectra(DataPointerTable):
-    # Table to store references to spectra
-    super().__init__()
-    __tablename__ = 'Spectra'
-    __mapper_args__ = {'polymorphic_identity': 'spectra'}
-
 
     # Metadata
     regime = Column(Enum(Regime, create_constraint=True, values_callable=lambda x: [e.value for e in x],
                          native_enum=False),
-                    primary_key=True)  # eg, Optical, Infrared, etc
-    telescope = Column(String(30), ForeignKey(Telescopes.name))
-    instrument = Column(String(30), ForeignKey(Instruments.name))
+                    )  # eg, Optical, Infrared, etc
+    telescope = Column(String(30), ForeignKey(Telescopes.telescope))
+    instrument = Column(String(30), ForeignKey(Instruments.instrument))
     mode = Column(String(30))  # eg, Prism, Echelle, etc
-    observation_date = Column(DateTime, primary_key=True)
+    observation_date = Column(DateTime)
     wavelength_units = Column(String(20))
     flux_units = Column(String(20))
     wavelength_order = Column(Integer)
 
-
-
-    # Foreign key constraints for telescope, instrument, mode; all handled via reference to Modes table
-    __table_args__ = (ForeignKeyConstraint([telescope, instrument, mode],
-                                           [Modes.telescope, Modes.instrument, Modes.name],
-                                           onupdate="cascade"),
-                      {})
