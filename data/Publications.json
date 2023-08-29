@@ -1,7 +1,7 @@
 [{
-        "reference": "Bowl15",
-        "bibcode": "2015ApJS..216....7B",
-        "doi": "10.1088/0067-0049/216/1/7",
-        "description": "Planets around Low-mass Stars (PALMS). IV. The Outer Architecture of M Dwarf Planetary Systems"
+        "reference": "Rubin80",
+        "bibcode": "1980ApJ...238..471R",
+        "doi": "10.1086/158003",
+        "description": "Rotational properties of 21 SC galaxies with a large range of luminosities and radii, from NGC 4605 (R=4kpc) to UGC 2885 (R=122kpc)."
     }
 ]
