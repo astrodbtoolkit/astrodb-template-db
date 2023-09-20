@@ -110,34 +110,36 @@ class Names(Base):
 
 # todo: make "tabulardata" or "physicaldata" abstract classes.
 
-class DataPointerTable:
+class _DataPointerTable:
     # __tablename__ = 'DataPointerTable'
     # source = Column(String(100),
     #                 nullable=False, primary_key=True)
     data = Column(String(100))
-    reference = Column(String(30), ForeignKey('Publications.reference', onupdate='cascade'))
     comments = Column(String(1000))
     data_type = Column(String(32), nullable=False)
     # Other columns common to all child tables
 
-class Spectra(DataPointerTable, Base):
+class Spectra(_DataPointerTable, Base):
     __tablename__ = 'Spectra'
     source = Column(String(100), ForeignKey('Sources.source', ondelete='cascade', onupdate='cascade'),
                     nullable=False, primary_key=True)
+    reference = Column(String(30), ForeignKey('Publications.reference', ondelete='cascade', onupdate='cascade'),
+                       primary_key=True)
     # Data
     spectrum = Column(String(1000), nullable=False)  # URL of spectrum location
     original_spectrum = Column(String(1000))  # URL of original spectrum location, if applicable
     local_spectrum = Column(String(1000))  # local directory (via environment variable) of spectrum location
-
+    # onupdate = 'cascade'), primary_key = True
     # Metadata
-    regime = Column(Enum(Regime, create_constraint=True, values_callable=lambda x: [e.value for e in x],
-                         native_enum=False),
-                    )  # eg, Optical, Infrared, etc
-    telescope = Column(String(30), ForeignKey(Telescopes.telescope))
-    instrument = Column(String(30), ForeignKey(Instruments.instrument))
+    # regime = Column(Enum(Regime, create_constraint=True, values_callable=lambda x: [e.value for e in x],
+    #                      native_enum=False),
+    #                 )  # eg, Optical, Infrared, etc
+    telescope = Column(String(30), ForeignKey('Telescopes.telescope'), onupdate='cascade',primary_key=True)
+    instrument = Column(String(30), ForeignKey('Instruments.instrument'), onupdate='cascade',primary_key=True)
     mode = Column(String(30))  # eg, Prism, Echelle, etc
     observation_date = Column(DateTime)
     wavelength_units = Column(String(20))
     flux_units = Column(String(20))
     wavelength_order = Column(Integer)
+    other_references = Column(String(100))
 

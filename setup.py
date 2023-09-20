@@ -28,15 +28,6 @@ CLASSIFIERS = [
 # todo: pin to requirements
 INSTALL_REQUIRES = [
     "numpy",
-    "scipy",
-    "jaxlib",
-    "jax",
-    "tqdm",
-    "h5py",
-    "tensorflow",
-    "keras",
-    "matplotlib",
-    "pandas",
 ]
 
 ###################################################################

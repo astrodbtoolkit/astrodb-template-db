@@ -1,0 +1,42 @@
+{
+    "Sources": [
+        {
+            "source": "Dark matter source 1",
+            "ra": 55.6326,
+            "dec": 12.2729,
+            "epoch": 2000,
+            "equinox": "J2000",
+            "shortname": "DM1",
+            "reference": "Rubin80",
+            "other_references": "Perlmutter99",
+            "comments": "This is a cool dark matter source!"
+        }
+    ],
+    "Names": [
+        {
+            "other_name": "The first dark matter source"
+        },
+        {
+            "other_name": "The #1 source of dark matter"
+        }
+    ],
+    "Spectra": [
+        {
+            "spectrum": "https://www.illustris-project.org/static/illustris/media/illustris_mock_HUDF_galaxies.png",
+            "data_type": "spectrum",
+            "original_spectrum": null,
+            "local_spectrum": null,
+            "telescope": "IRTF",
+            "instrument": "SpeX",
+            "wavelength_units": "um",
+            "flux_units": "erg/s/cm^2/Angstrom",
+            "wavelength_order": "increasing",
+            "data":"2",
+            "mode": "Prism",
+            "observation_date": "1960-09-08T00:00:00",
+            "comments": null,
+            "reference": "Riess98",
+            "other_references": null
+        }
+    ]
+}
