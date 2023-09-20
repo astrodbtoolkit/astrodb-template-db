@@ -1,0 +1,4 @@
+source,ra,dec,epoch,equinox,shortname,reference,other_references,comments
+Dark energy source 1,55.6326,12.2729,2000,J2000,DM1,Rubin80,Perlmutter99,This is a cool dark matter source!
+Dark energy source 2,57.6326,12.2729,2000,J2000,DE2,Rubin80,null,This is a cool dark energy source!
+Dark matter source 1,57.6326,14.28,2000,J2000,DE1,Perlmutter99,Rubin80,"Nice, dark energy."

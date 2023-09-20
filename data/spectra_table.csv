@@ -1,0 +1,2 @@
+source,spectrum,data_type,original_spectrum,local_spectrum,telescope,instrument,mode,observation_date,wavelength_units,flux_units,wavelength_order,data,comments,reference,other_references
+Dark energy source 1,"""https://www.illustris-project.org/static/illustris/media/illustris_mock_HUDF_galaxies.png""","""spectrum""",null,null,"""IRTF""","""SpeX""","""Prism""","""1960-09-08T00:00:00""","""um""","""erg/s/cm^2/Angstrom""","""increasing""","""2""",null,"""Rubin80""",null
