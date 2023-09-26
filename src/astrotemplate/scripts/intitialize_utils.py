@@ -2,6 +2,7 @@
 Utility functions for initializing a database, including initial table creation.
 
 test: check that the foreign key constraints match the tables to exist
+test: make sure the spectrum columns from the schema match what I read in from the CSV.
 """
 from astrodbkit2.astrodb import create_database, Database
 from astrotemplate.schema import *
@@ -155,12 +156,20 @@ class SpectraTableInitializer(TableInitializer):
 
     def initialize_table(self, table_data_path):
 
-        # first, check whether the URL exists when read in from the CSV
-        # todo:, get the URL?
+        names = ["source", 'reference', 'spectrum','original_spectrum', 'local_spectrum', 'telescope', 'instrument',
+                    'mode', 'observation_date', 'wavelength_units', 'flux_units', 'wavelength_order', 'other_references']
 
-        check_url_valid(url)
-        # todo: second, cast the date times as correct
-        # todo: recast as pandas dataframe
+        # first, check whether the URL exists when read in from the CSV
+
+        data = pd.read_csv(table_data_path,
+                           names=names) # we know the table names from the schema
+
+        for url in data.url:
+            check_url_valid(url)
+
+        for i, row in data.iterrows():
+            data.loc[i, 'observation_date'] = pd.to_datetime(row.observation_date) # astropy datetime?
+
         # finally, add the data to the table as usual...as a dataframe
         super().initialize_table(table_data_path,  data_type='pandas')
 
