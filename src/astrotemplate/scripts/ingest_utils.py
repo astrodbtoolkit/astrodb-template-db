@@ -5,6 +5,18 @@ todo: consider whether we want to do this from a CSV, as well.
 """
 import logging
 import sys
+import socket
+
+def check_internet_connection():
+    # get current IP address of  system
+    ipaddress = socket.gethostbyname(socket.gethostname())
+
+    # checking system IP is the same as "127.0.0.1" or not.
+    if ipaddress == "127.0.0.1": # no internet
+        return False, ipaddress
+    else:
+        return True, ipaddress
+
 
 logger = logging.getLogger('astrotemplate')
 

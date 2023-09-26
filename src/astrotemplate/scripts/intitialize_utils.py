@@ -6,6 +6,47 @@ test: check that the foreign key constraints match the tables to exist
 from astrodbkit2.astrodb import create_database, Database
 from astrotemplate.schema import *
 import os
+import logging
+import sys
+import socket
+import requests
+logger = logging.getLogger('astrotemplate')
+
+# maybe make this an astropy table so that we don't have to add another dependency?
+import pandas as pd
+
+def check_internet_connection():
+    # get current IP address of  system
+    ipaddress = socket.gethostbyname(socket.gethostname())
+
+    # checking system IP is the same as "127.0.0.1" or not.
+    if ipaddress == "127.0.0.1": # no internet
+        return False, ipaddress
+    else:
+        return True, ipaddress
+
+def check_url_valid(url):
+    """
+    Check that the URLs in the spectra table are valid.
+
+    :return:
+    """
+    internet = check_internet_connection()
+    if internet:
+        request_response = requests.head(url)
+        status_code = request_response.status_code  # The website is up if the status code is 200
+        if status_code != 200:
+            status = 'skipped' # instead of incrememnting n_skipped, just skip this one
+            msg = "The spectrum location does not appear to be valid: \n" \
+                  f'spectrum: {url} \n' \
+                  f'status code: {status_code}'
+            logger.error(msg)
+        else:
+            msg = f"The spectrum location appears up: {url}"
+            logger.debug(msg)
+    else:
+        msg = "No internet connection. Internet is needed to check spectrum files."
+        raise ValueError(msg)
 
 class TableNotInitialized(Exception):
     """
@@ -50,19 +91,30 @@ class TableInitializer(object):
             if not self.db.table_exists(table):
                 raise TableNotInitialized(f"{table} table must be initialized first.")
 
-    def initialize_table(self, table_data_path):
+    def initialize_table(self, table_data, data_type='csv'):
         """
         Initialize the Sources table. this must be created first.
 
         Inputs
         ------
-        table_data_path: str
+        table_data: str or dictionary
             Path to the sources table csv file. todo: not just take in a CSV?
+        data_type: str
+            Type of data to be added to the table. Options are 'csv' or 'pandas'
 
         :return:
         """
         self.check_tables_exist()
-        self.db.add_table_data(table_data_path, table=self.table_name, fmt='csv')
+        if data_type == 'csv':
+            if type(table_data) != str:
+                raise ValueError("table_data must be a string when data_type is 'csv'")
+
+
+        elif data_type == 'pandas':
+            if type(table_data) != pd.DataFrame:
+                raise ValueError("table_data must be a DataFrame when data_type is 'pandas'")
+
+        self.db.add_table_data(table_data, table=self.table_name, fmt=data_type)
         self.db.save_database(abs_path + '/data')
 
 
@@ -104,8 +156,11 @@ class SpectraTableInitializer(TableInitializer):
     def initialize_table(self, table_data_path):
 
         # first, check whether the URL exists when read in from the CSV
-        # second, cast the date times as correct
-        # finally, add the data to the table as usual
+        # todo:, get the URL?
+
+        check_url_valid(url)
+        # todo: second, cast the date times as correct
+        # finally, add the data to the table as usual...as a dictionary
         super().initialize_table(table_data_path)
 
 
