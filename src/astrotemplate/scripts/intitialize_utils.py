@@ -160,8 +160,9 @@ class SpectraTableInitializer(TableInitializer):
 
         check_url_valid(url)
         # todo: second, cast the date times as correct
-        # finally, add the data to the table as usual...as a dictionary
-        super().initialize_table(table_data_path)
+        # todo: recast as pandas dataframe
+        # finally, add the data to the table as usual...as a dataframe
+        super().initialize_table(table_data_path,  data_type='pandas')
 
 
 
