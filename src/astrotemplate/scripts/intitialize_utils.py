@@ -21,7 +21,7 @@ class TableInitializer(object):
     tables_to_exist = []
 
     def __init__(self):
-        self.create_db()
+        self._create_db()
 
     def _create_db(self):
         """
@@ -67,41 +67,41 @@ class TableInitializer(object):
 
 
 
-def PublicationsTableInitializer(TableInitializer):
+class PublicationsTableInitializer(TableInitializer):
     table_name = 'Publications'
 
-def SourceTableInitializer(TableInitializer):
+class SourceTableInitializer(TableInitializer):
     table_name = 'Sources'
     tables_to_exist = ['Publications']
 
-def NamesTableInitializer(TableInitializer):
+class NamesTableInitializer(TableInitializer):
     table_name = 'Names'
     tables_to_exist = ['Sources']
 
-def ModesTableInitializer(TableInitializer):
+class ModesTableInitializer(TableInitializer):
     table_name = 'Modes'
     tables_to_exist = ['Instruments', 'Telescopes']
 
-def RegimesTableInitializer(TableInitializer):
+class RegimesTableInitializer(TableInitializer):
     table_name = 'Regimes'
 
-def PhotometryFiltersTableInitializer(TableInitializer):
+class PhotometryFiltersTableInitializer(TableInitializer):
     table_name = 'PhotometryFilters'
     tables_to_exist = ['Instruments', 'Telescopes']
 
-def InstrumentsTableInitializer(TableInitializer):
+class InstrumentsTableInitializer(TableInitializer):
     table_name = 'Instruments'
     tables_to_exist = ['Publications']
 
-def TelescopesTableInitializer(TableInitializer):
+class TelescopesTableInitializer(TableInitializer):
     table_name = 'Telescopes'
     tables_to_exist = ['Publications']
 
-def SpectraTableInitializer(TableInitializer):
+class SpectraTableInitializer(TableInitializer):
     table_name = 'Spectra'
     tables_to_exist = ['Sources', 'Publications', 'Instruments', 'Telescopes']
 
-    def initialize_table(table_data_path):
+    def initialize_table(self, table_data_path):
 
         # first, check whether the URL exists when read in from the CSV
         # second, cast the date times as correct
