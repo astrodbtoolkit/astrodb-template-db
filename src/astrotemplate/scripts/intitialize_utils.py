@@ -16,39 +16,6 @@ logger = logging.getLogger('astrotemplate')
 # maybe make this an astropy table so that we don't have to add another dependency?
 import pandas as pd
 
-def check_internet_connection():
-    # get current IP address of  system
-    ipaddress = socket.gethostbyname(socket.gethostname())
-
-    # checking system IP is the same as "127.0.0.1" or not.
-    if ipaddress == "127.0.0.1": # no internet
-        return False, ipaddress
-    else:
-        return True, ipaddress
-
-def check_url_valid(url):
-    """
-    Check that the URLs in the spectra table are valid.
-
-    :return:
-    """
-    internet = check_internet_connection()
-    if internet:
-        request_response = requests.head(url)
-        status_code = request_response.status_code  # The website is up if the status code is 200
-        if status_code != 200:
-            status = 'skipped' # instead of incrememnting n_skipped, just skip this one
-            msg = "The spectrum location does not appear to be valid: \n" \
-                  f'spectrum: {url} \n' \
-                  f'status code: {status_code}'
-            logger.error(msg)
-        else:
-            msg = f"The spectrum location appears up: {url}"
-            logger.debug(msg)
-    else:
-        msg = "No internet connection. Internet is needed to check spectrum files."
-        raise ValueError(msg)
-
 class TableNotInitialized(Exception):
     """
     Exception raised when a table is not initialized.
