@@ -7,6 +7,7 @@ import logging
 import sys
 import socket
 from initialize_utils import *
+import requests
 
 logger = logging.getLogger('astrotemplate')
 
