@@ -28,6 +28,9 @@ CLASSIFIERS = [
 # todo: pin to requirements
 INSTALL_REQUIRES = [
     "numpy",
+    "astroquery",
+    "astropy",
+    "git+https://github.com/dr-rodriguez/AstrodbKit2"
 ]
 
 ###################################################################
