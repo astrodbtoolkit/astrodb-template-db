@@ -1,4 +1,9 @@
 # SOURCES
+
+from astropy.coordinates import SkyCoord
+import logging
+logger = logging.getLogger('astrotemplate')
+
 def ingest_sources(db, sources, references=None, ras=None, decs=None, comments=None, epochs=None,
                    equinoxes=None, other_references=None, raise_error=True, search_db=True):
     """

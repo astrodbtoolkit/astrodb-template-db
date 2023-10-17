@@ -1,3 +1,7 @@
+import sqlalchemy
+import logging
+logger = logging.getLogger('astrotemplate')
+
 def ingest_names(db, source, other_name):
     '''
     This function ingests an other name into the Names table

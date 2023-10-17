@@ -30,7 +30,10 @@ INSTALL_REQUIRES = [
     "numpy",
     "astroquery",
     "astropy",
-    "git+https://github.com/dr-rodriguez/AstrodbKit2"
+    "git+https://github.com/dr-rodriguez/AstrodbKit2",
+    "pandas",
+    "sqlalchemy==2.0.3",
+    "tqdm==4.64.1"
 ]
 
 ###################################################################

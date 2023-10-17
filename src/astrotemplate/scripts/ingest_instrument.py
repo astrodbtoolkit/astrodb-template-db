@@ -1,3 +1,6 @@
+import logging
+logger = logging.getLogger('astrotemplate')
+
 def ingest_instrument(db, telescope=None, instrument=None, mode=None):
     """
     Script to ingest instrumentation

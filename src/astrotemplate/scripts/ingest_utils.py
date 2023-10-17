@@ -9,6 +9,7 @@ import socket
 from initialize_utils import *
 import requests
 from astroquery.simbad import Simbad
+from astropy.coordinates import SkyCoord
 
 logger = logging.getLogger('astrotemplate')
 

@@ -1,3 +1,6 @@
+import logging
+logger = logging.getLogger('astrotemplate')
+
 def ingest_publication(db, doi: str = None, bibcode: str = None, publication: str = None, description: str = None,
                     ignore_ads: bool = False):
     """

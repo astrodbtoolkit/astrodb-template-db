@@ -1,6 +1,5 @@
 from ingest_utils import *
 import pandas as pd
-import requests
 
 def ingest_spectra(db, sources, spectra, regimes, telescopes, instruments, modes, obs_dates, references,original_spectra=None,
                    wavelength_units=None, flux_units=None, wavelength_order=None,
