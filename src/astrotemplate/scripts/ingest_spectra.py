@@ -75,7 +75,7 @@ def ingest_spectra(db, sources, spectra, regimes, telescopes, instruments, modes
 
         if len(db_name) != 1:
             msg = f"No unique source match for {source} in the database"
-            raise SimpleError(msg)
+            raise AstroTemplateError(msg)
         else:
             db_name = db_name[0]
 
@@ -87,7 +87,7 @@ def ingest_spectra(db, sources, spectra, regimes, telescopes, instruments, modes
             if status=='skipped':
                 n_skipped += 1
                 if raise_error:
-                    raise SimpleError(msg)
+                    raise AstroTemplateError(msg)
                 else:
                     continue
             if original_spectra:
@@ -95,12 +95,12 @@ def ingest_spectra(db, sources, spectra, regimes, telescopes, instruments, modes
                 if status=='skipped':
                     n_skipped += 1
                     if raise_error:
-                        raise SimpleError(msg)
+                        raise AstroTemplateError(msg)
                     else:
                         continue
         else:
             msg = "No internet connection. Internet is needed to check spectrum files."
-            raise SimpleError(msg)
+            raise AstroTemplateError(msg)
 
         # Find what spectra already exists in database for this source
         source_spec_data = db.query(db.Spectra).filter(db.Spectra.c.source == db_name).table()
@@ -123,13 +123,13 @@ def ingest_spectra(db, sources, spectra, regimes, telescopes, instruments, modes
                 if raise_error:
                     msg = f"{source}: Can't convert obs date to Date Time object: {obs_dates[i]}"
                     logger.error(msg)
-                    raise SimpleError
+                    raise AstroTemplateError
             except dateutil.parser._parser.ParserError:
                 n_skipped += 1
                 if raise_error:
                     msg = f"{source}: Can't convert obs date to Date Time object: {obs_dates[i]}"
                     logger.error(msg)
-                    raise SimpleError
+                    raise AstroTemplateError
                 else:
                     msg = f"Skipping {source} Can't convert obs date to Date Time object: {obs_dates[i]}"
                     logger.warning(msg)
@@ -165,7 +165,7 @@ def ingest_spectra(db, sources, spectra, regimes, telescopes, instruments, modes
                 msg = f"Regime provided is not in schema: {regimes[i]}"
                 logger.error(msg)
                 if raise_error:
-                    raise SimpleError(msg)
+                    raise AstroTemplateError(msg)
                 else:
                     continue
             if db.query(db.Publications).filter(db.Publications.c.publication == references[i]).count() == 0:
@@ -173,7 +173,7 @@ def ingest_spectra(db, sources, spectra, regimes, telescopes, instruments, modes
                       f"(Add it with ingest_publication function.) \n "
                 logger.warning(msg)
                 if raise_error:
-                    raise SimpleError(msg)
+                    raise AstroTemplateError(msg)
                 else:
                     continue
                 # check telescope, instrument, mode exists
@@ -195,7 +195,7 @@ def ingest_spectra(db, sources, spectra, regimes, telescopes, instruments, modes
                     logger.debug(msg2 + msg3 + str(e))
                     n_dupes += 1
                     if raise_error:
-                        raise SimpleError
+                        raise AstroTemplateError
                     else:
                         continue  # Skip duplicate measurement
                 # else:
@@ -219,13 +219,13 @@ def ingest_spectra(db, sources, spectra, regimes, telescopes, instruments, modes
                 logger.error(msg)
                 n_missing_instrument += 1
                 if raise_error:
-                    raise SimpleError
+                    raise AstroTemplateError
                 else:
                     continue
             else:
                 msg = f'Spectrum for {source} could not be added to the database for unknown reason: \n {row_data} \n '
                 logger.error(msg)
-                raise SimpleError(msg)
+                raise AstroTemplateError(msg)
 
     msg = f"SPECTRA ADDED: {n_added} \n" \
           f" Spectra with blank obs_date: {n_blank} \n" \
@@ -242,7 +242,7 @@ def ingest_spectra(db, sources, spectra, regimes, telescopes, instruments, modes
     if n_added + n_dupes + n_blank + n_skipped + n_missing_instrument != n_spectra:
         msg = "Numbers don't add up: "
         logger.error(msg)
-        raise SimpleError(msg)
+        raise AstroTemplateError(msg)
 
     spec_count = db.query(Spectra.regime, func.count(Spectra.regime)).group_by(Spectra.regime).all()
 

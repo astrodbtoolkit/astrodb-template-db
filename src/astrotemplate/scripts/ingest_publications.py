@@ -1,3 +1,7 @@
+import sqlalchemy
+from ingest_utils import AstroTemplateError
+import os
+imoprt ads
 import logging
 logger = logging.getLogger('astrotemplate')
 
@@ -158,6 +162,7 @@ def ingest_publication(db, doi: str = None, bibcode: str = None, publication: st
               f"It's possible that a similar publication already exists in database\n"\
               "Use find_publication function before adding a new record"
         logger.error(msg)
-        raise SimpleError(msg + str(error))
+        raise AstroTemplateError(msg + str(error))
 
     return
+

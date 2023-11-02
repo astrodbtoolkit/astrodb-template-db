@@ -1,6 +1,7 @@
 # SOURCES
 
 from astropy.coordinates import SkyCoord
+from ingest_utils import *
 import logging
 logger = logging.getLogger('astrotemplate')
 
@@ -105,7 +106,7 @@ def ingest_sources(db, sources, references=None, ras=None, decs=None, comments=N
             msg = f"{i} More than one match for {source}\n {name_matches}\n"
             logger.warning(msg1 + msg)
             if raise_error:
-                raise SimpleError(msg)
+                raise AstroTemplateError(msg)
             else:
                 continue
         elif len(name_matches) == 0 or not search_db:  # No match in the database, INGEST!
@@ -123,7 +124,7 @@ def ingest_sources(db, sources, references=None, ras=None, decs=None, comments=N
                     msg = f"{i}: Skipping: {source}. Coordinates are needed and could not be retrieved from SIMBAD. \n"
                     logger.warning(msg)
                     if raise_error:
-                        raise SimpleError(msg)
+                        raise AstroTemplateError(msg)
                     else:
                         continue
                 elif len(simbad_result_table) == 1:
@@ -142,7 +143,7 @@ def ingest_sources(db, sources, references=None, ras=None, decs=None, comments=N
                     msg = f"{i}: Skipping: {source}. Coordinates are needed and could not be retrieved from SIMBAD. \n"
                     logger.warning(msg)
                     if raise_error:
-                        raise SimpleError(msg)
+                        raise AstroTemplateError(msg)
                     else:
                         continue
 
@@ -150,7 +151,7 @@ def ingest_sources(db, sources, references=None, ras=None, decs=None, comments=N
         else:
             msg = f"{i}: unexpected condition encountered ingesting {source}"
             logger.error(msg)
-            raise SimpleError(msg)
+            raise AstroTemplateError(msg)
 
         # Construct data to be added
         source_data = [{'source': source,
@@ -180,7 +181,7 @@ def ingest_sources(db, sources, references=None, ras=None, decs=None, comments=N
                 logger.debug(msg2)
                 n_skipped += 1
                 if raise_error:
-                    raise SimpleError(msg + msg2)
+                    raise AstroTemplateError(msg + msg2)
                 else:
                     continue
             elif db.query(db.Publications).filter(db.Publications.c.publication == references[i]).count() == 0:
@@ -192,7 +193,7 @@ def ingest_sources(db, sources, references=None, ras=None, decs=None, comments=N
                 logger.debug(msg2)
                 n_skipped += 1
                 if raise_error:
-                    raise SimpleError(msg + msg2)
+                    raise AstroTemplateError(msg + msg2)
                 else:
                     continue
             else:
@@ -202,7 +203,7 @@ def ingest_sources(db, sources, references=None, ras=None, decs=None, comments=N
                 logger.debug(msg2)
                 n_skipped += 1
                 if raise_error:
-                    raise SimpleError(msg + msg2)
+                    raise AstroTemplateError(msg + msg2)
                 else:
                     continue
 
@@ -214,7 +215,7 @@ def ingest_sources(db, sources, references=None, ras=None, decs=None, comments=N
             msg = f"{i}: Could not add {names_data} to database"
             logger.warning(msg)
             if raise_error:
-                raise SimpleError(msg)
+                raise AstroTemplateError(msg)
             else:
                 continue
 
@@ -228,10 +229,10 @@ def ingest_sources(db, sources, references=None, ras=None, decs=None, comments=N
 
     if n_added != n_names:
         msg = f"Number added should equal names added."
-        raise SimpleError(msg)
+        raise AstroTemplateError(msg)
 
     if n_added + n_existing + n_multiples + n_skipped != n_sources:
         msg = f"Number added + Number skipped doesn't add up to total sources"
-        raise SimpleError(msg)
+        raise AstroTemplateError(msg)
 
     return
