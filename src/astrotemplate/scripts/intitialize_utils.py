@@ -8,9 +8,6 @@ from astrodbkit2.astrodb import create_database, Database
 from astrotemplate.schema import *
 import os
 import logging
-import sys
-import socket
-import requests
 logger = logging.getLogger('astrotemplate')
 
 # maybe make this an astropy table so that we don't have to add another dependency?
