@@ -1,0 +1,23 @@
+{
+    "Sources": [
+        {
+            "source": "2MASS J13571237+1428398",
+            "ra": 209.301675,
+            "dec": 14.477722,
+            "epoch": null,
+            "equinox": null,
+            "shortname": "1357+1428",
+            "reference": "Schm10",
+            "other_references": null,
+            "comments": null
+        }
+    ],
+    "Names": [
+        {
+            "other_name": "2MASS J13571237+1428398"
+        },
+        {
+            "other_name": "SDSS J135712.40+142839.8"
+        }
+    ]
+}
