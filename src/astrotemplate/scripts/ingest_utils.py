@@ -24,6 +24,9 @@ if not len(logger.handlers):
     logger.addHandler(ch)
 logger.setLevel(logging.INFO)
 
+class AstroTemplateError(Exception):
+    pass
+
 
 
 def check_internet_connection():
