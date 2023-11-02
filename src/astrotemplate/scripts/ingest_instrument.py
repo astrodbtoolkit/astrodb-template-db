@@ -1,3 +1,4 @@
+import sqlalchemy
 import logging
 logger = logging.getLogger('astrotemplate')
 
