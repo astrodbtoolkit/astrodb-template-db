@@ -33,7 +33,7 @@ INSTALL_REQUIRES = [
     "git+https://github.com/dr-rodriguez/AstrodbKit2",
     "pandas",
     "sqlalchemy==2.0.3",
-    "tqdm==4.64.1"
+    "tqdm==4.64.1",
     "ads"
 ]
 
