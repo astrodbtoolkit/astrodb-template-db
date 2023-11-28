@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "astrotemplate"
+
+authors = [
+    {name = "Arjun Savel", email = "asavel@umd.edu", role = "maintainer"},
+    {name= "Kelle Cruz"},
+    {name= "David Rodriguez"}
+]
+description = "astrotemplate-db: a template for astronomocal databases"
+readme = "README.md"
+requires-python = ">=3.7"
+keywords = ["databases", "astronomy"]
+license = {text = "BSD-3-Clause"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+    "numpy",
+    "astroquery",
+    "astropy",
+    "git+https://github.com/dr-rodriguez/AstrodbKit2",
+    "pandas",
+    "sqlalchemy==2.0.3",
+    "tqdm==4.64.1",
+    "ads",
+]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+
+
