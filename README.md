@@ -1,8 +1,19 @@
-so far: what you need to do is...pip install astrodbtoolkit.
+astrotemplate-db
+---------------------------
+A template for astronomical databases.
 
- pip install git+https://github.com/dr-rodriguez/AstrodbKit2
+installation instructions
+---------------------------
+All you should need to run is:
 
+`pip install .`
 
-will check later what we need for the environment file? or...actually, 
-let's start with the current environment file and prune what we don't need later 
-on the tests.
+If you'd liek to ensure that the package has been installed correctly, you can run
+
+`pip install .[test]`
+
+then run
+
+`pytest tests`
+
+These commands will download the `pytest` package and run this codebase's test suite, respectively.
