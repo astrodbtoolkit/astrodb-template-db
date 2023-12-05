@@ -25,17 +25,6 @@ CLASSIFIERS = [
     "Programming Language :: Python :: 3.11",
     "Topic :: Scientific/Engineering :: Astronomy",
 ]
-# todo: pin to requirements
-INSTALL_REQUIRES = [
-    "numpy",
-    "astroquery",
-    "astropy",
-    "git+https://github.com/dr-rodriguez/AstrodbKit2",
-    "pandas",
-    "sqlalchemy==2.0.3",
-    "tqdm==4.64.1",
-    "ads"
-]
 
 ###################################################################
 
