@@ -1,6 +1,6 @@
 astrotemplate-db
 ---------------------------
-A template for astronomical databases.
+A template for astronomical databases. This is a [template repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-template-repository) — you can use this to create your own repository, the build your use case from there on out.
 
 We encourage users to follow the detailed best practices for astronomical databases outlined in [Chen et al. 2022](https://iopscience.iop.org/article/10.3847/1538-4365/ac6268).
 
