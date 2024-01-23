@@ -4,7 +4,7 @@ functions to test the schema itself.
 
 import pytest
 import os
-from astrotemplate.schema import *
+from schema.schema import *
 DB_NAME = 'test.db'
 DB_PATH = 'data'
 
