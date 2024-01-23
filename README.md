@@ -10,8 +10,6 @@ The only dependency for running the template is [AstrodbKit2](https://github.com
 
 `pip install git+https://github.com/dr-rodriguez/AstrodbKit2`
 
-[todo: update?]
-
 
 How does the database work?
 ---------------------------
