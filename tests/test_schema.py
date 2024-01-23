@@ -7,6 +7,7 @@ import os
 from schema.schema import *
 DB_NAME = 'test.db'
 DB_PATH = 'data'
+print(os.getcwd())
 
 from astrodbkit2.astrodb import create_database, Database
 REFERENCE_TABLES = ['Publications', 'Telescopes', 'Instruments', 'Modes', 'PhotometryFilters', 'Versions', 'Parameters']
