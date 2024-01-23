@@ -6,19 +6,11 @@ We encourage users to follow the detailed best practices for astronomical databa
 
 Installation instructions
 ---------------------------
-All you should need to run is:
+The only dependency for running the template is [AstrodbKit2](https://github.com/astrodbtoolkit/AstrodbKit2). It can be installed with the following command:
 
-`pip install .`
+`pip install git+https://github.com/dr-rodriguez/AstrodbKit2`
 
-If you'd like to ensure that the package has been installed correctly, you can run
-
-`pip install .[test]`
-
-then run
-
-`pytest tests`
-
-These commands will download the `pytest` package and run this codebase's test suite, respectively.
+[todo: update?]
 
 
 How does the database work?
