@@ -10,7 +10,7 @@ All you should need to run is:
 
 `pip install .`
 
-If you'd liek to ensure that the package has been installed correctly, you can run
+If you'd like to ensure that the package has been installed correctly, you can run
 
 `pip install .[test]`
 
