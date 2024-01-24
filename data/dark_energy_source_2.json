@@ -1,0 +1,15 @@
+{
+    "Sources": [
+        {
+            "source": "Dark energy source 2",
+            "ra": 57.6326,
+            "dec": 12.2729,
+            "epoch": 2000.0,
+            "equinox": "J2000",
+            "shortname": "DE2",
+            "reference": "Rubin80",
+            "other_references": null,
+            "comments": "This is a cool dark energy source!"
+        }
+    ]
+}

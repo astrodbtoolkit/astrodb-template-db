@@ -1,21 +1,20 @@
-[{
+[
+    {
         "reference": "Rubin80",
         "bibcode": "1980ApJ...238..471R",
         "doi": "10.1086/158003",
         "description": "Rotational properties of 21 SC galaxies with a large range of luminosities and radii, from NGC 4605 (R=4kpc) to UGC 2885 (R=122kpc)."
     },
-  {
+    {
         "reference": "Riess98",
         "bibcode": "1998AJ....116.1009R",
         "doi": " 10.1086/300499",
         "description": "Observational Evidence from Supernovae for an Accelerating Universe and a Cosmological Constant"
     },
-
-  {
+    {
         "reference": "Perlmutter99",
         "bibcode": "1999ApJ...517..565P",
         "doi": "10.1086/307221",
-        "description": "Measurements of Ω and Λ from 42 High-Redshift Supernovae"
+        "description": "Measurements of \u03a9 and \u039b from 42 High-Redshift Supernovae"
     }
-
 ]
