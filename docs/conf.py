@@ -210,7 +210,7 @@ texinfo_documents = [
         "astrodb-template-db Documentation",
         author,
         "astrodb-template-db",
-        find_meta("description"),
+        "A template for astronomical databases.",
         "Miscellaneous",
     )
 ]
