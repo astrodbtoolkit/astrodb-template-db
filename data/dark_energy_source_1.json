@@ -1,0 +1,15 @@
+{
+    "Sources": [
+        {
+            "source": "Dark energy source 1",
+            "ra": 55.6326,
+            "dec": 12.2729,
+            "epoch": 2000.0,
+            "equinox": "J2000",
+            "shortname": "DM1",
+            "reference": "Rubin80",
+            "other_references": "Perlmutter99",
+            "comments": "This is a cool dark matter source!"
+        }
+    ]
+}
