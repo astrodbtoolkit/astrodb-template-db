@@ -1,27 +1,7 @@
 astrodb-template-db
 ==================================
 
-
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Getting Started
-
-
-
-
-
-.. toctree::
-   :maxdepth: 1
-   :caption: For developers
-
-
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Documentation
-
-
+Testing that this works!
 
 License & attribution
 ---------------------
