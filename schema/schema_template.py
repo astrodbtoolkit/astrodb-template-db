@@ -1,5 +1,5 @@
 """
-Schema for the Astrodb Template database.
+Schema for the AstroDB Template database.
 
 The following tables are expected by AstroDB Toolkit and the AstroDB_scripts package:
 - Sources
@@ -20,7 +20,6 @@ from sqlalchemy import (
 )
 import enum
 from astrodbkit2.astrodb import Base
-
 
 
 # TODO: make "tabulardata" or "physicaldata" abstract classes.
