@@ -41,6 +41,10 @@ class Publications(Base):
 
 
 class Telescopes(Base):
+    """
+    ORM for Telescopes table.
+    This stores information about the telescope, its name, and has relationship to Publications.
+    """
     __tablename__ = "Telescopes"
     telescope = Column(String(30), primary_key=True, nullable=False)
     description = Column(String(1000))
@@ -50,6 +54,11 @@ class Telescopes(Base):
 
 
 class Instruments(Base):
+    """
+    ORM for Instruments table.
+    This stores relationships between telescopes and Publications,
+    as well as mode, instrument (name), and description.
+    """
     __tablename__ = "Instruments"
     instrument = Column(String(30), primary_key=True, nullable=False)
     mode = Column(String(30), primary_key=True)
