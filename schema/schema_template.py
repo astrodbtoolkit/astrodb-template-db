@@ -24,7 +24,6 @@ from astrodbkit2.astrodb import Base
 
 # TODO: make "tabulardata" or "physicaldata" abstract classes.
 
-
 # -------------------------------------------------------------------------------------------------------------------
 # Reference tables
 # -------------------------------------------------------------------------------------------------------------------
@@ -191,16 +190,13 @@ class Spectra(_DataPointerTable, Base):
     )
     # Data
     spectrum = Column(String(1000), nullable=False)  # URL of spectrum location
+
     # URL of original spectrum location, if applicable
     original_spectrum = Column(String(1000))
+
     # local directory (via environment variable) of spectrum location
     local_spectrum = Column(String(1000))
-    # onupdate = 'cascade'), primary_key = True
-    # Metadata
-    # regime = Column(Enum(Regime, create_constraint=True,
-    # values_callable=lambda x: [e.value for e in x],
-    #                      native_enum=False),
-    #                 )  # eg, Optical, Infrared, etc
+
     telescope = Column(
         String(30),
         ForeignKey("Telescopes.telescope"),
