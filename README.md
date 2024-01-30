@@ -1,7 +1,9 @@
 astrodb-template-db
 ---------------------------
 
-[![Test astrotemplate-db](https://github.com/astrodbtoolkit/astrotemplate-db/actions/workflows/run_tests.yml/badge.svg)](https://github.com/astrodbtoolkit/astrotemplate-db/actions/workflows/run_tests.yml)
+[![Test astrotemplate-db](https://github.com/astrodbtoolkit/astrotemplate-db/actions/workflows/run_tests.yml/badge.svg)](https://github.com/astrodbtoolkit/astrotemplate-db/actions/workflows/run_tests.yml) 
+[![Documentation Status](https://readthedocs.org/projects/astrodb-template-db/badge/?version=latest)](https://astrodb-template-db.readthedocs.io/en/latest/?badge=latest)
+
 
 
 A template for astronomical databases. This is a [template repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-template-repository) — you can use this to create your own repository, then build your use case from there on out.
