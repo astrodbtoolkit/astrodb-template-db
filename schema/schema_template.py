@@ -1,4 +1,14 @@
-# Schema for the AstroDD Template database
+"""
+Schema for the Astrodb Template database.
+
+The following tables are expected by AstroDB Toolkit and the AstroDB_scripts package:
+- Sources
+- Publications
+- Instruments
+You may modify these tables, but doing so may decrease the interoperability of your database with other tools.
+
+"""
+
 
 from sqlalchemy import (
     Column,
@@ -10,6 +20,7 @@ from sqlalchemy import (
 )
 import enum
 from astrodbkit2.astrodb import Base
+
 
 
 # TODO: make "tabulardata" or "physicaldata" abstract classes.
