@@ -1,4 +1,14 @@
-# Schema for the AstroDD Template database
+"""
+Schema for the AstroDB Template database.
+
+The following tables are expected by AstroDB Toolkit and the AstroDB_scripts package:
+- Sources
+- Publications
+- Instruments
+You may modify these tables, but doing so may decrease the interoperability of your database with other tools.
+
+"""
+
 
 from sqlalchemy import (
     Column,
@@ -13,7 +23,6 @@ from astrodbkit2.astrodb import Base
 
 
 # TODO: make "tabulardata" or "physicaldata" abstract classes.
-
 
 # -------------------------------------------------------------------------------------------------------------------
 # Reference tables
@@ -32,6 +41,10 @@ class Publications(Base):
 
 
 class Telescopes(Base):
+    """
+    ORM for Telescopes table.
+    This stores information about the telescope, its name, and has relationship to Publications.
+    """
     __tablename__ = "Telescopes"
     telescope = Column(String(30), primary_key=True, nullable=False)
     description = Column(String(1000))
@@ -41,6 +54,11 @@ class Telescopes(Base):
 
 
 class Instruments(Base):
+    """
+    ORM for Instruments table.
+    This stores relationships between telescopes and Publications,
+    as well as mode, instrument (name), and description.
+    """
     __tablename__ = "Instruments"
     instrument = Column(String(30), primary_key=True, nullable=False)
     mode = Column(String(30), primary_key=True)
@@ -181,16 +199,13 @@ class Spectra(_DataPointerTable, Base):
     )
     # Data
     spectrum = Column(String(1000), nullable=False)  # URL of spectrum location
+
     # URL of original spectrum location, if applicable
     original_spectrum = Column(String(1000))
+
     # local directory (via environment variable) of spectrum location
     local_spectrum = Column(String(1000))
-    # onupdate = 'cascade'), primary_key = True
-    # Metadata
-    # regime = Column(Enum(Regime, create_constraint=True,
-    # values_callable=lambda x: [e.value for e in x],
-    #                      native_enum=False),
-    #                 )  # eg, Optical, Infrared, etc
+
     telescope = Column(
         String(30),
         ForeignKey("Telescopes.telescope"),
