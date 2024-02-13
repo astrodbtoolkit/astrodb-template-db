@@ -97,8 +97,8 @@ class PhotometryFilters(Base):
         ForeignKey("Telescopes.telescope", onupdate="cascade"),
         primary_key=True,
     )
-    effective_wavelength_micron = Column(Float, nullable=False)
-    width_micron = Column(Float)
+    effective_wavelength = Column(Float, nullable=False)
+    width = Column(Float)
 
 
 class Versions(Base):
