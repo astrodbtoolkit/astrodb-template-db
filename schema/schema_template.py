@@ -184,7 +184,7 @@ class _DataPointerTable:
     # Other columns common to all child tables
 
 
-class Spectra(_DataPointerTable, Base):
+class Spectra_Jy_per_micron(_DataPointerTable, Base):
     __tablename__ = "Spectra"
     source = Column(
         String(100),
@@ -220,7 +220,5 @@ class Spectra(_DataPointerTable, Base):
     )
     mode = Column(String(30))  # eg, Prism, Echelle, etc
     observation_date = Column(DateTime)
-    wavelength_units = Column(String(20))
-    flux_units = Column(String(20))
     wavelength_order = Column(Integer)
     other_references = Column(String(100))
