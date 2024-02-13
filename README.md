@@ -26,8 +26,8 @@ Under the hood, this template leans heavily on [AstrodbKit2](https://github.com/
 Units
 ---------------------------
 Per [Chen et al. 2022](https://iopscience.iop.org/article/10.3847/1538-4365/ac6268), we explicitly define the units
-for each table in their name (e.g., in the Spectra_Jy_per_micron table, the flux units are Jy, and the 
-wavelength units are micron). Doing so removes unit ambiguity when querying and modifying the database.
+for each table in their name (e.g., in the `Sources` table, the column with Right Ascension values
+is named `ra_deg`). Doing so removes unit ambiguity when querying and modifying the database.
 
 We plan to support passing Astropy units to the database, with the database  automatically converting into the
 internal units of each table upon ingest. We aim to have internal tests require that each table with a quantity
