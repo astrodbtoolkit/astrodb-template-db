@@ -184,7 +184,7 @@ class _DataPointerTable:
     # Other columns common to all child tables
 
 
-class Spectra_Jy_per_micron(_DataPointerTable, Base):
+class Spectra(_DataPointerTable, Base):
     __tablename__ = "Spectra"
     source = Column(
         String(100),
