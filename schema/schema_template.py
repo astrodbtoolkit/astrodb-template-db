@@ -146,9 +146,9 @@ class Sources(Base):
 
     __tablename__ = "Sources"
     source = Column(String(100), primary_key=True, nullable=False)
-    ra = Column(Float)
-    dec = Column(Float)
-    epoch = Column(Float)  # decimal year
+    ra_deg = Column(Float)
+    dec_deg = Column(Float)
+    epoch_year = Column(Float)  # decimal year
     equinox = Column(String(10))  # eg, J2000
     shortname = Column(String(30))  # not needed?
     reference = Column(
@@ -220,7 +220,5 @@ class Spectra(_DataPointerTable, Base):
     )
     mode = Column(String(30))  # eg, Prism, Echelle, etc
     observation_date = Column(DateTime)
-    wavelength_units = Column(String(20))
-    flux_units = Column(String(20))
     wavelength_order = Column(Integer)
     other_references = Column(String(100))
