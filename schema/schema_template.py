@@ -43,7 +43,7 @@ class Publications(Base):
     @validates("reference")
     def validate_reference(self, key, value):
         if value is None or len(value) > 30:
-            raise ValueError("Provided reference is invalid; too long or None: {value}")
+            raise ValueError(f"Provided reference is invalid; too long or None: {value}")
         return value
 
 
