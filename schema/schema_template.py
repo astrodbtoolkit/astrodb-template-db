@@ -80,26 +80,26 @@ class Instruments(Base):
 
 class PhotometryFilters(Base):
     """
-    ORM for filter table.
-    This stores relationships between filters and instruments,
-    telescopes, as well as wavelength and width
+    ORM for PhotometryFilters table.
+    This stores information about the filters as well as wavelength and width
     """
 
     __tablename__ = "PhotometryFilters"
-    band = Column(String(30), primary_key=True, nullable=False)
-    # of the form instrument.filter (see SVO)
-    instrument = Column(
-        String(30),
-        ForeignKey("Instruments.instrument", onupdate="cascade"),
-        primary_key=True,
-    )
-    telescope = Column(
-        String(30),
-        ForeignKey("Telescopes.telescope", onupdate="cascade"),
-        primary_key=True,
-    )
+    band = Column(String(30), primary_key=True, nullable=False)  # of the form instrument.filter (see SVO)
     effective_wavelength = Column(Float, nullable=False)
     width = Column(Float)
+
+    @validates("band")
+    def validate_band(self, key, value):
+        if "." not in value:
+            raise ValueError("Band name must be of the form instrument.filter")
+        return value
+
+    @validates("effective_wavelength")
+    def validate_wavelength(self, key, value):
+        if value is not None and value < 0:
+            raise ValueError(f"Invalid effective wavelength received: {value}")
+        return value
 
 
 class Versions(Base):
@@ -196,3 +196,17 @@ class _DataPointerTable:
     data_type = Column(String(32), nullable=False)
     # Other columns common to all child tables
 
+
+class Photometry(Base):
+    # Table to store photometry information
+    __tablename__ = 'Photometry'
+
+    source = Column(String(100), ForeignKey('Sources.source', ondelete='cascade', onupdate='cascade'),
+                    nullable=False, primary_key=True)
+    band = Column(String(30), ForeignKey('PhotometryFilters.band'), primary_key=True)
+    magnitude = Column(Float, nullable=False)
+    magnitude_error = Column(Float)
+    telescope = Column(String(30), ForeignKey('Telescopes.telescope'))
+    epoch = Column(Float)  # decimal year
+    comments = Column(String(1000))
+    reference = Column(String(30), ForeignKey('Publications.reference', onupdate='cascade'), primary_key=True)

@@ -88,3 +88,37 @@ def test_orm_use(db):
         s2 = Sources(source="V4046 Sgr", ra_deg=9999, dec_deg=-32.79, reference="Ref 1")
     with pytest.raises(ValueError):
         s2 = Sources(source="V4046 Sgr", ra_deg=273.54, dec_deg=-9999, reference="Ref 1")
+
+
+def test_add_photometry(db):
+    # Using ORM for simplicity and extra validation
+
+    # Test validation
+    with pytest.raises(ValueError):
+        pf = PhotometryFilters(band="Ks")
+    with pytest.raises(ValueError):
+        pf = PhotometryFilters(band="2MASS.Ks", effective_wavelength=-40)
+
+    # Insert supporting data (Sources, Publications, Telescopes, PhotometryFilters)
+    s = Sources(source="V4046 Sgr", ra_deg=273.54, dec_deg=-32.79, reference="Ref 1")
+    ref = Publications(reference="Cutri03")
+    tel = Telescopes(telescope="2MASS", reference="Cutri03")
+    pf = PhotometryFilters(band="2MASS.Ks", effective_wavelength=2.159)
+    with db.session as session:
+        session.add_all([ref, tel, pf, s])
+        session.commit()
+
+    # Verify supporting information was stored
+    assert db.query(db.Sources).filter(db.Sources.c.source == "V4046 Sgr").count() == 1
+    assert db.query(db.Telescopes).filter(db.Telescopes.c.telescope == "2MASS").count() == 1
+    assert db.query(db.PhotometryFilters).filter(db.PhotometryFilters.c.band == "2MASS.Ks").count() == 1
+
+    # Insert Photometry data, which refers to the supporting tables
+    # Using it within add_all can cause issues since it may insert the value before the supporting information is in place
+    phot = Photometry(source="V4046 Sgr", band="2MASS.Ks", magnitude=7.249, telescope="2MASS", reference="Cutri03")
+    with db.session as session:
+        session.add(phot)
+        session.commit()
+
+    # Verify Photometry was added
+    assert db.query(db.Photometry).filter(db.Photometry.c.source == "V4046 Sgr").count() == 1
