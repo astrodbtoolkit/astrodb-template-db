@@ -65,3 +65,28 @@ def test_setup_db(db):
         conn.commit()
 
     return db
+
+
+def test_orm_use(db):
+    # Tests validation using the SQLAlchemy ORM
+
+    # Adding and removing a basic source
+    s = Sources(source="V4046 Sgr", ra_deg=273.54, dec_deg=-32.79, reference="Ref 1")
+    with db.session as session:
+        session.add(s)
+        session.commit()
+
+    assert db.query(db.Sources).filter(db.Sources.c.source == "V4046 Sgr").count() == 1
+
+    # Remove added source so other tests don't include it
+    with db.session as session:
+        session.delete(s)
+        session.commit()
+
+    assert db.query(db.Sources).filter(db.Sources.c.source == "V4046 Sgr").count() == 0
+
+    # Adding a source with problematic ra/dec to test validation
+    with pytest.raises(ValueError):
+        s2 = Sources(source="V4046 Sgr", ra_deg=9999, dec_deg=-32.79, reference="Ref 1")
+    with pytest.raises(ValueError):
+        s2 = Sources(source="V4046 Sgr", ra_deg=273.54, dec_deg=-9999, reference="Ref 1")

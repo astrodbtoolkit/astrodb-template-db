@@ -18,6 +18,7 @@ from sqlalchemy import (
     String,
     DateTime,
 )
+from sqlalchemy.orm import validates
 import enum
 from astrodbkit2.astrodb import Base
 
@@ -158,6 +159,18 @@ class Sources(Base):
     )
     other_references = Column(String(100))
     comments = Column(String(1000))
+
+    @validates("ra_deg")
+    def validate_ra(self, key, value):
+        if value > 360 or value < 0:
+            raise ValueError("RA not in allowed range (0..360)")
+        return value
+
+    @validates("dec_deg")
+    def validate_dec(self, key, value):
+        if value > 90 or value < -90:
+            raise ValueError("Dec not in allowed range (-90..90)")
+        return value
 
 
 class Names(Base):
