@@ -127,3 +127,13 @@ def test_add_photometry(db):
 
     # Verify Photometry was added
     assert db.query(db.Photometry).filter(db.Photometry.c.source == "V4046 Sgr").count() == 1
+
+
+def test_add_reference(db):
+    # Using ORM for simplicity and validation
+
+    with pytest.raises(ValueError):
+        ref = Publications(reference="ThisIsASuperLongReferenceThatIsInvalid")
+    with pytest.raises(ValueError):
+        ref = Publications(reference=None)
+    ref = Publications(reference="Ref 1")
