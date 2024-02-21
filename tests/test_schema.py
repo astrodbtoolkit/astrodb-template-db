@@ -64,8 +64,6 @@ def test_setup_db(db):
         conn.execute(db.Sources.insert().values(source_data))
         conn.commit()
 
-    return db
-
 
 def test_orm_use(db):
     # Tests validation using the SQLAlchemy ORM

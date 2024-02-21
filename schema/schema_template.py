@@ -16,7 +16,7 @@ from sqlalchemy import (
     ForeignKey,
     Integer,
     String,
-    DateTime,
+    DateTime
 )
 from sqlalchemy.orm import validates
 import enum
@@ -196,42 +196,3 @@ class _DataPointerTable:
     data_type = Column(String(32), nullable=False)
     # Other columns common to all child tables
 
-
-class Spectra(_DataPointerTable, Base):
-    __tablename__ = "Spectra"
-    source = Column(
-        String(100),
-        ForeignKey("Sources.source", ondelete="cascade", onupdate="cascade"),
-        nullable=False,
-        primary_key=True,
-    )
-    reference = Column(
-        String(30),
-        ForeignKey("Publications.reference", ondelete="cascade", onupdate="cascade"),
-        primary_key=True,
-    )
-    # Data
-    spectrum = Column(String(1000), nullable=False)  # URL of spectrum location
-
-    # URL of original spectrum location, if applicable
-    original_spectrum = Column(String(1000))
-
-    # local directory (via environment variable) of spectrum location
-    local_spectrum = Column(String(1000))
-
-    telescope = Column(
-        String(30),
-        ForeignKey("Telescopes.telescope"),
-        onupdate="cascade",
-        primary_key=True,
-    )
-    instrument = Column(
-        String(30),
-        ForeignKey("Instruments.instrument"),
-        onupdate="cascade",
-        primary_key=True,
-    )
-    mode = Column(String(30))  # eg, Prism, Echelle, etc
-    observation_date = Column(DateTime)
-    wavelength_order = Column(Integer)
-    other_references = Column(String(100))
