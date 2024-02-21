@@ -97,7 +97,7 @@ class PhotometryFilters(Base):
 
     @validates("effective_wavelength")
     def validate_wavelength(self, key, value):
-        if value is not None and value < 0:
+        if value is None or value < 0:
             raise ValueError(f"Invalid effective wavelength received: {value}")
         return value
 

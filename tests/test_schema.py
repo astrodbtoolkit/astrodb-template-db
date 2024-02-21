@@ -97,7 +97,12 @@ def test_add_photometry(db):
     with pytest.raises(ValueError):
         pf = PhotometryFilters(band="Ks")
     with pytest.raises(ValueError):
+        pf = PhotometryFilters(band="2MASS.Ks", effective_wavelength=None)
+    with pytest.raises(ValueError):
         pf = PhotometryFilters(band="2MASS.Ks", effective_wavelength=-40)
+
+    # NOTE: this does not raise an error because effective_wavelength is not provided
+    _ = PhotometryFilters(band="2MASS.H") 
 
     # Insert supporting data (Sources, Publications, Telescopes, PhotometryFilters)
     s = Sources(source="V4046 Sgr", ra_deg=273.54, dec_deg=-32.79, reference="Ref 1")
