@@ -16,8 +16,9 @@ from sqlalchemy import (
     ForeignKey,
     Integer,
     String,
-    DateTime,
+    DateTime
 )
+from sqlalchemy.orm import validates
 import enum
 from astrodbkit2.astrodb import Base
 
@@ -38,6 +39,12 @@ class Publications(Base):
     bibcode = Column(String(100))
     doi = Column(String(100))
     description = Column(String(1000))
+
+    @validates("reference")
+    def validate_reference(self, key, value):
+        if value is None or len(value) > 30:
+            raise ValueError(f"Provided reference is invalid; too long or None: {value}")
+        return value
 
 
 class Telescopes(Base):
@@ -79,26 +86,26 @@ class Instruments(Base):
 
 class PhotometryFilters(Base):
     """
-    ORM for filter table.
-    This stores relationships between filters and instruments,
-    telescopes, as well as wavelength and width
+    ORM for PhotometryFilters table.
+    This stores information about the filters as well as wavelength and width
     """
 
     __tablename__ = "PhotometryFilters"
-    band = Column(String(30), primary_key=True, nullable=False)
-    # of the form instrument.filter (see SVO)
-    instrument = Column(
-        String(30),
-        ForeignKey("Instruments.instrument", onupdate="cascade"),
-        primary_key=True,
-    )
-    telescope = Column(
-        String(30),
-        ForeignKey("Telescopes.telescope", onupdate="cascade"),
-        primary_key=True,
-    )
+    band = Column(String(30), primary_key=True, nullable=False)  # of the form instrument.filter (see SVO)
     effective_wavelength = Column(Float, nullable=False)
     width = Column(Float)
+
+    @validates("band")
+    def validate_band(self, key, value):
+        if "." not in value:
+            raise ValueError("Band name must be of the form instrument.filter")
+        return value
+
+    @validates("effective_wavelength")
+    def validate_wavelength(self, key, value):
+        if value is None or value < 0:
+            raise ValueError(f"Invalid effective wavelength received: {value}")
+        return value
 
 
 class Versions(Base):
@@ -159,6 +166,18 @@ class Sources(Base):
     other_references = Column(String(100))
     comments = Column(String(1000))
 
+    @validates("ra_deg")
+    def validate_ra(self, key, value):
+        if value > 360 or value < 0:
+            raise ValueError("RA not in allowed range (0..360)")
+        return value
+
+    @validates("dec_deg")
+    def validate_dec(self, key, value):
+        if value > 90 or value < -90:
+            raise ValueError("Dec not in allowed range (-90..90)")
+        return value
+
 
 class Names(Base):
     __tablename__ = "Names"
@@ -184,41 +203,16 @@ class _DataPointerTable:
     # Other columns common to all child tables
 
 
-class Spectra(_DataPointerTable, Base):
-    __tablename__ = "Spectra"
-    source = Column(
-        String(100),
-        ForeignKey("Sources.source", ondelete="cascade", onupdate="cascade"),
-        nullable=False,
-        primary_key=True,
-    )
-    reference = Column(
-        String(30),
-        ForeignKey("Publications.reference", ondelete="cascade", onupdate="cascade"),
-        primary_key=True,
-    )
-    # Data
-    spectrum = Column(String(1000), nullable=False)  # URL of spectrum location
+class Photometry(Base):
+    # Table to store photometry information
+    __tablename__ = 'Photometry'
 
-    # URL of original spectrum location, if applicable
-    original_spectrum = Column(String(1000))
-
-    # local directory (via environment variable) of spectrum location
-    local_spectrum = Column(String(1000))
-
-    telescope = Column(
-        String(30),
-        ForeignKey("Telescopes.telescope"),
-        onupdate="cascade",
-        primary_key=True,
-    )
-    instrument = Column(
-        String(30),
-        ForeignKey("Instruments.instrument"),
-        onupdate="cascade",
-        primary_key=True,
-    )
-    mode = Column(String(30))  # eg, Prism, Echelle, etc
-    observation_date = Column(DateTime)
-    wavelength_order = Column(Integer)
-    other_references = Column(String(100))
+    source = Column(String(100), ForeignKey('Sources.source', ondelete='cascade', onupdate='cascade'),
+                    nullable=False, primary_key=True)
+    band = Column(String(30), ForeignKey('PhotometryFilters.band'), primary_key=True)
+    magnitude = Column(Float, nullable=False)
+    magnitude_error = Column(Float)
+    telescope = Column(String(30), ForeignKey('Telescopes.telescope'))
+    epoch = Column(Float)  # decimal year
+    comments = Column(String(1000))
+    reference = Column(String(30), ForeignKey('Publications.reference', onupdate='cascade'), primary_key=True)
