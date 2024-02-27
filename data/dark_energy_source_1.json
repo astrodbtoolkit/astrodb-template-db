@@ -2,9 +2,9 @@
     "Sources": [
         {
             "source": "Dark energy source 1",
-            "ra": 55.6326,
-            "dec": 12.2729,
-            "epoch": 2000.0,
+            "ra_deg": 55.6326,
+            "dec_deg": 12.2729,
+            "epoch_year": 2000.0,
             "equinox": "J2000",
             "shortname": "DM1",
             "reference": "Rubin80",

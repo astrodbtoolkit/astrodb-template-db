@@ -2,9 +2,9 @@
     "Sources": [
         {
             "source": "Dark matter source 1",
-            "ra": 57.6326,
-            "dec": 14.28,
-            "epoch": 2000.0,
+            "ra_deg": 57.6326,
+            "dec_deg": 14.28,
+            "epoch_year": 2000.0,
             "equinox": "J2000",
             "shortname": "DE1",
             "reference": "Perlmutter99",
