@@ -91,9 +91,10 @@ class PhotometryFilters(Base):
     """
 
     __tablename__ = "PhotometryFilters"
-    band = Column(String(30), primary_key=True, nullable=False)  # of the form instrument.filter (see SVO)
-    effective_wavelength = Column(Float, nullable=False)
-    width = Column(Float)
+    band = Column(String(30), primary_key=True, nullable=False)
+    ucd = Column(String(100))
+    effective_wavelength_angstroms = Column(Float, nullable=False)
+    width_angstroms = Column(Float)
 
     @validates("band")
     def validate_band(self, key, value):
@@ -101,7 +102,7 @@ class PhotometryFilters(Base):
             raise ValueError("Band name must be of the form instrument.filter")
         return value
 
-    @validates("effective_wavelength")
+    @validates("effective_wavelength_angstroms")
     def validate_wavelength(self, key, value):
         if value is None or value < 0:
             raise ValueError(f"Invalid effective wavelength received: {value}")
