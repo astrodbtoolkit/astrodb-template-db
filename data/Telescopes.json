@@ -1,0 +1,27 @@
+[
+    {
+        "telescope": "2MASS",
+        "description": "The Two Micron All Sky Survey",
+        "reference": "Cutr03"
+    },
+    {
+        "telescope": "Gaia",
+        "description": "Gaia",
+        "reference": null
+    },
+    {
+        "telescope": "SLOAN",
+        "description": "The Sloan Digital Sky Survey",
+        "reference": null
+    },
+    {
+        "telescope": "WISE",
+        "description": "Wide-field Infrared Survey Explorer",
+        "reference": "Wrig10"
+    },
+    {
+        "telescope": "Generic",
+        "description": "Generic telescope",
+        "reference": null
+    }
+]

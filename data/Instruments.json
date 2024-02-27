@@ -1,0 +1,44 @@
+[
+    {
+        "instrument": "2MASS",
+        "mode": "Imaging",
+        "telescope": "2MASS",
+        "description": null,
+        "reference": "Cohe03"
+    },
+    {
+        "instrument": "Gaia3",
+        "mode": "Imaging",
+        "telescope": "Gaia",
+        "description": null,
+        "reference": "Gaia23"
+    },
+    {
+        "instrument": "SDSS",
+        "mode": "Imaging",
+        "telescope": "SLOAN",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "WISE",
+        "mode": "Imaging",
+        "telescope": "WISE",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "Johnson",
+        "mode": "Imaging",
+        "telescope": "Generic",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "Cousins",
+        "mode": "Imaging",
+        "telescope": "Generic",
+        "description": null,
+        "reference": null
+    }
+]
