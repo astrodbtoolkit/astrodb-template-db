@@ -163,3 +163,46 @@ def test_publications(db):
         ref = Publications(reference="ThisIsASuperLongReferenceThatIsInvalid")
     with pytest.raises(ValueError):
         ref = Publications(reference=None)
+
+def test_telescopes(db):
+    with pytest.raises(ValueError):
+        tel = Telescopes(telescope="ThisIsASuperLongTelescopeNameThatIsInvalid")
+    with pytest.raises(ValueError):
+        tel = Telescopes(telescope=None)
+
+def test_sources(db):
+    with pytest.raises(ValueError):
+        s = Sources(source="ThisIsASuperLongSourceNameThatIsInvalid")
+    with pytest.raises(ValueError):
+        s = Sources(source=None)
+
+def test_versions(db):
+    with pytest.raises(ValueError):
+        ver = Versions(version="ThisIsASuperLongVersionNameThatIsInvalid")
+    with pytest.raises(ValueError):
+        ver = Versions(version=None)
+
+def test_names(db):
+    with pytest.raises(ValueError):
+        n = Names(source="ThisIsASuperLongSourceNameThatIsInvalid", other_name="OtherName")
+    with pytest.raises(ValueError):
+        n = Names(source=None, other_name="OtherName")
+    with pytest.raises(ValueError):
+        n = Names(source="Source", other_name="ThisIsASuperLongOtherNameThatIsInvalid")
+    with pytest.raises(ValueError):
+        n = Names(source="Source", other_name=None)
+
+def test_instruments(db):
+    with pytest.raises(ValueError):
+        inst = Instruments(instrument="ThisIsASuperLongInstrumentNameThatIsInvalid")
+    with pytest.raises(ValueError):
+        inst = Instruments(instrument=None)
+    with pytest.raises(ValueError):
+        inst = Instruments(mode="ThisIsASuperLongModeNameThatIsInvalid")
+    with pytest.raises(ValueError):
+        inst = Instruments(mode=None)
+    with pytest.raises(ValueError):
+        inst = Instruments(telescope="ThisIsASuperLongTelescopeNameThatIsInvalid")
+    with pytest.raises(ValueError):
+        inst = Instruments(telescope=None)
+
