@@ -28,6 +28,15 @@ from astrodbkit2.astrodb import Base
 # -------------------------------------------------------------------------------------------------------------------
 # Reference tables
 # -------------------------------------------------------------------------------------------------------------------
+REFERENCE_TABLES = [
+    "Publications",
+    "Telescopes",
+    "Instruments",
+    "PhotometryFilters",
+    "Versions",
+]
+
+
 class Publications(Base):
     """ORM for publications table.
     This stores reference information (DOI, bibcodes, etc) and
