@@ -194,8 +194,8 @@ def test_versions(db):
 @pytest.mark.parametrize("values, error_state",
                          [
                              ({"source": "ThisIsASuperLongSourceNameThatIsInvalid", "other_name": "OtherName"}, ValueError),
-                             ({"source": None, other_name="OtherName"}, ValueError),
-                             ({"source": "Source", other_name="ThisIsASuperLongOtherNameThatIsInvalid"}, ValueError),
+                             ({"source": None, "other_name":"OtherName"}, ValueError),
+                             ({"source": "Source", "other_name":"ThisIsASuperLongOtherNameThatIsInvalid"}, ValueError),
                              ({"telescope": "Source", "other_name": None}, ValueError)
                           ])
 def test_names(db):
