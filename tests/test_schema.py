@@ -195,7 +195,7 @@ def test_versions(db):
                          [
                              ({"source": "ThisIsASuperLongSourceNameThatIsInvalid", "other_name": "OtherName"}, ValueError),
                              ({"source": None, other_name="OtherName"}, ValueError),
-                             ({"source": "Source", other_name="ThisIsASuperLongOtherNameThatIsInvalid}, ValueError),
+                             ({"source": "Source", other_name="ThisIsASuperLongOtherNameThatIsInvalid"}, ValueError),
                              ({"telescope": "Source", "other_name": None}, ValueError)
                           ])
 def test_names(db):
