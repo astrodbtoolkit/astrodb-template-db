@@ -25,6 +25,11 @@ from astrodbkit2.astrodb import Base
 
 # TODO: make "tabulardata" or "physicaldata" abstract classes.
 
+def check_string_length(value, max_length, column):
+    if value is None or len(value) > max_length:
+        raise ValueError(f"Provided description is invalid; too long or None: {value}")
+    
+
 # -------------------------------------------------------------------------------------------------------------------
 # Reference tables
 # -------------------------------------------------------------------------------------------------------------------
@@ -48,8 +53,7 @@ class Publications(Base):
 
     @validates("reference")
     def validate_reference(self, key, value):
-        if value is None or len(value) > 30:
-            raise ValueError(f"Provided reference is invalid; too long or None: {value}")
+        check_string_length(value, 30, "reference")
         return value
 
     @validates("bibcode")
