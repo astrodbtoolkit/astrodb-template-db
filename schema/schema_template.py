@@ -25,9 +25,11 @@ from astrodbkit2.astrodb import Base
 
 # TODO: make "tabulardata" or "physicaldata" abstract classes.
 
-def check_string_length(value, max_length, column):
+def check_string_length(value, max_length, key):
     if value is None or len(value) > max_length:
-        raise ValueError(f"Provided description is invalid; too long or None: {value}")
+        raise ValueError(f"Provided {key} is invalid; too long or None: {value}")
+    else:
+        pass
     
 
 # -------------------------------------------------------------------------------------------------------------------
@@ -56,16 +58,15 @@ class Publications(Base):
         check_string_length(value, 30, "reference")
         return value
 
-    @validates("bibcode")
-    def validate_bibcode(self, key, value):
-        if value is None or len(value) > 100:
-            raise ValueError(f"Provided bibcode is invalid; too long or None: {value}")
-        return value
+    # @validates("bibcode")
+    # def validate_bibcode(self, key, value):
+    #     if value is None or len(value) > 100:
+    #         raise ValueError(f"Provided bibcode is invalid; too long or None: {value}")
+    #     return value
 
-    @validates("doi")
-    def validate_doi(self, key, value):
-        if value is None or len(value) > 100:
-            raise ValueError(f"Provided doi is invalid; too long or None: {value}")
+    @validates("doi", "bibcode")
+    def validate_doi_and_bibcode(self, key, value):
+        check_string_length(value, 100, key)
         return value
 
     @validates("description")
