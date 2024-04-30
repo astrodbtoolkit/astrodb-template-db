@@ -324,7 +324,7 @@ class Sources(Base):
 
     @validates("source")
     def validate_source(self, key, value):
-        if value is None or len(value) > self.source_length:
+        if value is None or len(value) > self.source_string_length:
             raise ValueError(f"Provided source is invalid; too long or None: {value}")
         return value
 
