@@ -15,6 +15,14 @@ from schema.schema_template import (
 )
 from astrodbkit2.astrodb import create_database, Database
 
+def schema_tester(table, values, error_state):
+    """Helper function to handle the basic testing of the schema classes"""
+    if error_state is None:
+        _ = table(**values)
+    else:
+        with pytest.raises(error_state):
+            _ = table(**values)
+
 
 DB_NAME = "test.sqlite"
 DB_PATH = "data"
@@ -182,7 +190,16 @@ def test_versions(db):
     with pytest.raises(ValueError):
         ver = Versions(version=None)
 
+
+@pytest.mark.parametrize("values, error_state",
+                         [
+                             ({"source": "ThisIsASuperLongSourceNameThatIsInvalid", "other_name": "OtherName"}, ValueError),
+                             ({"source": None, other_name="OtherName}, ValueError),
+                             ({"source": "Source", other_name="ThisIsASuperLongOtherNameThatIsInvalid}, ValueError),
+                             ({"telescope": "Source", "other_name": None}, ValueError)
+                          ])
 def test_names(db):
+    schema_tester(Names, values, error_state)
     with pytest.raises(ValueError):
         n = Names(source="ThisIsASuperLongSourceNameThatIsInvalid", other_name="OtherName")
     with pytest.raises(ValueError):
@@ -192,17 +209,15 @@ def test_names(db):
     with pytest.raises(ValueError):
         n = Names(source="Source", other_name=None)
 
+
+@pytest.mark.parametrize("values, error_state",
+                         [
+                             ({"instrument": "ThisIsASuperLongInstrumentNameThatIsInvalid"}, ValueError),
+                             ({"instrument": None}, ValueError),
+                             ({"mode": "ThisIsASuperLongInstrumentNameThatIsInvalid"}, ValueError),
+                             ({"telescope": "ThisIsASuperLongInstrumentNameThatIsInvalid"}, ValueError),
+                              ({"telescope": None}, ValueError)
+                          ])
 def test_instruments(db):
-    with pytest.raises(ValueError):
-        inst = Instruments(instrument="ThisIsASuperLongInstrumentNameThatIsInvalid")
-    with pytest.raises(ValueError):
-        inst = Instruments(instrument=None)
-    with pytest.raises(ValueError):
-        inst = Instruments(mode="ThisIsASuperLongModeNameThatIsInvalid")
-    with pytest.raises(ValueError):
-        inst = Instruments(mode=None)
-    with pytest.raises(ValueError):
-        inst = Instruments(telescope="ThisIsASuperLongTelescopeNameThatIsInvalid")
-    with pytest.raises(ValueError):
-        inst = Instruments(telescope=None)
+    schema_tester(Instruments, values, error_state)
 
