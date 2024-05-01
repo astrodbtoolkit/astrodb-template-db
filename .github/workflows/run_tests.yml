@@ -26,7 +26,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install git+https://github.com/dr-rodriguez/AstrodbKit2
+        pip install git+https://github.com/astrodbtoolkit/AstrodbKit2
         pip install git+https://github.com/astrodbtoolkit/astrodb_scripts.git
         pip install pytest
     - name: Test with pytest
