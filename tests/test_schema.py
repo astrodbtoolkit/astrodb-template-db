@@ -171,7 +171,7 @@ def test_photometry(db):
 @pytest.mark.parametrize("values, error_state", [
     ({"reference": "Valid"}, None),
     ({"reference": "ThisIsASuperLongReferenceThatIsInvalid"}, ValueError),
-    ({"telesreferencecope": None}, ValueError),
+    ({"telesreferencecope": None}, TypeError),  # invalid column
 ])
 def test_publications(values, error_state):
     schema_tester(Publications, values, error_state)
@@ -186,7 +186,7 @@ def test_telescopes(values, error_state):
 
 @pytest.mark.parametrize("values, error_state", [
     ({"source": "Valid"}, None),
-    ({"source": "ThisIsASuperLongSourceNameThatIsInvalid"}, ValueError),
+    ({"source": "ThisIsASuperLongSourceNameThatIsInvalid"*5}, ValueError),
     ({"source": None}, ValueError),
 ])
 def test_sources(values, error_state):
@@ -194,7 +194,7 @@ def test_sources(values, error_state):
 
 
 @pytest.mark.parametrize("values, error_state", [
-    ({"version": 1}, None),
+    ({"version": "1.0"}, None),
     ({"version": "ThisIsASuperLongVersionNameThatIsInvalid"}, ValueError),
     ({"version": None}, ValueError)
 ])
@@ -205,9 +205,9 @@ def test_versions(values, error_state):
 @pytest.mark.parametrize("values, error_state",
                          [
                              ({"source": "Valid", "other_name": "OtherName"}, None),
-                             ({"source": "ThisIsASuperLongSourceNameThatIsInvalid", "other_name": "OtherName"}, ValueError),
+                             ({"source": "ThisIsASuperLongSourceNameThatIsInvalid"*5, "other_name": "OtherName"}, ValueError),
                              ({"source": None, "other_name":"OtherName"}, ValueError),
-                             ({"source": "Source", "other_name":"ThisIsASuperLongOtherNameThatIsInvalid"}, ValueError),
+                             ({"source": "Source", "other_name":"ThisIsASuperLongOtherNameThatIsInvalid"*5}, ValueError),
                              ({"telescope": "Source", "other_name": None}, TypeError)  # telescope is an invalid field
                           ])
 def test_names(values, error_state):

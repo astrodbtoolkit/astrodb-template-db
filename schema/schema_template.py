@@ -251,20 +251,17 @@ class Sources(Base):
 
     @validates("source")
     def validate_source(self, key, value):
-        if value is None or len(value) > self.source_string_length:
-            raise ValueError(f"Provided source is invalid; too long or None: {value}")
+        check_string_length(value, self.source_string_length, key)
         return value
 
     @validates("equinox")
     def validate_equinox(self, key, value):
-        if value is None or len(value) > self.equinox_string_length:
-            raise ValueError(f"Provided equinox is invalid; too long or None: {value}")
+        check_string_length(value, self.equinox_string_length, key)
         return value
 
     @validates("shortname")
     def validate_shortname(self, key, value):
-        if value is None or len(value) > self.shortname_string_length:
-            raise ValueError(f"Provided shortname is invalid; too long or None: {value}")
+        check_string_length(value, self.shortname_string_length, key)
         return value
 
     @validates("other_references")
