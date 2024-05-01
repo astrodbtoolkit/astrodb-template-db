@@ -1,28 +1,21 @@
 """
 functions to test the schema itself.
 """
-import pytest
 import os
+
+import pytest
+from astrodbkit2.astrodb import Database, create_database
+
 from schema.schema_template import (
-    Sources,
-    Names,
-    Publications,
-    Telescopes,
     Instruments,
-    PhotometryFilters,
+    Names,
     Photometry,
+    PhotometryFilters,
+    Publications,
+    Sources,
+    Telescopes,
     Versions,
 )
-from astrodbkit2.astrodb import create_database, Database
-
-def schema_tester(table, values, error_state):
-    """Helper function to handle the basic testing of the schema classes"""
-    if error_state is None:
-        _ = table(**values)
-    else:
-        with pytest.raises(error_state):
-            _ = table(**values)
-
 
 DB_NAME = "test.sqlite"
 DB_PATH = "data"
@@ -36,6 +29,15 @@ REFERENCE_TABLES = [
     "Versions",
     "Parameters",
 ]
+
+
+def schema_tester(table, values, error_state):
+    """Helper function to handle the basic testing of the schema classes"""
+    if error_state is None:
+        _ = table(**values)
+    else:
+        with pytest.raises(error_state):
+            _ = table(**values)
 
 
 # Load the database for use in individual tests
@@ -198,16 +200,8 @@ def test_versions(db):
                              ({"source": "Source", "other_name":"ThisIsASuperLongOtherNameThatIsInvalid"}, ValueError),
                              ({"telescope": "Source", "other_name": None}, ValueError)
                           ])
-def test_names(db):
+def test_names(values, error_state):
     schema_tester(Names, values, error_state)
-    with pytest.raises(ValueError):
-        n = Names(source="ThisIsASuperLongSourceNameThatIsInvalid", other_name="OtherName")
-    with pytest.raises(ValueError):
-        n = Names(source=None, other_name="OtherName")
-    with pytest.raises(ValueError):
-        n = Names(source="Source", other_name="ThisIsASuperLongOtherNameThatIsInvalid")
-    with pytest.raises(ValueError):
-        n = Names(source="Source", other_name=None)
 
 
 @pytest.mark.parametrize("values, error_state",
@@ -216,8 +210,8 @@ def test_names(db):
                              ({"instrument": None}, ValueError),
                              ({"mode": "ThisIsASuperLongInstrumentNameThatIsInvalid"}, ValueError),
                              ({"telescope": "ThisIsASuperLongInstrumentNameThatIsInvalid"}, ValueError),
-                              ({"telescope": None}, ValueError)
+                             ({"telescope": None}, ValueError)
                           ])
-def test_instruments(db):
+def test_instruments(values, error_state):
     schema_tester(Instruments, values, error_state)
 
