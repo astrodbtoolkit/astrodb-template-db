@@ -168,37 +168,47 @@ def test_photometry(db):
     )
 
 
-def test_publications(db):
-    with pytest.raises(ValueError):
-        ref = Publications(reference="ThisIsASuperLongReferenceThatIsInvalid")
-    with pytest.raises(ValueError):
-        ref = Publications(reference=None)
+@pytest.mark.parametrize("values, error_state", [
+    ({"reference": "Valid"}, None),
+    ({"reference": "ThisIsASuperLongReferenceThatIsInvalid"}, ValueError),
+    ({"telesreferencecope": None}, ValueError),
+])
+def test_publications(values, error_state):
+    schema_tester(Publications, values, error_state)
 
-def test_telescopes(db):
-    with pytest.raises(ValueError):
-        tel = Telescopes(telescope="ThisIsASuperLongTelescopeNameThatIsInvalid")
-    with pytest.raises(ValueError):
-        tel = Telescopes(telescope=None)
+@pytest.mark.parametrize("values, error_state", [
+    ({"telescope": "Valid"}, None),
+    ({"telescope": "ThisIsASuperLongTelescopeThatIsInvalid"}, ValueError),
+    ({"telescope": None}, ValueError),
+])
+def test_telescopes(values, error_state):
+    schema_tester(Telescopes, values, error_state)
 
-def test_sources(db):
-    with pytest.raises(ValueError):
-        s = Sources(source="ThisIsASuperLongSourceNameThatIsInvalid")
-    with pytest.raises(ValueError):
-        s = Sources(source=None)
+@pytest.mark.parametrize("values, error_state", [
+    ({"source": "Valid"}, None),
+    ({"source": "ThisIsASuperLongSourceNameThatIsInvalid"}, ValueError),
+    ({"source": None}, ValueError),
+])
+def test_sources(values, error_state):
+    schema_tester(Sources, values, error_state)
 
-def test_versions(db):
-    with pytest.raises(ValueError):
-        ver = Versions(version="ThisIsASuperLongVersionNameThatIsInvalid")
-    with pytest.raises(ValueError):
-        ver = Versions(version=None)
+
+@pytest.mark.parametrize("values, error_state", [
+    ({"version": 1}, None),
+    ({"version": "ThisIsASuperLongVersionNameThatIsInvalid"}, ValueError),
+    ({"version": None}, ValueError)
+])
+def test_versions(values, error_state):
+    schema_tester(Versions, values, error_state)
 
 
 @pytest.mark.parametrize("values, error_state",
                          [
+                             ({"source": "Valid", "other_name": "OtherName"}, None),
                              ({"source": "ThisIsASuperLongSourceNameThatIsInvalid", "other_name": "OtherName"}, ValueError),
                              ({"source": None, "other_name":"OtherName"}, ValueError),
                              ({"source": "Source", "other_name":"ThisIsASuperLongOtherNameThatIsInvalid"}, ValueError),
-                             ({"telescope": "Source", "other_name": None}, ValueError)
+                             ({"telescope": "Source", "other_name": None}, TypeError)  # telescope is an invalid field
                           ])
 def test_names(values, error_state):
     schema_tester(Names, values, error_state)
@@ -206,6 +216,7 @@ def test_names(values, error_state):
 
 @pytest.mark.parametrize("values, error_state",
                          [
+                             ({"instrument": "Valid"}, None),
                              ({"instrument": "ThisIsASuperLongInstrumentNameThatIsInvalid"}, ValueError),
                              ({"instrument": None}, ValueError),
                              ({"mode": "ThisIsASuperLongInstrumentNameThatIsInvalid"}, ValueError),
