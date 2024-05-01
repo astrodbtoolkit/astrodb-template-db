@@ -170,6 +170,8 @@ def test_photometry(db):
 
 @pytest.mark.parametrize("values, error_state", [
     ({"reference": "Valid"}, None),
+    ({"reference": "Valid", "doi": "LongDOI"*100}, ValueError),  # using multiplier to make a very long string
+    ({"reference": "Valid", "bibcode": "LongBibCode"*100}, ValueError),
     ({"reference": "ThisIsASuperLongReferenceThatIsInvalid"}, ValueError),
     ({"telesreferencecope": None}, TypeError),  # invalid column
 ])
