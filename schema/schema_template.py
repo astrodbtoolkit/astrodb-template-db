@@ -9,19 +9,15 @@ You may modify these tables, but doing so may decrease the interoperability of y
 
 """
 
-
-from sqlalchemy import (
-    Column,
-    Float,
-    ForeignKey,
-    Integer,
-    String,
-    DateTime
-)
-from sqlalchemy.orm import validates
 import enum
-from astrodbkit2.astrodb import Base
 
+from astrodbkit2.astrodb import Base
+from sqlalchemy import Column, DateTime, Float, ForeignKey, Integer, String
+from sqlalchemy.orm import validates
+
+# Globals
+REFERENCE_STRING_LENGTH = 30
+DESCRIPTION_STRING_LENGTH = 1000
 
 # TODO: make "tabulardata" or "physicaldata" abstract classes.
 
@@ -43,19 +39,18 @@ class Publications(Base):
     reference_string_length = 30
     bibcode_string_length = 100
     doi_string_length = 100
-    description_string_length = 1000
 
 
 
     __tablename__ = "Publications"
-    reference = Column(String(reference_string_length), primary_key=True, nullable=False)
+    reference = Column(String(REFERENCE_STRING_LENGTH), primary_key=True, nullable=False)
     bibcode = Column(String(bibcode_string_length))
     doi = Column(String(doi_string_length))
-    description = Column(String(description_string_length))
+    description = Column(String(DESCRIPTION_STRING_LENGTH))
 
     @validates("reference")
     def validate_reference(self, key, value):
-        check_string_length(value, 30, "reference")
+        check_string_length(value, REFERENCE_STRING_LENGTH, "reference")
         return value
 
     # @validates("bibcode")
@@ -71,8 +66,7 @@ class Publications(Base):
 
     @validates("description")
     def validate_description(self, key, value):
-        if value is None or len(value) > 1000:
-            raise ValueError(f"Provided description is invalid; too long or None: {value}")
+        check_string_length(value, DESCRIPTION_STRING_LENGTH, key)
         return value
 
 
@@ -85,35 +79,23 @@ class Telescopes(Base):
     This stores information about the telescope, its name, and has relationship to Publications.
     """
     telescope_string_length = 30
-    description_string_length = 1000
-    reference_string_length = 30
 
     __tablename__ = "Telescopes"
     telescope = Column(String(telescope_string_length), primary_key=True, nullable=False)
-    description = Column(String(description_string_length))
+    description = Column(String(DESCRIPTION_STRING_LENGTH))
     reference = Column(
-        String(reference_string_length), ForeignKey("Publications.reference", onupdate="cascade")
+        String(REFERENCE_STRING_LENGTH), ForeignKey("Publications.reference", onupdate="cascade")
     )
 
     @validates("telescope")
     def validate_telescope(self, key, value):
-        if value is None or len(value) > self.telescope_string_length:
-            raise ValueError(f"Provided telescope is invalid; too long or None: {value}")
+        check_string_length(value, self.telescope_string_length, key)
         return value
 
     @validates("description")
     def validate_description(self, key, value):
-        if value is None or len(value) > self.description_string_length:
-            raise ValueError(f"Provided description is invalid; too long or None: {value}")
+        check_string_length(value, DESCRIPTION_STRING_LENGTH, key)
         return value
-
-    @validates("reference")
-    def validate_reference(self, key, value):
-        if value is None or len(value) > self.reference_string_length:
-            raise ValueError(f"Provided reference is invalid; too long or None: {value}")
-        return value
-
-
 
 
 class Instruments(Base):
@@ -122,53 +104,28 @@ class Instruments(Base):
     This stores relationships between telescopes and Publications,
     as well as mode, instrument (name), and description.
     """
-    instrument_string_length = 30
-    mode_string_length = 30
-    telescope_string_length = 30
-    description_string_length = 1000
-    reference_string_length = 30
 
     __tablename__ = "Instruments"
-    instrument = Column(String(instrument_string_length), primary_key=True, nullable=False)
-    mode = Column(String(mode_string_length), primary_key=True)
+    instrument = Column(String(30), primary_key=True, nullable=False)
+    mode = Column(String(30), primary_key=True)
     telescope = Column(
-        String(telescope_string_length),
+        String(30),
         ForeignKey("Telescopes.telescope", onupdate="cascade"),
         primary_key=True,
     )
-    description = Column(String(description_string_length))
+    description = Column(String(DESCRIPTION_STRING_LENGTH))
     reference = Column(
-        String(reference_string_length), ForeignKey("Publications.reference", onupdate="cascade")
+        String(REFERENCE_STRING_LENGTH), ForeignKey("Publications.reference", onupdate="cascade")
     )
 
-    @validates("instrument")
+    @validates("instrument", "mode", "telescope")
     def validate_instrument(self, key, value):
-        if value is None or len(value) > self.instrument_string_length:
-            raise ValueError(f"Provided instrument is invalid; too long or None: {value}")
-        return value
-
-    @validates("mode")
-    def validate_mode(self, key, value):
-        if value is None or len(value) > self.mode_string_length:
-            raise ValueError(f"Provided mode is invalid; too long or None: {value}")
-        return value
-
-    @validates("telescope")
-    def validate_telescope(self, key, value):
-        if value is None or len(value) > self.telescope_string_length:
-            raise ValueError(f"Provided telescope is invalid; too long or None: {value}")
+        check_string_length(value, 30, key)
         return value
 
     @validates("description")
     def validate_description(self, key, value):
-        if value is None or len(value) > self.description_string_length:
-            raise ValueError(f"Provided description is invalid; too long or None: {value}")
-        return value
-
-    @validates("reference")
-    def validate_reference(self, key, value):
-        if value is None or len(value) > self.reference_string_length:
-            raise ValueError(f"Provided reference is invalid; too long or None: {value}")
+        check_string_length(value, DESCRIPTION_STRING_LENGTH, key)
         return value
 
 
@@ -183,12 +140,10 @@ class PhotometryFilters(Base):
     ORM for PhotometryFilters table.
     This stores information about the filters as well as wavelength and width
     """
-    band_string_length = 30
-    ucd_string_length = 100
 
     __tablename__ = "PhotometryFilters"
-    band = Column(String(band_string_length), primary_key=True, nullable=False)
-    ucd = Column(String(ucd_string_length))
+    band = Column(String(30), primary_key=True, nullable=False)
+    ucd = Column(String(100))
     effective_wavelength_angstroms = Column(Float, nullable=False)
     width_angstroms = Column(Float)
 
@@ -198,22 +153,15 @@ class PhotometryFilters(Base):
             raise ValueError("Band name must be of the form instrument.filter")
         return value
 
-    @validates("effective_wavelength_angstroms")
+    @validates("effective_wavelength_angstroms", "width_angstroms")
     def validate_wavelength(self, key, value):
         if value is None or value < 0:
-            raise ValueError(f"Invalid effective wavelength received: {value}")
-        return value
-
-    @validates("width_angstroms")
-    def validate_width(self, key, value):
-        if value is None or value < 0:
-            raise ValueError(f"Invalid width received: {value}")
+            raise ValueError(f"Invalid {key} received: {value}")
         return value
 
     @validates("ucd")
     def validate_ucd(self, key, value):
-        if value is None or len(value) > self.ucd_string_length:
-            raise ValueError(f"Provided UCD is invalid; too long or None: {value}")
+        check_string_length(value, 100, key)
         return value
 
 
@@ -222,46 +170,26 @@ class Versions(Base):
     ORM for Versions table
     This stores the version numbers for the database
     """
-    version_string_length = 30
-    start_date_string_length = 30
-    end_date_string_length = 30
-    description_string_length = 1000
 
     __tablename__ = "Versions"
-    version = Column(String(version_string_length), primary_key=True, nullable=False)
-    start_date = Column(String(start_date_string_length))
-    end_date = Column(String(end_date_string_length))
-    description = Column(String(description_string_length))
+    version = Column(String(30), primary_key=True, nullable=False)
+    start_date = Column(String(30))
+    end_date = Column(String(30))
+    description = Column(String(DESCRIPTION_STRING_LENGTH))
 
-    @validates("version")
+    @validates("version", "start_date", "end_date")
     def validate_version(self, key, value):
-        if value is None or len(value) > self.version_string_length:
-            raise ValueError(f"Provided version is invalid; too long or None: {value}")
-        return value
-
-    @validates("start_date")
-    def validate_start_date(self, key, value):
-        if value is None or len(value) > self.start_date_string_length:
-            raise ValueError(f"Provided start_date is invalid; too long or None: {value}")
-        return value
-
-    @validates("end_date")
-    def validate_end_date(self, key, value):
-        if value is None or len(value) > self.end_date_string_length:
-            raise ValueError(f"Provided end_date is invalid; too long or None: {value}")
+        check_string_length(value, 30, key)
         return value
 
     @validates("description")
     def validate_description(self, key, value):
-        if value is None or len(value) > self.description_string_length:
-            raise ValueError(f"Provided description is invalid; too long or None: {value}")
+        check_string_length(value, DESCRIPTION_STRING_LENGTH, key)
         return value
 
 
 # -------------------------------------------------------------------------------------------------------------------
 # Hard-coded enumerations
-
-
 class Regime(enum.Enum):
     """Enumeration for spectral type, spectra, and photometry regimes
     Use UCD controlled vocabulary:
@@ -292,7 +220,6 @@ class Sources(Base):
     source_string_length = 100
     equinox_string_length = 10
     shortname_string_length = 30
-    reference_string_length = 30
     other_references_string_length = 100
     comments_string_length = 1000
 
@@ -303,7 +230,7 @@ class Sources(Base):
     equinox = Column(String(equinox_string_length))  # eg, J2000
     shortname = Column(String(shortname_string_length))  # not needed?
     reference = Column(
-        String(reference_string_length),
+        String(REFERENCE_STRING_LENGTH),
         ForeignKey("Publications.reference", onupdate="cascade"),
         nullable=False,
     )
@@ -338,12 +265,6 @@ class Sources(Base):
     def validate_shortname(self, key, value):
         if value is None or len(value) > self.shortname_string_length:
             raise ValueError(f"Provided shortname is invalid; too long or None: {value}")
-        return value
-
-    @validates("reference")
-    def validate_reference(self, key, value):
-        if value is None or len(value) > self.reference_string_length:
-            raise ValueError(f"Provided reference is invalid; too long or None: {value}")
         return value
 
     @validates("other_references")
@@ -430,7 +351,6 @@ class Photometry(Base):
     band_string_length = 30
     telescope_string_length = 30
     comments_string_length = 1000
-    reference_string_length = 30
 
     __tablename__ = 'Photometry'
 
@@ -442,7 +362,7 @@ class Photometry(Base):
     telescope = Column(String(telescope_string_length), ForeignKey('Telescopes.telescope'))
     epoch = Column(Float)  # decimal year
     comments = Column(String(comments_string_length))
-    reference = Column(String(reference_string_length), ForeignKey('Publications.reference', onupdate='cascade'), primary_key=True)
+    reference = Column(String(REFERENCE_STRING_LENGTH), ForeignKey('Publications.reference', onupdate='cascade'), primary_key=True)
 
 
     @validates("source")
@@ -485,12 +405,6 @@ class Photometry(Base):
     def validate_comments(self, key, value):
         if value is None or len(value) > self.comments_string_length:
             raise ValueError(f"Provided comments is invalid; too long or None: {value}")
-        return value
-
-    @validates("reference")
-    def validate_reference(self, key, value):
-        if value is None or len(value) > self.reference_string_length:
-            raise ValueError(f"Provided reference is invalid; too long or None: {value}")
         return value
 
 
