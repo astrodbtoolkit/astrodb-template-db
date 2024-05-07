@@ -9,21 +9,24 @@ You may modify these tables, but doing so may decrease the interoperability of y
 
 """
 
-
-from sqlalchemy import (
-    Column,
-    Float,
-    ForeignKey,
-    Integer,
-    String,
-    DateTime
-)
-from sqlalchemy.orm import validates
 import enum
-from astrodbkit2.astrodb import Base
 
+from astrodbkit2.astrodb import Base
+from sqlalchemy import Column, DateTime, Float, ForeignKey, Integer, String
+from sqlalchemy.orm import validates
+
+# Globals
+REFERENCE_STRING_LENGTH = 30
+DESCRIPTION_STRING_LENGTH = 1000
 
 # TODO: make "tabulardata" or "physicaldata" abstract classes.
+
+def check_string_length(value, max_length, key):
+    if value is None or len(value) > max_length:
+        raise ValueError(f"Provided {key} is invalid; too long or None: {value}")
+    else:
+        pass
+    
 
 # -------------------------------------------------------------------------------------------------------------------
 # Reference tables
@@ -44,15 +47,24 @@ class Publications(Base):
     """
 
     __tablename__ = "Publications"
-    reference = Column(String(30), primary_key=True, nullable=False)
+    reference = Column(String(REFERENCE_STRING_LENGTH), primary_key=True, nullable=False)
     bibcode = Column(String(100))
     doi = Column(String(100))
-    description = Column(String(1000))
+    description = Column(String(DESCRIPTION_STRING_LENGTH))
 
     @validates("reference")
     def validate_reference(self, key, value):
-        if value is None or len(value) > 30:
-            raise ValueError(f"Provided reference is invalid; too long or None: {value}")
+        check_string_length(value, REFERENCE_STRING_LENGTH, "reference")
+        return value
+
+    @validates("doi", "bibcode")
+    def validate_doi_and_bibcode(self, key, value):
+        check_string_length(value, 100, key)
+        return value
+
+    @validates("description")
+    def validate_description(self, key, value):
+        check_string_length(value, DESCRIPTION_STRING_LENGTH, key)
         return value
 
 
@@ -61,12 +73,23 @@ class Telescopes(Base):
     ORM for Telescopes table.
     This stores information about the telescope, its name, and has relationship to Publications.
     """
+
     __tablename__ = "Telescopes"
     telescope = Column(String(30), primary_key=True, nullable=False)
-    description = Column(String(1000))
+    description = Column(String(DESCRIPTION_STRING_LENGTH))
     reference = Column(
-        String(30), ForeignKey("Publications.reference", onupdate="cascade")
+        String(REFERENCE_STRING_LENGTH), ForeignKey("Publications.reference", onupdate="cascade")
     )
+
+    @validates("telescope")
+    def validate_telescope(self, key, value):
+        check_string_length(value, 30, key)
+        return value
+
+    @validates("description")
+    def validate_description(self, key, value):
+        check_string_length(value, DESCRIPTION_STRING_LENGTH, key)
+        return value
 
 
 class Instruments(Base):
@@ -75,6 +98,7 @@ class Instruments(Base):
     This stores relationships between telescopes and Publications,
     as well as mode, instrument (name), and description.
     """
+
     __tablename__ = "Instruments"
     instrument = Column(String(30), primary_key=True, nullable=False)
     mode = Column(String(30), primary_key=True)
@@ -83,10 +107,20 @@ class Instruments(Base):
         ForeignKey("Telescopes.telescope", onupdate="cascade"),
         primary_key=True,
     )
-    description = Column(String(1000))
+    description = Column(String(DESCRIPTION_STRING_LENGTH))
     reference = Column(
-        String(30), ForeignKey("Publications.reference", onupdate="cascade")
+        String(REFERENCE_STRING_LENGTH), ForeignKey("Publications.reference", onupdate="cascade")
     )
+
+    @validates("instrument", "mode", "telescope")
+    def validate_instrument(self, key, value):
+        check_string_length(value, 30, key)
+        return value
+
+    @validates("description")
+    def validate_description(self, key, value):
+        check_string_length(value, DESCRIPTION_STRING_LENGTH, key)
+        return value
 
 
 # instead of having modes...telescope --> instrument --> mode (used mostly for spectra).
@@ -111,10 +145,15 @@ class PhotometryFilters(Base):
             raise ValueError("Band name must be of the form instrument.filter")
         return value
 
-    @validates("effective_wavelength_angstroms")
+    @validates("effective_wavelength_angstroms", "width_angstroms")
     def validate_wavelength(self, key, value):
         if value is None or value < 0:
-            raise ValueError(f"Invalid effective wavelength received: {value}")
+            raise ValueError(f"Invalid {key} received: {value}")
+        return value
+
+    @validates("ucd")
+    def validate_ucd(self, key, value):
+        check_string_length(value, 100, key)
         return value
 
 
@@ -128,13 +167,21 @@ class Versions(Base):
     version = Column(String(30), primary_key=True, nullable=False)
     start_date = Column(String(30))
     end_date = Column(String(30))
-    description = Column(String(1000))
+    description = Column(String(DESCRIPTION_STRING_LENGTH))
+
+    @validates("version", "start_date", "end_date")
+    def validate_version(self, key, value):
+        check_string_length(value, 30, key)
+        return value
+
+    @validates("description")
+    def validate_description(self, key, value):
+        check_string_length(value, DESCRIPTION_STRING_LENGTH, key)
+        return value
 
 
 # -------------------------------------------------------------------------------------------------------------------
 # Hard-coded enumerations
-
-
 class Regime(enum.Enum):
     """Enumeration for spectral type, spectra, and photometry regimes
     Use UCD controlled vocabulary:
@@ -160,8 +207,8 @@ class Regime(enum.Enum):
 class Sources(Base):
     """ORM for the sources table.
     This stores the main identifiers for our objects along with ra and dec"""
-
     __tablename__ = "Sources"
+
     source = Column(String(100), primary_key=True, nullable=False)
     ra_deg = Column(Float)
     dec_deg = Column(Float)
@@ -169,12 +216,12 @@ class Sources(Base):
     equinox = Column(String(10))  # eg, J2000
     shortname = Column(String(30))  # not needed?
     reference = Column(
-        String(30),
+        String(REFERENCE_STRING_LENGTH),
         ForeignKey("Publications.reference", onupdate="cascade"),
         nullable=False,
     )
     other_references = Column(String(100))
-    comments = Column(String(1000))
+    comments = Column(String(DESCRIPTION_STRING_LENGTH))
 
     @validates("ra_deg")
     def validate_ra(self, key, value):
@@ -188,8 +235,30 @@ class Sources(Base):
             raise ValueError("Dec not in allowed range (-90..90)")
         return value
 
+    @validates("source", "other_references")
+    def validate_source(self, key, value):
+        check_string_length(value, 100, key)
+        return value
+
+    @validates("equinox")
+    def validate_equinox(self, key, value):
+        check_string_length(value, 10, key)
+        return value
+
+    @validates("shortname")
+    def validate_shortname(self, key, value):
+        check_string_length(value, 30, key)
+        return value
+
+    @validates("comments")
+    def validate_comments(self, key, value):
+        check_string_length(value, DESCRIPTION_STRING_LENGTH, key)
+        return value
+
 
 class Names(Base):
+    """Names table"""
+
     __tablename__ = "Names"
     source = Column(
         String(100),
@@ -199,6 +268,10 @@ class Names(Base):
     )
     other_name = Column(String(100), primary_key=True, nullable=False)
 
+    @validates("source", "other_name")
+    def validate_source(self, key, value):
+        check_string_length(value, 100, key)
+        return value
 
 # todo: make "tabulardata" or "physicaldata" abstract classes.
 
@@ -207,10 +280,26 @@ class _DataPointerTable:
     # __tablename__ = 'DataPointerTable'
     # source = Column(String(100),
     #                 nullable=False, primary_key=True)
+
     data = Column(String(100))
-    comments = Column(String(1000))
+    comments = Column(String(DESCRIPTION_STRING_LENGTH))
     data_type = Column(String(32), nullable=False)
     # Other columns common to all child tables
+
+    @validates("data")
+    def validate_data(self, key, value):
+        check_string_length(value, 100, key)
+        return value
+
+    @validates("comments")
+    def validate_comments(self, key, value):
+        check_string_length(value, DESCRIPTION_STRING_LENGTH, key)
+        return value
+
+    @validates("data_type")
+    def validate_data_type(self, key, value):
+        check_string_length(value, 32, key)
+        return value
 
 
 class Photometry(Base):
@@ -224,5 +313,29 @@ class Photometry(Base):
     magnitude_error = Column(Float)
     telescope = Column(String(30), ForeignKey('Telescopes.telescope'))
     epoch = Column(Float)  # decimal year
-    comments = Column(String(1000))
-    reference = Column(String(30), ForeignKey('Publications.reference', onupdate='cascade'), primary_key=True)
+    comments = Column(String(DESCRIPTION_STRING_LENGTH))
+    reference = Column(String(REFERENCE_STRING_LENGTH), ForeignKey('Publications.reference', onupdate='cascade'), primary_key=True)
+
+
+    @validates("band")
+    def validate_band(self, key, value):
+        check_string_length(value, 30, key)
+        return value
+
+    @validates("magnitude", "magnitude_error", "epoch")
+    def validate_magnitude(self, key, value):
+        if value is None:
+            raise ValueError(f"Provided {key} is invalid; None: {value}")
+        return value
+
+    @validates("telescope")
+    def validate_telescope(self, key, value):
+        check_string_length(value, 30, key)
+        return value
+
+    @validates("comments")
+    def validate_comments(self, key, value):
+        check_string_length(value, DESCRIPTION_STRING_LENGTH, key)
+        return value
+
+

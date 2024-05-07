@@ -1,20 +1,21 @@
 """
 functions to test the schema itself.
 """
-import pytest
 import os
+
+import pytest
+from astrodbkit2.astrodb import Database, create_database
+
 from schema.schema_template import (
-    Sources,
-    Names,
-    Publications,
-    Telescopes,
     Instruments,
-    PhotometryFilters,
+    Names,
     Photometry,
+    PhotometryFilters,
+    Publications,
+    Sources,
+    Telescopes,
     Versions,
 )
-from astrodbkit2.astrodb import create_database, Database
-
 
 DB_NAME = "test.sqlite"
 DB_PATH = "data"
@@ -28,6 +29,15 @@ REFERENCE_TABLES = [
     "Versions",
     "Parameters",
 ]
+
+
+def schema_tester(table, values, error_state):
+    """Helper function to handle the basic testing of the schema classes"""
+    if error_state is None:
+        _ = table(**values)
+    else:
+        with pytest.raises(error_state):
+            _ = table(**values)
 
 
 # Load the database for use in individual tests
@@ -92,27 +102,6 @@ def test_orm_use(db):
 
     assert db.query(db.Sources).filter(db.Sources.c.source == "V4046 Sgr").count() == 0
 
-    # Adding a source with problematic ra/dec to test validation
-    with pytest.raises(ValueError):
-        s2 = Sources(source="V4046 Sgr", ra_deg=9999, dec_deg=-32.79, reference="Ref 1")
-    with pytest.raises(ValueError):
-        s2 = Sources(source="V4046 Sgr", ra_deg=273.54, dec_deg=-9999, reference="Ref 1")
-
-
-def test_photometry_filters(db):
-    # filter should have a '.' in it
-    with pytest.raises(ValueError):
-        pf = PhotometryFilters(band="not_a_filter")
-
-    # effective_wavelength should be a positive number
-    with pytest.raises(ValueError):
-        pf = PhotometryFilters(band="new.filter", effective_wavelength_angstroms=None)
-    with pytest.raises(ValueError):
-        pf = PhotometryFilters(band="new.filter2", effective_wavelength_angstroms=-40)
-
-    # NOTE: this does not raise an error because effective_wavelength is not provided
-    _ = PhotometryFilters(band="2MASS.H") 
-
 
 def test_photometry(db):
     # Insert supporting data to (Sources, Publications, Telescopes, PhotometryFilters)
@@ -157,9 +146,82 @@ def test_photometry(db):
         == 1
     )
 
+# -----------------------------------------------------------------------
+# Schema tests
+@pytest.mark.parametrize("values, error_state", [
+    ({"reference": "Valid"}, None),
+    ({"reference": "Valid", "doi": "LongDOI"*100}, ValueError),  # using multiplier to make a very long string
+    ({"reference": "Valid", "bibcode": "LongBibCode"*100}, ValueError),
+    ({"reference": "ThisIsASuperLongReferenceThatIsInvalid"}, ValueError),
+    ({"telesreferencecope": None}, TypeError),  # invalid column
+])
+def test_publications_schema(values, error_state):
+    schema_tester(Publications, values, error_state)
 
-def test_publications(db):
-    with pytest.raises(ValueError):
-        ref = Publications(reference="ThisIsASuperLongReferenceThatIsInvalid")
-    with pytest.raises(ValueError):
-        ref = Publications(reference=None)
+@pytest.mark.parametrize("values, error_state", [
+    ({"band": "new.filter"}, None),
+    ({"band": "not_a_filter"}, ValueError),
+    ({"band": "new.filter", "effective_wavelength_angstroms": None}, ValueError),
+    ({"band": "new.filter", "effective_wavelength_angstroms": -40}, ValueError),
+])
+def test_photometry_filters_schema(values, error_state):
+    schema_tester(PhotometryFilters, values, error_state)
+
+@pytest.mark.parametrize("values, error_state", [
+    ({"source": "V4046 Sgr", "band": "2MASS.Ks", "magnitude": 7.249, "telescope": "2MASS", "reference": "Cutri03",}, None),
+])
+def test_photometry_schema(values, error_state):
+    schema_tester(Photometry, values, error_state)
+
+@pytest.mark.parametrize("values, error_state", [
+    ({"telescope": "Valid"}, None),
+    ({"telescope": "ThisIsASuperLongTelescopeThatIsInvalid"}, ValueError),
+    ({"telescope": None}, ValueError),
+])
+def test_telescopes(values, error_state):
+    schema_tester(Telescopes, values, error_state)
+
+@pytest.mark.parametrize("values, error_state", [
+    ({"source": "Valid"}, None),
+    ({"source": "V4046 Sgr", "ra_deg": 9999, "dec_deg": -32.79, "reference": "Ref 1"}, ValueError),
+    ({"source": "V4046 Sgr", "ra_deg": 273.54, "dec_deg": -9999, "reference": "Ref 1"}, ValueError),
+    ({"source": "ThisIsASuperLongSourceNameThatIsInvalid"*5}, ValueError),
+    ({"source": None}, ValueError),
+])
+def test_sources_schema(values, error_state):
+    schema_tester(Sources, values, error_state)
+
+
+@pytest.mark.parametrize("values, error_state", [
+    ({"version": "1.0"}, None),
+    ({"version": "ThisIsASuperLongVersionNameThatIsInvalid"}, ValueError),
+    ({"version": None}, ValueError)
+])
+def test_versions_schema(values, error_state):
+    schema_tester(Versions, values, error_state)
+
+
+@pytest.mark.parametrize("values, error_state",
+                         [
+                             ({"source": "Valid", "other_name": "OtherName"}, None),
+                             ({"source": "ThisIsASuperLongSourceNameThatIsInvalid"*5, "other_name": "OtherName"}, ValueError),
+                             ({"source": None, "other_name":"OtherName"}, ValueError),
+                             ({"source": "Source", "other_name":"ThisIsASuperLongOtherNameThatIsInvalid"*5}, ValueError),
+                             ({"telescope": "Source", "other_name": None}, TypeError)  # telescope is an invalid field
+                          ])
+def test_names(values, error_state):
+    schema_tester(Names, values, error_state)
+
+
+@pytest.mark.parametrize("values, error_state",
+                         [
+                             ({"instrument": "Valid"}, None),
+                             ({"instrument": "ThisIsASuperLongInstrumentNameThatIsInvalid"}, ValueError),
+                             ({"instrument": None}, ValueError),
+                             ({"mode": "ThisIsASuperLongInstrumentNameThatIsInvalid"}, ValueError),
+                             ({"telescope": "ThisIsASuperLongInstrumentNameThatIsInvalid"}, ValueError),
+                             ({"telescope": None}, ValueError)
+                          ])
+def test_instruments_schema(values, error_state):
+    schema_tester(Instruments, values, error_state)
+
