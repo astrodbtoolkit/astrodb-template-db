@@ -37,6 +37,7 @@ REFERENCE_TABLES = [
     "Instruments",
     "PhotometryFilters",
     "Versions",
+    "Regime"
 ]
 
 
@@ -182,24 +183,16 @@ class Versions(Base):
 
 # -------------------------------------------------------------------------------------------------------------------
 # Hard-coded enumerations
-class Regime(enum.Enum):
+class Regime(Base):
     """Enumeration for spectral type, spectra, and photometry regimes
     Use UCD controlled vocabulary:
     https://www.ivoa.net/documents/UCD1+/20200212/PEN-UCDlist-1.4-20200212.html#tth_sEcB
     The string values are used, not the variable names.
     """
 
-    ultraviolet = "em.UV"
-    optical_UCD = "em.opt"
-    optical = "optical"
-    nir_UCD = "em.IR.NIR"  # Near-Infrared, 1-5 microns
-    nir = "nir"
-    infrared = "em.IR"  # Infrared part of the spectrum
-    mir_UCD = "em.IR.MIR"  # Medium-Infrared, 5-30 microns
-    mir = "mir"
-    millimeter = "em.mm"
-    radio = "em.radio"
-    unknown = "unknown"
+    # todo: validate that it's a valid UCD regime.
+
+    regime = Column(String(REFERENCE_STRING_LENGTH), primary_key=True, nullable=False)
 
 
 # -------------------------------------------------------------------------------------------------------------------
@@ -315,7 +308,11 @@ class Photometry(Base):
     epoch = Column(Float)  # decimal year
     comments = Column(String(DESCRIPTION_STRING_LENGTH))
     reference = Column(String(REFERENCE_STRING_LENGTH), ForeignKey('Publications.reference', onupdate='cascade'), primary_key=True)
-
+    regime = Column(
+        String(REFERENCE_STRING_LENGTH),
+        ForeignKey("Regimes.regime", onupdate="cascade"),
+        nullable=False,
+    )
 
     @validates("band")
     def validate_band(self, key, value):
