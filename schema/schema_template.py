@@ -189,7 +189,7 @@ class Regime(Base):
     https://www.ivoa.net/documents/UCD1+/20200212/PEN-UCDlist-1.4-20200212.html#tth_sEcB
     The string values are used, not the variable names.
     """
-
+    __tablename__ = "Regimes"
     # todo: validate that it's a valid UCD regime.
 
     regime = Column(String(REFERENCE_STRING_LENGTH), primary_key=True, nullable=False)
