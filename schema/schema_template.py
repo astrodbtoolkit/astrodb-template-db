@@ -37,7 +37,7 @@ REFERENCE_TABLES = [
     "Instruments",
     "PhotometryFilters",
     "Versions",
-    "Regime"
+    "Regimes"
 ]
 
 
