@@ -14,6 +14,7 @@ import enum
 from astrodbkit2.astrodb import Base
 from sqlalchemy import Column, DateTime, Float, ForeignKey, Integer, String, Boolean
 from sqlalchemy.orm import validates
+from astropy.io.votable.ucd import check_ucd
 
 # Globals
 REFERENCE_STRING_LENGTH = 30
@@ -156,8 +157,15 @@ class PhotometryFilters(Base):
         return value
 
     @validates("ucd")
-    def validate_ucd(self, key, value):
+    def validate_ucd_length(self, key, value):
         check_string_length(value, 100, key)
+        return value
+
+    @validates("ucd")
+    def validate_ucd(self, key, value):
+        ucd_string = "phot;" + value
+        if check_ucd(ucd_string, check_controlled_vocabulary=True) is False:
+            raise ValueError(f"UCD {value} not in controlled vocabulary")
         return value
 
 
