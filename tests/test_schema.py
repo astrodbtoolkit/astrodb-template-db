@@ -15,6 +15,7 @@ from schema.schema_template import (
     Sources,
     Telescopes,
     Versions,
+    Regimes
 )
 
 DB_NAME = "test.sqlite"
@@ -28,6 +29,7 @@ REFERENCE_TABLES = [
     "PhotometryFilters",
     "Versions",
     "Parameters",
+    "Regimes",
 ]
 
 
@@ -109,8 +111,9 @@ def test_photometry(db):
     ref = Publications(reference="Cutri03")
     tel = Telescopes(telescope="2MASS", reference="Cutri03")
     pf = PhotometryFilters(band="2MASS.Ks", effective_wavelength_angstroms=2.159)
+    reg = Regimes(regime="optical")
     with db.session as session:
-        session.add_all([ref, pf, tel, s])
+        session.add_all([ref, pf, tel, s, reg])
         session.commit()
 
     # Verify supporting information was stored
@@ -135,6 +138,7 @@ def test_photometry(db):
         magnitude=7.249,
         telescope="2MASS",
         reference="Cutri03",
+        regime="optical",
     )
     with db.session as session:
         session.add(phot)
