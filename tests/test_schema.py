@@ -113,7 +113,7 @@ def test_photometry(db):
     pf = PhotometryFilters(band="2MASS.Ks", effective_wavelength_angstroms=2.159)
     reg = Regimes(regime="optical")
     with db.session as session:
-        session.add_all([ref, pf, tel, s])
+        session.add_all([ref, pf, tel, s, reg])
         session.commit()
 
     # Verify supporting information was stored
