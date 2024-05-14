@@ -338,10 +338,10 @@ class Photometry(Base):
         check_string_length(value, DESCRIPTION_STRING_LENGTH, key)
         return value
 
-class Measurement(Base):
-    # Template table. This is a placeholder for a table that would store measurements such as parallax.
+class Parallax(Base):
+    # This is an example of a measurement table (see below, commented-out table as another example)
 
-    __tablename__ = 'Measurement'
+    __tablename__ = 'Parallax'
     source = Column(
         String(100),
         ForeignKey("Sources.source", ondelete="cascade", onupdate="cascade"),
@@ -349,13 +349,10 @@ class Measurement(Base):
         primary_key=True,
     )
 
-    # units should be replaced with the unit of measurement.
-    # e.g., for parallax measured in milliarcseconds, this would read parallax_mas
-    measurement_units = Column(Float, nullable=False)
+    # always note units, following the practices of Chen et al. 2022.
+    parallax_mas = Column(Float, nullable=False)
 
-    # units should be replaced with the unit of measurement.
-    # e.g., for parallax measured in milliarcseconds, this would read parallax_error_mas
-    measurement_error_units = Column(Float) # todo: make asymmetric errors
+    parallax_error = Column(Float) # todo: make asymmetric errors
     adopted = Column(Boolean)  # flag for indicating if this is the adopted
     comments = Column(String(1000))
     reference = Column(
@@ -368,6 +365,36 @@ class Measurement(Base):
     def validate_comment_length(self, key, value):
         check_string_length(value, 1000, key)
         return value
+
+# class Measurement(Base):
+#     # This is a template table that you can fill in with your own measurement.
+#     . This is a placeholder for a table that would store measurements such as parallax.
+#
+#     __tablename__ = 'Measurement'
+#     source = Column(
+#         String(100),
+#         ForeignKey("Sources.source", ondelete="cascade", onupdate="cascade"),
+#         nullable=False,
+#         primary_key=True,
+#     )
+#
+#     # units should be replaced with the unit of measurement.
+#     # e.g., for parallax measured in milliarcseconds, this would read parallax_mas
+#     measurement_units = Column(Float, nullable=False)
+#
+#     measurement_error = Column(Float) # todo: make asymmetric errors
+#     adopted = Column(Boolean)  # flag for indicating if this is the adopted
+#     comments = Column(String(1000))
+#     reference = Column(
+#         String(30),
+#         ForeignKey("Publications.reference", onupdate="cascade"),
+#         primary_key=True,
+#     )
+#
+#     @validates("comment")
+#     def validate_comment_length(self, key, value):
+#         check_string_length(value, 1000, key)
+#         return value
 
 
 
