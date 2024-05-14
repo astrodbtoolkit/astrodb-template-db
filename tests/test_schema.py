@@ -136,6 +136,7 @@ def test_photometry(db):
         magnitude=7.249,
         telescope="2MASS",
         reference="Cutri03",
+        regime="optical",
     )
     with db.session as session:
         session.add(phot)
