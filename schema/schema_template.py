@@ -378,9 +378,9 @@ class Parallax(Base):
 #         primary_key=True,
 #     )
 #
-#     # units should be replaced with the unit of measurement.
+#     # units should be included in the column name.
 #     # e.g., for parallax measured in milliarcseconds, this would read parallax_mas
-#     measurement_units = Column(Float, nullable=False)
+#     measurement = Column(Float, nullable=False)
 #
 #     measurement_error = Column(Float) # todo: make asymmetric errors
 #     adopted = Column(Boolean)  # flag for indicating if this is the adopted
