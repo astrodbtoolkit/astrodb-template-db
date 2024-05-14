@@ -132,6 +132,9 @@ class PhotometryFilters(Base):
     """
     ORM for PhotometryFilters table.
     This stores information about the filters as well as wavelength and width
+
+    It is recommended to use UCD controlled vocabulary:
+    https://www.ivoa.net/documents/UCD1+/20200212/PEN-UCDlist-1.4-20200212.html#tth_sEcB
     """
 
     __tablename__ = "PhotometryFilters"
@@ -185,14 +188,18 @@ class Versions(Base):
 # Hard-coded enumerations
 class Regimes(Base):
     """Enumeration for spectral type, spectra, and photometry regimes
-    Use UCD controlled vocabulary:
-    https://www.ivoa.net/documents/UCD1+/20200212/PEN-UCDlist-1.4-20200212.html#tth_sEcB
     The string values are used, not the variable names.
     """
     __tablename__ = "Regimes"
     # todo: validate that it's a valid UCD regime.
 
     regime = Column(String(REFERENCE_STRING_LENGTH), primary_key=True, nullable=False)
+
+    @validates("regime")
+    def validate_regime(self, key, value):
+        """Just checks the length of the regime name"""
+        check_string_length(value, 30, key)
+        return value
 
 
 # -------------------------------------------------------------------------------------------------------------------
