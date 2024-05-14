@@ -28,6 +28,7 @@ REFERENCE_TABLES = [
     "PhotometryFilters",
     "Versions",
     "Parameters",
+    "Regimes",
 ]
 
 
