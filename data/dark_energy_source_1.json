@@ -9,7 +9,8 @@
             "shortname": "DM1",
             "reference": "Rubin80",
             "other_references": "Perlmutter99",
-            "comments": "This is a cool dark matter source!"
+            "comments": "This is a cool dark matter source!",
+            "regimes": "optical"
         }
     ]
 }
