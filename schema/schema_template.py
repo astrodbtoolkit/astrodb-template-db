@@ -183,7 +183,7 @@ class Versions(Base):
 
 # -------------------------------------------------------------------------------------------------------------------
 # Hard-coded enumerations
-class Regime(Base):
+class Regimes(Base):
     """Enumeration for spectral type, spectra, and photometry regimes
     Use UCD controlled vocabulary:
     https://www.ivoa.net/documents/UCD1+/20200212/PEN-UCDlist-1.4-20200212.html#tth_sEcB
