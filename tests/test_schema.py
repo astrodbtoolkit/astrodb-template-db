@@ -1,10 +1,8 @@
 """
 functions to test the schema itself.
 """
-import os
 
 import pytest
-from astrodbkit2.astrodb import Database, create_database
 
 from schema.schema_template import (
     Instruments,
@@ -40,26 +38,6 @@ def schema_tester(table, values, error_state):
     else:
         with pytest.raises(error_state):
             _ = table(**values)
-
-
-# Load the database for use in individual tests
-@pytest.fixture(scope="module")
-def db():
-    # Create a fresh temporary database and assert it exists
-    # Because we've imported simple.schema, we will be using that schema for the database
-
-    if os.path.exists(DB_NAME):
-        os.remove(DB_NAME)
-    connection_string = "sqlite:///" + DB_NAME
-    create_database(connection_string)
-    assert os.path.exists(DB_NAME)
-
-    # Connect to the new database and confirm it has the Sources table
-    db = Database(connection_string, reference_tables=REFERENCE_TABLES)
-    assert db
-    assert "source" in [c.name for c in db.Sources.columns]
-
-    return db
 
 
 def test_setup_db(db):

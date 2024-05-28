@@ -16,8 +16,10 @@ def db():
     DB_NAME = "tests/astrodb_template_tests.sqlite"
     DB_PATH = "data"
 
+    # Remove any existing copy of the test database
     if os.path.exists(DB_NAME):
         os.remove(DB_NAME)
+
     connection_string = "sqlite:///" + DB_NAME
     create_database(connection_string)
     assert os.path.exists(DB_NAME)
@@ -25,16 +27,17 @@ def db():
     # Connect to the new database
     db = Database(connection_string, reference_tables=REFERENCE_TABLES)
 
-    # Load data into an in-memory sqlite database first, for performance
-    db = Database(
-        "sqlite://", reference_tables=REFERENCE_TABLES
-    )  # creates and connects to a temporary in-memory database
-    db.load_database(
-        DB_PATH, verbose=False
-    )  # loads the data from the data files into the database
-    db.dump_sqlite(DB_NAME)  # dump in-memory database to file
-    db = Database(
-        "sqlite:///" + DB_NAME, reference_tables=REFERENCE_TABLES
-    )  # replace database object with new file version
+    # The input data is NOT correct; that needs to be fixed or this commented out
+    # # Load data into an in-memory sqlite database first, for performance
+    # db = Database(
+    #     "sqlite://", reference_tables=REFERENCE_TABLES
+    # )  # creates and connects to a temporary in-memory database
+    # db.load_database(
+    #     DB_PATH, verbose=False
+    # )  # loads the data from the data files into the database
+    # db.dump_sqlite(DB_NAME)  # dump in-memory database to file
+    # db = Database(
+    #     "sqlite:///" + DB_NAME, reference_tables=REFERENCE_TABLES
+    # )  # replace database object with new file version
 
     return db
