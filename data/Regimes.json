@@ -6,18 +6,18 @@
       "regime": "x-ray"
     },
    {
-        "regime": "ultraviolet",
+      "regime": "ultraviolet"
     },
     {
-        "regime": "optical",
+      "regime": "optical"
     },
     {
-        "regime": "infrared",
+      "regime": "infrared"
     },
     {
-        "regime": "millimeter",
+      "regime": "millimeter"
     },
     {
-        "regime": "radio",
+      "regime": "radio"
     }
 ]
