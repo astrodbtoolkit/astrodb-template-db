@@ -110,15 +110,15 @@ def test_photometry(db):
 def test_coordinates(db):
     # Verify that all sources have valid coordinates
     t = (
-        db.query(db.Sources.c.source, db.Sources.c.ra, db.Sources.c.dec)
+        db.query(db.Sources.c.source, db.Sources.c.ra_deg, db.Sources.c.dec_deg)
         .filter(
             or_(
-                db.Sources.c.ra.is_(None),
-                db.Sources.c.ra < 0,
-                db.Sources.c.ra > 360,
-                db.Sources.c.dec.is_(None),
-                db.Sources.c.dec < -90,
-                db.Sources.c.dec > 90,
+                db.Sources.c.ra_deg.is_(None),
+                db.Sources.c.ra_deg < 0,
+                db.Sources.c.ra_deg > 360,
+                db.Sources.c.dec_deg.is_(None),
+                db.Sources.c.dec_deg < -90,
+                db.Sources.c.dec_deg > 90,
             )
         )
         .astropy()
