@@ -106,3 +106,26 @@ def test_photometry(db):
         db.query(db.Photometry).filter(db.Photometry.c.source == "V4046 Sgr").count()
         == 1
     )
+
+def test_coordinates(db):
+    # Verify that all sources have valid coordinates
+    t = (
+        db.query(db.Sources.c.source, db.Sources.c.ra, db.Sources.c.dec)
+        .filter(
+            or_(
+                db.Sources.c.ra.is_(None),
+                db.Sources.c.ra < 0,
+                db.Sources.c.ra > 360,
+                db.Sources.c.dec.is_(None),
+                db.Sources.c.dec < -90,
+                db.Sources.c.dec > 90,
+            )
+        )
+        .astropy()
+    )
+
+    if len(t) > 0:
+        print(f"\n{len(t)} Sources failed coordinate checks")
+        print(t)
+
+    assert len(t) == 0, f"{len(t)} Sources failed coordinate checks"
