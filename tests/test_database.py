@@ -13,6 +13,7 @@ from schema.schema_template import (
     Versions,
     Regimes
 )
+from astrodbkit2.astrodb import or_
 
 def test_setup_db(db):
     # Some setup tasks to ensure some data exists in the database first
@@ -106,3 +107,24 @@ def test_photometry(db):
         db.query(db.Photometry).filter(db.Photometry.c.source == "V4046 Sgr").count()
         == 1
     )
+
+def test_magnitudes(db):
+    # Check that magnitudes make sense.
+    t = (
+        db.query(db.Photometry.c.magnitude)
+        .filter(
+            or_(
+                db.Photometry.c.magnitude.is_(None),
+                db.Photometry.c.magnitude < 100,
+                db.Photometry.c.ra_deg > -1,
+            )
+        )
+        .astropy()
+    )
+
+    if len(t) > 0:
+        print(f"\n{len(t)} Photometry failed magnitude checks")
+        print(t)
+
+    assert len(t) == 0, f"{len(t)} Photometry failed magnitude checks"
+
