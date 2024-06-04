@@ -117,14 +117,39 @@ def test_magnitudes(db):
                 db.Photometry.c.magnitude.is_(None),
                 db.Photometry.c.magnitude < 100,
                 db.Photometry.c.magnitude > -1,
+              )
+        )
+        .astropy()
+    )
+
+    if len(t) > 0:
+      print(f"\n{len(t)} Photometry failed magnitude checks")
+      print(t)
+
+    assert len(t) == 0, f"{len(t)} Photometry failed magnitude checks"
+      
+      
+      
+def test_coordinates(db):
+    # Verify that all sources have valid coordinates
+    t = (
+        db.query(db.Sources.c.source, db.Sources.c.ra_deg, db.Sources.c.dec_deg)
+        .filter(
+            or_(
+                db.Sources.c.ra_deg.is_(None),
+                db.Sources.c.ra_deg < 0,
+                db.Sources.c.ra_deg > 360,
+                db.Sources.c.dec_deg.is_(None),
+                db.Sources.c.dec_deg < -90,
+                db.Sources.c.dec_deg > 90,
             )
         )
         .astropy()
     )
 
     if len(t) > 0:
-        print(f"\n{len(t)} Photometry failed magnitude checks")
+
+        print(f"\n{len(t)} Sources failed coordinate checks")
         print(t)
 
-    assert len(t) == 0, f"{len(t)} Photometry failed magnitude checks"
-
+    assert len(t) == 0, f"{len(t)} Sources failed coordinate checks"
