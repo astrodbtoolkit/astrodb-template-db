@@ -14,6 +14,7 @@ from schema.schema_template import (
     Regimes
 )
 from astrodbkit2.astrodb import or_
+
 def test_setup_db(db):
     # Some setup tasks to ensure some data exists in the database first
     ref_data = [
@@ -107,6 +108,24 @@ def test_photometry(db):
         == 1
     )
 
+def test_parallax_error(db):
+    # Verify that all sources have valid parallax errors
+    t = (
+        db.query(db.Parallax.c.parallax_error)
+        .filter(
+            or_(
+                db.Parallax.c.parallax_error < 0,
+              
+              )
+        )
+        .astropy()
+    )
+    if len(t) > 0:
+      print(f"\n{len(t)} Parallax failed parallax error checks")
+      print(t)
+
+    assert len(t) == 0, f"{len(t)} Parallax failed parallax error checks"
+              
 def test_coordinates(db):
     # Verify that all sources have valid coordinates
     t = (
@@ -125,6 +144,7 @@ def test_coordinates(db):
     )
 
     if len(t) > 0:
+
         print(f"\n{len(t)} Sources failed coordinate checks")
         print(t)
 
