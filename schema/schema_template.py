@@ -159,10 +159,7 @@ class PhotometryFilters(Base):
     @validates("ucd")
     def validate_ucd_length(self, key, value):
         check_string_length(value, 100, key)
-        return value
 
-    @validates("ucd")
-    def validate_ucd(self, key, value):
         ucd_string = "phot;" + value
         if check_ucd(ucd_string, check_controlled_vocabulary=True) is False:
             raise ValueError(f"UCD {value} not in controlled vocabulary")
