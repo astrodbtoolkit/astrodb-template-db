@@ -121,15 +121,34 @@ def test_magnitudes(db):
         )
         .astropy()
     )
-
+    
     if len(t) > 0:
       print(f"\n{len(t)} Photometry failed magnitude checks")
       print(t)
 
     assert len(t) == 0, f"{len(t)} Photometry failed magnitude checks"
-      
-      
-      
+          
+    
+
+def test_parallax_error(db):
+    # Verify that all sources have valid parallax errors
+    t = (
+        db.query(db.Parallax.c.parallax_error)
+        .filter(
+            or_(
+                db.Parallax.c.parallax_error < 0,
+              
+              )
+        )
+        .astropy()
+    )
+
+    if len(t) > 0:
+      print(f"\n{len(t)} Parallax failed parallax error checks")
+      print(t)
+
+    assert len(t) == 0, f"{len(t)} Parallax failed parallax error checks"
+              
 def test_coordinates(db):
     # Verify that all sources have valid coordinates
     t = (
