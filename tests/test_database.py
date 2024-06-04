@@ -121,7 +121,7 @@ def test_parallax_error(db):
     )
 
     if len(t) > 0:
-        print(f"\n{len(t)} Sources failed coordinate checks")
+        print(f"\n{len(t)} Parallax failed parallax error checks")
         print(t)
 
-    assert len(t) == 0, f"{len(t)} Sources failed coordinate checks"
+    assert len(t) == 0, f"{len(t)} Parallax failed parallax error checks"
