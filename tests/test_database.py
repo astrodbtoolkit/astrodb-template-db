@@ -108,6 +108,28 @@ def test_photometry(db):
         == 1
     )
 
+def test_magnitudes(db):
+    # Check that magnitudes make sense.
+    t = (
+        db.query(db.Photometry.c.magnitude)
+        .filter(
+            or_(
+                db.Photometry.c.magnitude.is_(None),
+                db.Photometry.c.magnitude > 100,
+                db.Photometry.c.magnitude < -1,
+              )
+        )
+        .astropy()
+    )
+    
+    if len(t) > 0:
+      print(f"\n{len(t)} Photometry failed magnitude checks")
+      print(t)
+
+    assert len(t) == 0, f"{len(t)} Photometry failed magnitude checks"
+          
+    
+
 def test_parallax_error(db):
     # Verify that all sources have valid parallax errors
     t = (
@@ -120,6 +142,7 @@ def test_parallax_error(db):
         )
         .astropy()
     )
+
     if len(t) > 0:
       print(f"\n{len(t)} Parallax failed parallax error checks")
       print(t)
