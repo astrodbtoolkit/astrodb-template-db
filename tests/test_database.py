@@ -13,7 +13,7 @@ from schema.schema_template import (
     Versions,
     Regimes
 )
-
+from astrodbkit2.astrodb import or_
 def test_setup_db(db):
     # Some setup tasks to ensure some data exists in the database first
     ref_data = [
@@ -106,3 +106,26 @@ def test_photometry(db):
         db.query(db.Photometry).filter(db.Photometry.c.source == "V4046 Sgr").count()
         == 1
     )
+
+def test_coordinates(db):
+    # Verify that all sources have valid coordinates
+    t = (
+        db.query(db.Sources.c.source, db.Sources.c.ra_deg, db.Sources.c.dec_deg)
+        .filter(
+            or_(
+                db.Sources.c.ra_deg.is_(None),
+                db.Sources.c.ra_deg < 0,
+                db.Sources.c.ra_deg > 360,
+                db.Sources.c.dec_deg.is_(None),
+                db.Sources.c.dec_deg < -90,
+                db.Sources.c.dec_deg > 90,
+            )
+        )
+        .astropy()
+    )
+
+    if len(t) > 0:
+        print(f"\n{len(t)} Sources failed coordinate checks")
+        print(t)
+
+    assert len(t) == 0, f"{len(t)} Sources failed coordinate checks"
