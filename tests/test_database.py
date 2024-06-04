@@ -115,13 +115,37 @@ def test_parallax_error(db):
         .filter(
             or_(
                 db.Parallax.c.parallax_error < 0,
+              
+              )
+        )
+        .astropy()
+    )
+    if len(t) > 0:
+      print(f"\n{len(t)} Parallax failed parallax error checks")
+      print(t)
+
+    assert len(t) == 0, f"{len(t)} Parallax failed parallax error checks"
+              
+def test_coordinates(db):
+    # Verify that all sources have valid coordinates
+    t = (
+        db.query(db.Sources.c.source, db.Sources.c.ra_deg, db.Sources.c.dec_deg)
+        .filter(
+            or_(
+                db.Sources.c.ra_deg.is_(None),
+                db.Sources.c.ra_deg < 0,
+                db.Sources.c.ra_deg > 360,
+                db.Sources.c.dec_deg.is_(None),
+                db.Sources.c.dec_deg < -90,
+                db.Sources.c.dec_deg > 90,
             )
         )
         .astropy()
     )
 
     if len(t) > 0:
-        print(f"\n{len(t)} Parallax failed parallax error checks")
+
+        print(f"\n{len(t)} Sources failed coordinate checks")
         print(t)
 
-    assert len(t) == 0, f"{len(t)} Parallax failed parallax error checks"
+    assert len(t) == 0, f"{len(t)} Sources failed coordinate checks"
