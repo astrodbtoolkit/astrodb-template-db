@@ -116,7 +116,7 @@ def test_magnitudes(db):
             or_(
                 db.Photometry.c.magnitude.is_(None),
                 db.Photometry.c.magnitude < 100,
-                db.Photometry.c.ra_deg > -1,
+                db.Photometry.c.magnitude > -1,
             )
         )
         .astropy()
