@@ -13,7 +13,7 @@ from schema.schema_template import (
     Versions,
     Regimes
 )
-
+from astrodbkit2.astrodb import or_
 def test_setup_db(db):
     # Some setup tasks to ensure some data exists in the database first
     ref_data = [
