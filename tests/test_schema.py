@@ -13,6 +13,7 @@ from schema.schema_template import (
     Sources,
     Telescopes,
     Versions,
+    Parallax,
     Regimes
 )
 
