@@ -229,3 +229,13 @@ def test_names(values, error_state):
 def test_instruments_schema(values, error_state):
     schema_tester(Instruments, values, error_state)
 
+
+# test the ucds. they're passed to phorometry filter and should break things if they're random strings
+@pytest.mark.parametrize("values, error_state",
+                            [
+                                ({"ucd": "em.IR.H"}, None),
+                                ({"ucd": "ThisIsASuperLongUCDThatIsInvalid"}, ValueError)
+                            ])
+def test_instruments_schema(values, error_state):
+    schema_tester(PhotometryFilters, values, error_state)
+
