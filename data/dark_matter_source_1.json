@@ -1,7 +1,7 @@
 {
     "Sources": [
         {
-            "source": "Dark matter source 1",
+            "source": "M1",
             "ra_deg": 57.6326,
             "dec_deg": 14.28,
             "epoch_year": 2000.0,
