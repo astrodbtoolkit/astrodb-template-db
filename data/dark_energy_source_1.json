@@ -1,7 +1,7 @@
 {
     "Sources": [
         {
-            "source": "Dark energy source 1",
+            "source": "HAT-P-12b",
             "ra_deg": 55.6326,
             "dec_deg": 12.2729,
             "epoch_year": 2000.0,
