@@ -365,7 +365,7 @@ class Parallax(Base):
         primary_key=True,
     )
 
-    @validates("comment")
+    @validates("comments")
     def validate_comment_length(self, key, value):
         check_string_length(value, 1000, key)
         return value
