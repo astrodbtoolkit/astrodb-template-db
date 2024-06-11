@@ -13,6 +13,7 @@ from schema.schema_template import (
     Sources,
     Telescopes,
     Versions,
+    Parallax,
     Regimes
 )
 
@@ -118,4 +119,18 @@ def test_names(values, error_state):
                           ])
 def test_instruments_schema(values, error_state):
     schema_tester(Instruments, values, error_state)
+
+@pytest.mark.parametrize("values, error_state",
+                         [
+                             ({"parallax_mas": 30}, None),
+                             ({"parallax_mas": -30}, None),
+                             ({"parallax_mas": None}, ValueError),
+                             ({"parallax_error": None}, None),
+                             ({"parallax_error": 30}, None),
+                             ({"parallax_error": -30}, None),
+                            ({"comments": 'string i will make far too long' * 1000}, ValueError),
+                            ({"comments": 'string that i will not make very long'}, None)
+                          ])
+def test_instruments_schema(values, error_state):
+    schema_tester(Parallax, values, error_state)
 
