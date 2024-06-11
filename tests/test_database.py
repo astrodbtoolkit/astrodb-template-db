@@ -14,6 +14,7 @@ from schema.schema_template import (
     Regimes
 )
 from astrodbkit2.astrodb import or_
+import numpy as np
 
 def test_setup_db(db):
     # Some setup tasks to ensure some data exists in the database first
@@ -172,3 +173,44 @@ def test_coordinates(db):
         print(t)
 
     assert len(t) == 0, f"{len(t)} Sources failed coordinate checks"
+
+
+def count_significant_digits_numpy(number):
+    # Convert to string with numpy and handle scientific notation
+    num_str = np.format_float_positional(number, precision=15, unique=False, fractional=False, trim='k')
+
+    # Remove leading zeros and the decimal point
+    if '.' in num_str:
+        num_str = num_str.rstrip('0').rstrip('.')
+
+    # Remove leading minus if the number is negative
+    num_str = num_str.lstrip('-')
+
+    # Split into integer and fractional parts
+    if '.' in num_str:
+        integer_part, fractional_part = num_str.split('.')
+    else:
+        integer_part, fractional_part = num_str, ''
+
+    # Count significant digits
+    significant_digits = len(integer_part.lstrip('0')) + len(fractional_part)
+
+    return significant_digits
+def test_sig_figs_parallax(db):
+    # verify that the precision on parallax isn't greater than the error's precision
+    t = (
+        db.query(db.Parallax.c.parallax, db.Parallax.c.parallax_error)
+        .filter(
+            or_(
+                db.Parallax.c.parallax_error.is_(None),
+                db.Parallax.c.parallax_error < 0,
+                db.Parallax.c.parallax_error > 0,
+                db.Parallax.c.parallax_error < db.Parallax.c.parallax,
+            )
+        )
+        .astropy()
+    )
+    for i in t:
+        parallax_sig_figs = count_significant_digits_numpy(i['parallax'])
+        error_sig_figs = count_significant_digits_numpy(i['parallax_error'])
+        assert error_sig_figs >= parallax_sig_figs, f"Parallax error has fewer significant figures than parallax for {i['parallax']} +/- {i['parallax_error']}"
