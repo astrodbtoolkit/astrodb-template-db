@@ -15,6 +15,8 @@ from schema.schema_template import (
 )
 from astrodbkit2.astrodb import or_
 
+from astroquery.simbad import Simbad
+
 def test_setup_db(db):
     # Some setup tasks to ensure some data exists in the database first
     ref_data = [
@@ -172,3 +174,15 @@ def test_coordinates(db):
         print(t)
 
     assert len(t) == 0, f"{len(t)} Sources failed coordinate checks"
+
+
+def test_SIMBAD_resolvable(db):
+    # Verify that all sources have valid coordinates
+    t = (
+        db.query(db.Sources.c.source)
+        .astropy()
+    )
+
+    for source in t:
+        result_table = Simbad.query_object(source[0])
+        assert result_table is not None, f"{source[0]} not found in SIMBAD"
