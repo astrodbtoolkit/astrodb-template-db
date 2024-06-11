@@ -30,9 +30,9 @@ def test_setup_db(db):
     ]
 
     source_data = [
-        {"source": "Fake 1", "ra_deg": 9.0673755, "dec_deg": 18.352889, "reference": "Ref 1"},
-        {"source": "Fake 2", "ra_deg": 9.0673755, "dec_deg": 18.352889, "reference": "Ref 1"},
-        {"source": "Fake 3", "ra_deg": 9.0673755, "dec_deg": 18.352889, "reference": "Ref 2"},
+        {"source": "WASP-76", "ra_deg": 9.0673755, "dec_deg": 18.352889, "reference": "Ref 1"},
+        {"source": "GJ 1214", "ra_deg": 9.0673755, "dec_deg": 18.352889, "reference": "Ref 1"},
+        {"source": "HD 209458", "ra_deg": 9.0673755, "dec_deg": 18.352889, "reference": "Ref 2"},
     ]
 
     with db.engine.connect() as conn:
