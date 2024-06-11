@@ -236,6 +236,6 @@ def test_instruments_schema(values, error_state):
                                 ({"ucd": "em.IR.H"}, None),
                                 ({"ucd": "ThisIsASuperLongUCDThatIsInvalid"}, ValueError)
                             ])
-def test_instruments_schema(values, error_state):
+def test_photometryfilters_schema(values, error_state):
     schema_tester(PhotometryFilters, values, error_state)
 
