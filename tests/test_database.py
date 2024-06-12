@@ -199,18 +199,10 @@ def count_significant_digits_numpy(number):
 def test_sig_figs_parallax(db):
     # verify that the precision on parallax isn't greater than the error's precision
     t = (
-        db.query(db.Parallax.c.parallax, db.Parallax.c.parallax_error)
-        .filter(
-            or_(
-                db.Parallax.c.parallax_error.is_(None),
-                db.Parallax.c.parallax_error < 0,
-                db.Parallax.c.parallax_error > 0,
-                db.Parallax.c.parallax_error < db.Parallax.c.parallax,
-            )
-        )
+        db.query(db.Parallax.c.parallax_mas, db.Parallax.c.parallax_error)
         .astropy()
     )
     for i in t:
-        parallax_sig_figs = count_significant_digits_numpy(i['parallax'])
+        parallax_sig_figs = count_significant_digits_numpy(i['parallax_mas'])
         error_sig_figs = count_significant_digits_numpy(i['parallax_error'])
         assert error_sig_figs >= parallax_sig_figs, f"Parallax error has fewer significant figures than parallax for {i['parallax']} +/- {i['parallax_error']}"
