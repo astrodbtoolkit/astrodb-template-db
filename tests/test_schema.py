@@ -234,7 +234,8 @@ def test_instruments_schema(values, error_state):
 @pytest.mark.parametrize("values, error_state",
                             [
                                 ({"ucd": "em.IR.H"}, None),
-                                ({"ucd": "ThisIsASuperLongUCDThatIsInvalid"}, ValueError)
+                                ({"ucd": "ThisIsASuperLongUCDThatIsInvalid"}, ValueError),
+                                ({"ucd": "fake.IR.H"}, ValueError)
                             ])
 def test_photometryfilters_schema(values, error_state):
     schema_tester(PhotometryFilters, values, error_state)
