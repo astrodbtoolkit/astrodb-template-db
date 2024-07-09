@@ -1,8 +1,8 @@
 {
     "Sources": [
         {
-            "source": "M1",
-            "ra_deg": 57.6326,
+            "source": "Crab Nebula",
+            "ra_deg": 57.6328,
             "dec_deg": 14.28,
             "epoch_year": 2000.0,
             "equinox": "J2000",

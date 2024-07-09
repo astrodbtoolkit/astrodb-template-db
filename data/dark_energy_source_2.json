@@ -1,7 +1,7 @@
 {
     "Sources": [
         {
-            "source": "M32",
+            "source": "WASP-76b",
             "ra_deg": 57.6326,
             "dec_deg": 12.2729,
             "epoch_year": 2000.0,
