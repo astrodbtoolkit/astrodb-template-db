@@ -120,6 +120,19 @@ def test_instruments_schema(values, error_state):
     schema_tester(Instruments, values, error_state)
 
 
+    
+@pytest.mark.parametrize("values, error_state",
+                         [
+                             ({"regime": "good"}, None),
+                            ({"regime": "ThisIsASuperLongInstrumentNameThatIsInvalid!!!!!!!"}, ValueError)
+                          ])
+def test_instruments_schema(values, error_state):
+    """
+    In the schema, there is a validation that makes sure that the length of the regime is less than 30 characters.
+    """
+    schema_tester(Regimes, values, error_state)
+
+
 # test the ucds. they're passed to phorometry filter and should break things if they're random strings
 @pytest.mark.parametrize("values, error_state",
                             [
