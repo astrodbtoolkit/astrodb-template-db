@@ -13,6 +13,7 @@ from schema.schema_template import (
     Sources,
     Telescopes,
     Versions,
+    Parallax,
     Regimes
 )
 
@@ -118,4 +119,46 @@ def test_names(values, error_state):
                           ])
 def test_instruments_schema(values, error_state):
     schema_tester(Instruments, values, error_state)
+
+@pytest.mark.parametrize("values, error_state",
+                         [
+                             ({"parallax_mas": 30}, None),
+                             ({"parallax_mas": -30}, None),
+                             ({"parallax_mas": None}, ValueError),
+                             ({"parallax_error": None}, None),
+                             ({"parallax_error": 30}, None),
+                             ({"parallax_error": -30}, None),
+                            ({"comments": 'string i will make far too long' * 1000}, ValueError),
+                            ({"comments": 'string that i will not make very long'}, None)
+                          ])
+def test_parallax_schema(values, error_state):
+    """
+    These quantities are validated in the schema. For instance, the schema ensures that
+    comments must not be more than 1000 characters long.
+    """
+    schema_tester(Parallax, values, error_state)
+
+
+    
+@pytest.mark.parametrize("values, error_state",
+                         [
+                             ({"regime": "good"}, None),
+                            ({"regime": "ThisIsASuperLongInstrumentNameThatIsInvalid!!!!!!!"}, ValueError)
+                          ])
+def test_instruments_schema(values, error_state):
+    """
+    In the schema, there is a validation that makes sure that the length of the regime is less than 30 characters.
+    """
+    schema_tester(Regimes, values, error_state)
+
+
+# test the ucds. they're passed to phorometry filter and should break things if they're random strings
+@pytest.mark.parametrize("values, error_state",
+                            [
+                                ({"ucd": "em.IR.H"}, None),
+                                ({"ucd": "ThisIsASuperLongUCDThatIsInvalid"}, ValueError),
+                                ({"ucd": "fake.IR.H"}, ValueError)
+                            ])
+def test_photometryfilters_schema(values, error_state):
+    schema_tester(PhotometryFilters, values, error_state)
 

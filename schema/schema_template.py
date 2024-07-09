@@ -14,6 +14,7 @@ import enum
 from astrodbkit2.astrodb import Base
 from sqlalchemy import Column, DateTime, Float, ForeignKey, Integer, String, Boolean
 from sqlalchemy.orm import validates
+from astropy.io.votable.ucd import check_ucd
 
 # Globals
 REFERENCE_STRING_LENGTH = 30
@@ -178,8 +179,12 @@ class PhotometryFilters(Base):
         return value
 
     @validates("ucd")
-    def validate_ucd(self, key, value):
+    def validate_ucd_length(self, key, value):
         check_string_length(value, 100, key)
+
+        ucd_string = "phot;" + value
+        if check_ucd(ucd_string, check_controlled_vocabulary=True) is False:
+            raise ValueError(f"UCD {value} not in controlled vocabulary")
         return value
 
 
@@ -387,13 +392,16 @@ class Parallax(Base):
         primary_key=True,
     )
 
-    @validates("comment")
+    @validates("comments")
     def validate_comment_length(self, key, value):
         check_string_length(value, 1000, key)
         return value
 
     @validates("parallax_mas")
     def validate_parallax_sig_figs(self, key, value):
+        if value is None:
+            raise ValueError(f"Provided {key} is invalid; None: {value}")
+          
         if hasattr(self, 'parallax_error'):
             n_sig_figs_error = count_significant_digits_numpy(self.parallax_error)
             n_sig_figs_value = count_significant_digits_numpy(value)
@@ -402,6 +410,7 @@ class Parallax(Base):
                 raise ValueError(f"Provided {key} is invalid; more significant figures than value: {value}")
             else:
                 pass
+
         return value
 
 # class Measurement(Base):
