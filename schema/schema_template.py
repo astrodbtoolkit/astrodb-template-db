@@ -15,6 +15,7 @@ from astrodbkit2.astrodb import Base
 from sqlalchemy import Column, DateTime, Float, ForeignKey, Integer, String, Boolean
 from sqlalchemy.orm import validates
 from astropy.io.votable.ucd import check_ucd
+import numpy as np
 
 # Globals
 REFERENCE_STRING_LENGTH = 30
