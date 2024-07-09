@@ -370,9 +370,15 @@ class Parallax(Base):
         primary_key=True,
     )
 
-    @validates("comment")
+    @validates("comments")
     def validate_comment_length(self, key, value):
         check_string_length(value, 1000, key)
+        return value
+
+    @validates("parallax_mas")
+    def validate_parallax_value(self, key, value):
+        if value is None:
+            raise ValueError(f"Provided {key} is invalid; None: {value}")
         return value
 
 # class Measurement(Base):
