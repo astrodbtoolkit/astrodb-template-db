@@ -26,6 +26,26 @@ def check_string_length(value, max_length, key):
         raise ValueError(f"Provided {key} is invalid; too long or None: {value}")
     else:
         pass
+
+def count_significant_digits_numpy(number):
+    # Convert to string with numpy and handle scientific notation
+    num_str = np.format_float_positional(number, precision=15, unique=False, fractional=False, trim='k')
+
+    # Remove leading zeros and the decimal point
+    if '.' in num_str:
+        num_str = num_str.rstrip('0').rstrip('.')
+
+    # Remove leading minus if the number is negative
+    num_str = num_str.lstrip('-')
+
+    # Split into integer and fractional parts
+    if '.' in num_str:
+        integer_part, fractional_part = num_str.split('.')
+    else:
+        integer_part, fractional_part = num_str, ''
+
+    # Count significant digits
+    significant_digits = len(integer_part.lstrip('0')) + len(fractional_part)
     
 
 # -------------------------------------------------------------------------------------------------------------------
@@ -368,6 +388,18 @@ class Parallax(Base):
     @validates("comment")
     def validate_comment_length(self, key, value):
         check_string_length(value, 1000, key)
+        return value
+
+    @validates("parallax_mas")
+    def validate_parallax_sig_figs(self, key, value):
+        if hasattr(self, 'parallax_error'):
+            n_sig_figs_error = count_significant_digits_numpy(self.parallax_error)
+            n_sig_figs_value = count_significant_digits_numpy(value)
+
+            if n_sig_figs_value > n_sig_figs_error:
+                raise ValueError(f"Provided {key} is invalid; more significant figures than value: {value}")
+            else:
+                pass
         return value
 
 # class Measurement(Base):
