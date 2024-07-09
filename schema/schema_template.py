@@ -10,6 +10,7 @@ You may modify these tables, but doing so may decrease the interoperability of y
 """
 
 import enum
+import pdb
 
 from astrodbkit2.astrodb import Base
 from sqlalchemy import Column, DateTime, Float, ForeignKey, Integer, String, Boolean
@@ -50,6 +51,8 @@ def count_significant_digits_numpy(number):
     significant_digits = len(integer_part.lstrip('0')) + len(fractional_part)
 
     return significant_digits
+
+
     
 
 # -------------------------------------------------------------------------------------------------------------------
@@ -403,7 +406,8 @@ class Parallax(Base):
         if value is None:
             raise ValueError(f"Provided {key} is invalid; None: {value}")
           
-        if hasattr(self, 'parallax_error'):
+        if hasattr(self, 'parallax_error') and self.parallax_error is not None:
+
             n_sig_figs_error = count_significant_digits_numpy(self.parallax_error)
             n_sig_figs_value = count_significant_digits_numpy(value)
 
