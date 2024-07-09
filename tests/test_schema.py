@@ -127,6 +127,9 @@ def test_instruments_schema(values, error_state):
                             ({"regime": "ThisIsASuperLongInstrumentNameThatIsInvalid!!!!!!!"}, ValueError)
                           ])
 def test_instruments_schema(values, error_state):
+    """
+    In the schema, there is a validation that makes sure that the length of the regime is less than 30 characters.
+    """
     schema_tester(Regimes, values, error_state)
 
 
