@@ -375,6 +375,12 @@ class Parallax(Base):
         check_string_length(value, 1000, key)
         return value
 
+    @validates("parallax_mas")
+    def validate_parallax_value(self, key, value):
+        if value is None:
+            raise ValueError(f"Provided {key} is invalid; None: {value}")
+        return value
+
 # class Measurement(Base):
 #     # This is a template table that you can fill in with your own measurement.
 #     . This is a placeholder for a table that would store measurements such as parallax.
