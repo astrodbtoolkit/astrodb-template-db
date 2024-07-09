@@ -175,26 +175,6 @@ def test_coordinates(db):
     assert len(t) == 0, f"{len(t)} Sources failed coordinate checks"
 
 
-def count_significant_digits_numpy(number):
-    # Convert to string with numpy and handle scientific notation
-    num_str = np.format_float_positional(number, precision=15, unique=False, fractional=False, trim='k')
-
-    # Remove leading zeros and the decimal point
-    if '.' in num_str:
-        num_str = num_str.rstrip('0').rstrip('.')
-
-    # Remove leading minus if the number is negative
-    num_str = num_str.lstrip('-')
-
-    # Split into integer and fractional parts
-    if '.' in num_str:
-        integer_part, fractional_part = num_str.split('.')
-    else:
-        integer_part, fractional_part = num_str, ''
-
-    # Count significant digits
-    significant_digits = len(integer_part.lstrip('0')) + len(fractional_part)
-
     return significant_digits
 def test_sig_figs_parallax(db):
     # verify that the precision on parallax isn't greater than the error's precision
