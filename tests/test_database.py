@@ -175,7 +175,6 @@ def test_coordinates(db):
     assert len(t) == 0, f"{len(t)} Sources failed coordinate checks"
 
 
-    return significant_digits
 def test_sig_figs_parallax(db):
     # verify that the precision on parallax isn't greater than the error's precision
     t = (

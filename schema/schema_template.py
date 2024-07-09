@@ -46,6 +46,8 @@ def count_significant_digits_numpy(number):
 
     # Count significant digits
     significant_digits = len(integer_part.lstrip('0')) + len(fractional_part)
+
+    return significant_digits
     
 
 # -------------------------------------------------------------------------------------------------------------------
