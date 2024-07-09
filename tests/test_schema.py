@@ -131,7 +131,11 @@ def test_instruments_schema(values, error_state):
                             ({"comments": 'string i will make far too long' * 1000}, ValueError),
                             ({"comments": 'string that i will not make very long'}, None)
                           ])
-def test_instruments_schema(values, error_state):
+def test_parallax_schema(values, error_state):
+    """
+    These quantities are validated in the schema. For instance, the schema ensures that
+    comments must not be more than 1000 characters long.
+    """
     schema_tester(Parallax, values, error_state)
 
 
