@@ -17,10 +17,13 @@ from sqlalchemy import Column, DateTime, Float, ForeignKey, Integer, String, Boo
 from sqlalchemy.orm import validates
 from astropy.io.votable.ucd import check_ucd
 import numpy as np
+import logging
 
 # Globals
 REFERENCE_STRING_LENGTH = 30
 DESCRIPTION_STRING_LENGTH = 1000
+
+logger = logging.getLogger(__name__)
 
 # TODO: make "tabulardata" or "physicaldata" abstract classes.
 
@@ -412,7 +415,8 @@ class Parallax(Base):
             n_sig_figs_value = count_significant_digits_numpy(value)
 
             if n_sig_figs_value > n_sig_figs_error:
-                raise ValueError(f"Provided {key} is invalid; more significant figures than value: {value}")
+                # raise warning instead of error.
+                logger.warning(f"Provided {key} is invalid; more significant figures than error: {value}")
             else:
                 pass
 
