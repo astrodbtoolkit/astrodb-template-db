@@ -17,6 +17,7 @@ from sqlalchemy import Column, DateTime, Float, ForeignKey, Integer, String, Boo
 from sqlalchemy.orm import validates
 from astropy.io.votable.ucd import check_ucd
 import numpy as np
+from decimal import Decimal
 import logging
 
 # Globals
@@ -33,27 +34,9 @@ def check_string_length(value, max_length, key):
     else:
         pass
 
-def count_significant_digits_numpy(number):
-    # Convert to string with numpy and handle scientific notation
-    num_str = np.format_float_positional(number, precision=15, unique=False, fractional=False, trim='k')
 
-    # Remove leading zeros and the decimal point
-    if '.' in num_str:
-        num_str = num_str.rstrip('0').rstrip('.')
-
-    # Remove leading minus if the number is negative
-    num_str = num_str.lstrip('-')
-
-    # Split into integer and fractional parts
-    if '.' in num_str:
-        integer_part, fractional_part = num_str.split('.')
-    else:
-        integer_part, fractional_part = num_str, ''
-
-    # Count significant digits
-    significant_digits = len(integer_part.lstrip('0')) + len(fractional_part)
-
-    return significant_digits
+def count_significant_digits(numstr):
+    return len(Decimal(numstr).normalize().as_tuple().digits)
 
 
     
@@ -411,8 +394,8 @@ class Parallax(Base):
           
         if hasattr(self, 'parallax_error') and self.parallax_error is not None:
 
-            n_sig_figs_error = count_significant_digits_numpy(self.parallax_error)
-            n_sig_figs_value = count_significant_digits_numpy(value)
+            n_sig_figs_error = count_significant_digits(self.parallax_error)
+            n_sig_figs_value = count_significant_digits(value)
 
             if n_sig_figs_value > n_sig_figs_error:
                 # raise warning instead of error.

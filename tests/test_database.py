@@ -186,8 +186,8 @@ def test_sig_figs_parallax(db):
 
     wrong_sig_figs = []
     for i in t:
-        parallax_sig_figs = count_significant_digits_numpy(i['parallax_mas'])
-        error_sig_figs = count_significant_digits_numpy(i['parallax_error'])
+        parallax_sig_figs = count_significant_digits(i['parallax_mas'])
+        error_sig_figs = count_significant_digits(i['parallax_error'])
 
         if error_sig_figs >= parallax_sig_figs:
             wrong_sig_figs.append(i)
