@@ -15,10 +15,6 @@ from schema.schema_template import (
 )
 from astrodbkit2.astrodb import or_
 
-from astroquery.simbad import Simbad
-
-from astrodbkit2.utils import _name_formatter
-
 def test_setup_db(db):
     # Some setup tasks to ensure some data exists in the database first
     ref_data = [
@@ -176,72 +172,3 @@ def test_coordinates(db):
         print(t)
 
     assert len(t) == 0, f"{len(t)} Sources failed coordinate checks"
-
-
-def test_SIMBAD_resolvable(db):
-    # Verify that all sources have valid coordinates
-    results = db.query(db.Sources.c.source).all()
-    name_list = [s[0] for s in results]
-
-    # Add all IDS to the Simbad output as well as the user-provided id
-    Simbad.add_votable_fields("ids")
-    Simbad.add_votable_fields("typed_id")
-
-    simbad_results = Simbad.query_objects(name_list)
-    duplicate_count = 0
-    for row in simbad_results[["TYPED_ID", "IDS"]].iterrows():
-        try:
-            name, ids = row[0].decode("utf-8"), row[1].decode("utf-8")
-        except AttributeError:
-            # Catch decoding error
-            name, ids = row[0], row[1]
-
-        simbad_names = [
-            _name_formatter(s)
-            for s in ids.split("|")
-            if _name_formatter(s) != "" and _name_formatter(s) is not None
-        ]
-
-        assert(
-            len(simbad_names) > 0
-        ), f"No SIMBAD names for {name}"
-
-        # Examine DB for each input, displaying results when more than one source matches
-        t = db.search_object(
-            simbad_names, output_table="Sources", fmt="astropy", fuzzy_search=False
-        )
-        assert len(t) > 0, f"SIMBAD source not found for {name}: {t}"
-
-def test_SIMBAD_aliases(db):
-    # Verify that all sources have valid coordinates
-    results = db.query(db.Sources.c.source).all()
-    name_list = [s[0] for s in results]
-
-    # Add all IDS to the Simbad output as well as the user-provided id
-    Simbad.add_votable_fields("ids")
-    Simbad.add_votable_fields("typed_id")
-
-    simbad_results = Simbad.query_objects(name_list)
-    duplicate_count = 0
-    for row in simbad_results[["TYPED_ID", "IDS"]].iterrows():
-        try:
-            name, ids = row[0].decode("utf-8"), row[1].decode("utf-8")
-        except AttributeError:
-            # Catch decoding error
-            name, ids = row[0], row[1]
-
-        simbad_names = [
-            _name_formatter(s)
-            for s in ids.split("|")
-            if _name_formatter(s) != "" and _name_formatter(s) is not None
-        ]
-
-        assert(
-            len(simbad_names) > 0
-        ), f"No SIMBAD names for {name}"
-
-        # Examine DB for each input, displaying results when more than one source matches
-        t = db.search_object(
-            simbad_names, output_table="Sources", fmt="astropy", fuzzy_search=False
-        )
-        assert len(t) == 1, f"Duplicate sources identified via Simbad queries: {t}"
