@@ -181,7 +181,14 @@ def test_sig_figs_parallax(db):
         db.query(db.Parallax.c.parallax_mas, db.Parallax.c.parallax_error)
         .astropy()
     )
+    # create empty table to add the results to
+
+
+    wrong_sig_figs = []
     for i in t:
         parallax_sig_figs = count_significant_digits_numpy(i['parallax_mas'])
         error_sig_figs = count_significant_digits_numpy(i['parallax_error'])
-        assert error_sig_figs >= parallax_sig_figs, f"Parallax error has fewer significant figures than parallax for {i['parallax']} +/- {i['parallax_error']}"
+
+        if error_sig_figs >= parallax_sig_figs:
+            wrong_sig_figs.append(i)
+    assert len(wrong_sig_figs)==0, f"Parallax error has fewer significant figures than parallax for these sources: {wrong_sig_figs}"
