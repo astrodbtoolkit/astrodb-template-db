@@ -14,6 +14,7 @@ from schema.schema_template import (
     Regimes
 )
 from astrodbkit2.astrodb import or_
+import numpy as np
 
 def test_setup_db(db):
     # Some setup tasks to ensure some data exists in the database first
@@ -172,3 +173,22 @@ def test_coordinates(db):
         print(t)
 
     assert len(t) == 0, f"{len(t)} Sources failed coordinate checks"
+
+
+def test_sig_figs_parallax(db):
+    # verify that the precision on parallax isn't greater than the error's precision
+    t = (
+        db.query(db.Parallax.c.parallax_mas, db.Parallax.c.parallax_error)
+        .astropy()
+    )
+    # create empty table to add the results to
+
+
+    wrong_sig_figs = []
+    for i in t:
+        parallax_sig_figs = count_significant_digits(i['parallax_mas'])
+        error_sig_figs = count_significant_digits(i['parallax_error'])
+
+        if error_sig_figs >= parallax_sig_figs:
+            wrong_sig_figs.append(i)
+    assert len(wrong_sig_figs)==0, f"Parallax error has fewer significant figures than parallax for these sources: {wrong_sig_figs}"

@@ -10,15 +10,21 @@ You may modify these tables, but doing so may decrease the interoperability of y
 """
 
 import enum
+import pdb
 
 from astrodbkit2.astrodb import Base
 from sqlalchemy import Column, DateTime, Float, ForeignKey, Integer, String, Boolean
 from sqlalchemy.orm import validates
 from astropy.io.votable.ucd import check_ucd
+import numpy as np
+from decimal import Decimal
+import logging
 
 # Globals
 REFERENCE_STRING_LENGTH = 30
 DESCRIPTION_STRING_LENGTH = 1000
+
+logger = logging.getLogger(__name__)
 
 # TODO: make "tabulardata" or "physicaldata" abstract classes.
 
@@ -27,6 +33,12 @@ def check_string_length(value, max_length, key):
         raise ValueError(f"Provided {key} is invalid; too long or None: {value}")
     else:
         pass
+
+
+def count_significant_digits(numstr):
+    return len(Decimal(numstr).normalize().as_tuple().digits)
+
+
     
 
 # -------------------------------------------------------------------------------------------------------------------
@@ -376,9 +388,21 @@ class Parallax(Base):
         return value
 
     @validates("parallax_mas")
-    def validate_parallax_value(self, key, value):
+    def validate_parallax_sig_figs(self, key, value):
         if value is None:
             raise ValueError(f"Provided {key} is invalid; None: {value}")
+          
+        if hasattr(self, 'parallax_error') and self.parallax_error is not None:
+
+            n_sig_figs_error = count_significant_digits(self.parallax_error)
+            n_sig_figs_value = count_significant_digits(value)
+
+            if n_sig_figs_value > n_sig_figs_error:
+                # raise warning instead of error.
+                logger.warning(f"Provided {key} is invalid; more significant figures than error: {value}")
+            else:
+                pass
+
         return value
 
 # class Measurement(Base):
