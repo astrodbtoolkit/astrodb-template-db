@@ -14,6 +14,7 @@ from schema.schema_template import (
     Telescopes,
     Versions,
     Parallax,
+    RadialVelocities,
     Regimes
 )
 
@@ -137,6 +138,24 @@ def test_parallax_schema(values, error_state):
     comments must not be more than 1000 characters long.
     """
     schema_tester(Parallax, values, error_state)
+
+@pytest.mark.parametrize("values, error_state",
+                         [
+                             ({"radial_velocity_km_s": 30}, None),
+                             ({"radial_velocity_km_s": -30}, None),
+                             ({"radial_velocity_km_s": None}, ValueError),
+                             ({"radial_velocity_error_km_s": None}, None),
+                             ({"radial_velocity_error_km_s": 30}, None),
+                             ({"radial_velocity_error_km_s": -30}, None),
+                            ({"comments": 'string i will make far too long' * 1000}, ValueError),
+                            ({"comments": 'string that i will not make very long'}, None)
+                          ])
+def test_radial_velocities_schema(values, error_state):
+    """
+    These quantities are validated in the schema. For instance, the schema ensures that
+    comments must not be more than 1000 characters long.
+    """
+    schema_tester(RadialVelocities, values, error_state)
 
 
     
