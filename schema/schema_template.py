@@ -50,8 +50,11 @@ REFERENCE_TABLES = [
     "Instruments",
     "PhotometryFilters",
     "Versions",
-    "Regimes"
+    "Regimes",
+    "RadialVelocities"
 ]
+
+
 
 
 class Publications(Base):
@@ -395,6 +398,53 @@ class Parallax(Base):
         if hasattr(self, 'parallax_error') and self.parallax_error is not None:
 
             n_sig_figs_error = count_significant_digits(self.parallax_error)
+            n_sig_figs_value = count_significant_digits(value)
+
+            if n_sig_figs_value > n_sig_figs_error:
+                # raise warning instead of error.
+                logger.warning(f"Provided {key} is invalid; more significant figures than error: {value}")
+            else:
+                pass
+
+        return value
+
+
+class RadialVelocities(Base):
+    # This is an example of a measurement table (see below, commented-out table as another example)
+
+    __tablename__ = 'RadialVelocities'
+    source = Column(
+        String(100),
+        ForeignKey("Sources.source", ondelete="cascade", onupdate="cascade"),
+        nullable=False,
+        primary_key=True,
+    )
+
+    # always note units, following the practices of Chen et al. 2022.
+    radial_velocity_km_s = Column(Float, nullable=False)
+
+    radial_velocity_error_km_s = Column(Float)  # todo: make asymmetric errors
+    adopted = Column(Boolean)  # flag for indicating if this is the adopted
+    comments = Column(String(1000))
+    reference = Column(
+        String(30),
+        ForeignKey("Publications.reference", onupdate="cascade"),
+        primary_key=True,
+    )
+
+    @validates("comments")
+    def validate_comment_length(self, key, value):
+        check_string_length(value, 1000, key)
+        return value
+
+    @validates("radial_velocity_km_s")
+    def validate_rv_sig_figs(self, key, value):
+        if value is None:
+            raise ValueError(f"Provided {key} is invalid; None: {value}")
+
+        if hasattr(self, 'radial_velocity_error_km_s') and self.radial_velocity_error_km_s is not None:
+
+            n_sig_figs_error = count_significant_digits(self.radial_velocity_error_km_s)
             n_sig_figs_value = count_significant_digits(value)
 
             if n_sig_figs_value > n_sig_figs_error:
