@@ -13,7 +13,7 @@ from astroquery.simbad import Simbad
 from astrodbkit2.utils import _name_formatter
 
 def test_SIMBAD_resolvable(db):
-    # Verify that all sources have valid coordinates
+    # Verify that all sources have valid names
     results = db.query(db.Sources.c.source).all()
     name_list = [s[0] for s in results]
 
@@ -22,7 +22,6 @@ def test_SIMBAD_resolvable(db):
     Simbad.add_votable_fields("typed_id")
 
     simbad_results = Simbad.query_objects(name_list)
-    duplicate_count = 0
     for row in simbad_results[["TYPED_ID", "IDS"]].iterrows():
         try:
             name, ids = row[0].decode("utf-8"), row[1].decode("utf-8")
