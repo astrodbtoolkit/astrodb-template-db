@@ -22,6 +22,8 @@ def test_SIMBAD_resolvable(db):
     Simbad.add_votable_fields("typed_id")
 
     simbad_results = Simbad.query_objects(name_list)
+    no_result_rows = []
+    duplicate_rows = []
     for row in simbad_results[["TYPED_ID", "IDS"]].iterrows():
         try:
             name, ids = row[0].decode("utf-8"), row[1].decode("utf-8")
@@ -34,13 +36,16 @@ def test_SIMBAD_resolvable(db):
             for s in ids.split("|")
             if _name_formatter(s) != "" and _name_formatter(s) is not None
         ]
+        if len(simbad_names == 0):
+            no_result_rows += [row]
 
-        assert(
-            len(simbad_names) > 0
-        ), f"No SIMBAD names for {name}"
 
         # Examine DB for each input, displaying results when more than one source matches
         t = db.search_object(
             simbad_names, output_table="Sources", fmt="astropy", fuzzy_search=False
         )
-        assert len(t) == 1, f"SIMBAD source not found for {name}: {t}"
+        if len(t) != 1:
+            duplicate_rows += [row]
+
+    assert len(no_result_rows) == 0 and len(duplicate_rows) == 0, (f"No SIMBAD names for {no_result_rows},"
+                                                                   f" duplicate rows for {duplicate_rows}")
