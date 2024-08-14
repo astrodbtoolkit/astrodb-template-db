@@ -16,6 +16,33 @@ from schema.schema_template import (
 from astrodbkit2.astrodb import or_
 import numpy as np
 
+
+#### below, we test the number of items in a database. Forces us to update tests on ingest! ####
+
+def test_n_sources(db):
+    assert db.query(db.Sources).count() == 3
+
+def test_n_sources_rubin80(db):
+    rubin80_sources = db.query(db.Sources).filter(
+            or_(
+                db.Sources.c.reference =='Rubin80',
+
+              )
+        )
+    assert rubin80_sources.count() == 2
+
+
+def test_n_sources_perlmutter99(db):
+    rubin80_sources = db.query(db.Sources).filter(
+        or_(
+            db.Sources.c.reference == 'Perlmutter99',
+
+        )
+    )
+    assert rubin80_sources.count() == 1
+
+###### now, we test database functionality, self-consistency, etc. #####
+
 def test_setup_db(db):
     # Some setup tasks to ensure some data exists in the database first
     ref_data = [
