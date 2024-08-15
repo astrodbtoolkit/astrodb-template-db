@@ -17,7 +17,7 @@ def test_SIMBAD_resolvable(db):
     results = db.query(db.Sources.c.source).all()
     name_list = [s[0] for s in results]
 
-    # Add all IDS to the Simbad output as well as the user-provided id
+    # Include all SIMBAD Identifiers and our provided name to the SIMBAD query results table.
     Simbad.add_votable_fields("ids")
     Simbad.add_votable_fields("typed_id")
 
