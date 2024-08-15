@@ -410,7 +410,6 @@ class Parallax(Base):
 
 
 class RadialVelocities(Base):
-    # This is an example of a measurement table (see below, commented-out table as another example)
 
     __tablename__ = 'RadialVelocities'
     source = Column(
