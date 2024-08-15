@@ -13,7 +13,7 @@ from astroquery.simbad import Simbad
 from astrodbkit2.utils import _name_formatter
 
 def test_SIMBAD_resolvable(db):
-    # Verify that all sources have valid names
+    # Verify that sources have SIMBAD-resolvable names```
     results = db.query(db.Sources.c.source).all()
     name_list = [s[0] for s in results]
 
