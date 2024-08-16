@@ -22,8 +22,8 @@ def test_SIMBAD_resolvable(db):
     Simbad.add_votable_fields("typed_id")
 
     simbad_results = Simbad.query_objects(name_list)
-    not_found_in_simbad = []
-    multiple_matches_in_db = []
+    no_result_rows = []
+    duplicate_rows = []
     for row in simbad_results[["TYPED_ID", "IDS"]].iterrows():
         try:
             name, ids = row[0].decode("utf-8"), row[1].decode("utf-8")
@@ -36,7 +36,7 @@ def test_SIMBAD_resolvable(db):
             for s in ids.split("|")
             if _name_formatter(s) != "" and _name_formatter(s) is not None
         ]
-        if len(simbad_names == 0):
+        if len(simbad_names) == 0:
             no_result_rows += [row]
 
 
