@@ -4,11 +4,11 @@ import logging
 import sqlalchemy.exc
 import astropy.units as u
 from astropy.io.votable import parse
-from astrodb_scripts import load_astrodb, ingest_instrument, ingest_publication
-from astrodb_scripts import check_internet_connection as internet_connection
+from astrodb_utils import load_astrodb, ingest_instrument, ingest_publication
+from astrodb_utils import check_internet_connection as internet_connection
 from schema.schema_template import *
 
-from astrodb_scripts import AstroDBError
+from astrodb_utils import AstroDBError
 
 logger = logging.getLogger("AstroDB")
 logger.setLevel(logging.DEBUG)
@@ -113,7 +113,7 @@ ingest_photometry_filter(db, filter_name="I", telescope="Generic", instrument="C
 if SAVE_DB:
     db.save_database("data/")
 
-## These scripts will eventually live in astrodb_scripts package
+## These scripts will eventually live in astrodb_utils package
 
 
 def ingest_photometry_filter(

@@ -1,4 +1,4 @@
-from astrodb_scripts import (
+from astrodb_utils import (
     AstroDBError,
     find_source_in_db,
     check_internet_connection,

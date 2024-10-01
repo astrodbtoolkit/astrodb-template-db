@@ -15,7 +15,7 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "pip install astrodbkit astrodb_scripts pytest"
+	"postCreateCommand": "pip install astrodbkit astrodb_utils pytest"
 
 	// Configure tool-specific properties.
 	// "customizations": {},

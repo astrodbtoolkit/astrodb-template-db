@@ -1,7 +1,7 @@
 """
 Schema for the AstroDB Template database.
 
-The following tables are expected by AstroDB Toolkit and the AstroDB_scripts package:
+The following tables are expected by AstroDB Toolkit and the AstroDB_utils package:
 - Sources
 - Publications
 - Instruments
