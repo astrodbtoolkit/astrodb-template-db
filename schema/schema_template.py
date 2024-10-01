@@ -1,7 +1,7 @@
 """
 Schema for the AstroDB Template database.
 
-The following tables are expected by AstroDB Toolkit and the AstroDB_scripts package:
+The following tables are expected by AstroDB Toolkit and the AstroDB_utils package:
 - Sources
 - Publications
 - Instruments
@@ -12,7 +12,7 @@ You may modify these tables, but doing so may decrease the interoperability of y
 import enum
 import pdb
 
-from astrodbkit2.astrodb import Base
+from astrodbkit.astrodb import Base
 from sqlalchemy import Column, DateTime, Float, ForeignKey, Integer, String, Boolean
 from sqlalchemy.orm import validates
 from astropy.io.votable.ucd import check_ucd

@@ -1,6 +1,6 @@
 # Example on how to load a single, manually created object into the database
 
-from astrodbkit2.astrodb import Database, create_database
+from astrodbkit.astrodb import Database, create_database
 
 # Establish connection to database
 # If brand new database, run the following

@@ -13,7 +13,7 @@ from schema.schema_template import (
     Versions,
     Regimes
 )
-from astrodbkit2.astrodb import or_
+from astrodbkit.astrodb import or_
 import numpy as np
 
 def test_setup_db(db):

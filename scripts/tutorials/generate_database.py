@@ -4,7 +4,7 @@
 import argparse
 import sys
 import os
-from astrodbkit2.astrodb import create_database, Database
+from astrodbkit.astrodb import create_database, Database
 sys.path.append(os.getcwd())  # hack to be able to discover simple
 from astrotemplate.schema import *
 
@@ -12,7 +12,7 @@ from astrotemplate.schema import *
 DB_PATH = '/Users/arjunsavel/Desktop/research/astrotemplate-db/src/astrotemplate/data'
 DB_NAME = 'astrotemplate.db'
 
-# Used to overwrite AstrodbKit2 reference tables defaults
+# Used to overwrite AstrodbKit reference tables defaults
 REFERENCE_TABLES = ['Publications', 'Telescopes', 'Instruments', 'Modes', 'PhotometryFilters', 'Versions', 'Parameters']
 
 

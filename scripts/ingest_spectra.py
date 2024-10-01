@@ -1,4 +1,4 @@
-from astrodb_scripts import (
+from astrodb_utils import (
     AstroDBError,
     find_source_in_db,
     check_internet_connection,
@@ -34,7 +34,7 @@ def ingest_spectra(
 
     Parameters
     ----------
-    db: astrodbkit2.astrodb.Database
+    db: astrodbkit.astrodb.Database
     sources: list[str]
         List of source names
     spectra: list[str]

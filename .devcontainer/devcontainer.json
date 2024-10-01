@@ -15,7 +15,7 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "pip install git+https://github.com/dr-rodriguez/AstrodbKit2 git+https://github.com/astrodbtoolkit/astrodb_scripts.git pytest"
+	"postCreateCommand": "pip install astrodbkit astrodb_utils pytest"
 
 	// Configure tool-specific properties.
 	// "customizations": {},
