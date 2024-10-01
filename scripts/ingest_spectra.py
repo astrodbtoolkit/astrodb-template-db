@@ -34,7 +34,7 @@ def ingest_spectra(
 
     Parameters
     ----------
-    db: astrodbkit2.astrodb.Database
+    db: astrodbkit.astrodb.Database
     sources: list[str]
         List of source names
     spectra: list[str]
