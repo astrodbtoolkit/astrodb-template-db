@@ -10,7 +10,7 @@ the results of the tests, and the -rpP flags are used to suppress the output of 
 """
 from astroquery.simbad import Simbad
 
-from astrodbkit2.utils import _name_formatter
+from astrodbkit.utils import _name_formatter
 
 def test_SIMBAD_resolvable(db):
     # Verify that sources have SIMBAD-resolvable names```
