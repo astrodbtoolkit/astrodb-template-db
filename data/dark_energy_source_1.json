@@ -5,13 +5,18 @@
             "ra_deg": 55.6326,
             "dec_deg": 12.2729,
             "epoch_year": 2000.0,
-            "radial_velocity_km_s": 0.3,
-            "radial_velocity_error_km_s": 0.1,
             "equinox": "J2000",
             "shortname": "DM1",
             "reference": "Rubin80",
             "other_references": "Perlmutter99",
             "comments": "This is a cool dark matter source!"
+        }
+    ],
+    "RadialVelocities": [
+        {
+            "radial_velocity_km_s": 35.4,
+            "radial_velocity_error_km_s": 0.4,
+            "reference": "Rubin80"
         }
     ]
 }

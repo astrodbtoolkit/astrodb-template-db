@@ -436,6 +436,13 @@ class RadialVelocities(Base):
         check_string_length(value, 1000, key)
         return value
 
+    @validates("radial_velocity_error_km_s")
+    def validate_rv_errors(self, key, value):
+        if not value is None:
+            if value < 0.0:
+                raise ValueError(f"Provided RV is negative: {value}")
+        return value
+
     @validates("radial_velocity_km_s")
     def validate_rv_sig_figs(self, key, value):
         if value is None:

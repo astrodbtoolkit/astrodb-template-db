@@ -5,13 +5,18 @@
             "ra_deg": 57.6326,
             "dec_deg": 14.28,
             "epoch_year": 2000.0,
-            "radial_velocity_km_s": 300.3,
-            "radial_velocity_error_km_s": 114.0,
             "equinox": "J2000",
             "shortname": "DE1",
             "reference": "Perlmutter99",
             "other_references": "Rubin80",
             "comments": "Nice, dark energy."
+        }
+    ],
+    "RadialVelocities": [
+        {
+            "radial_velocity_km_s": 35.4,
+            "radial_velocity_error_km_s": 0.4,
+            "reference": "Rubin80"
         }
     ]
 }
