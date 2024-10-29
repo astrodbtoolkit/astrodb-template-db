@@ -4,7 +4,6 @@ testing module to test the contents of the radial velocities table.
 import sys
 sys.path.append("tests")  # needed for github actions to find the template module
 from conftest import db
-from astrodbkit2.astrodb import or_
 
 
 
