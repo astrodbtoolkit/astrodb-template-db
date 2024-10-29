@@ -422,7 +422,7 @@ class RadialVelocities(Base):
     # always note units, following the practices of Chen et al. 2022.
     radial_velocity_km_s = Column(Float, nullable=False)
 
-    radial_velocity_error_km_s = Column(Float)  # todo: make asymmetric errors
+    radial_velocity_error_km_s = Column(Float)
     adopted = Column(Boolean)  # flag for indicating if this is the adopted
     comments = Column(String(1000))
     reference = Column(
