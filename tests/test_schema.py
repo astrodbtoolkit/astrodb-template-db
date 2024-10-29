@@ -146,7 +146,7 @@ def test_parallax_schema(values, error_state):
                              ({"radial_velocity_km_s": None}, ValueError),
                              ({"radial_velocity_error_km_s": None}, None),
                              ({"radial_velocity_error_km_s": 30}, None),
-                             ({"radial_velocity_error_km_s": -30}, None),
+                             ({"radial_velocity_error_km_s": -30}, ValueError),
                             ({"comments": 'string i will make far too long' * 1000}, ValueError),
                             ({"comments": 'string that i will not make very long'}, None)
                           ])
