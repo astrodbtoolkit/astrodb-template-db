@@ -5,6 +5,8 @@
             "ra_deg": 57.6326,
             "dec_deg": 12.2729,
             "epoch_year": 2000.0,
+            "radial_velocity_km_s":-29.3,
+            "radial_velocity_error_km_s": 14.1,
             "equinox": "J2000",
             "shortname": "DE2",
             "reference": "Rubin80",
