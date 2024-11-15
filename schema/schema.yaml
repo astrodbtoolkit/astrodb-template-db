@@ -6,6 +6,8 @@ tables:
   - name: Sources
     "@id": "#Sources"
     description: "Main identifiers for objects along with coordinates."
+    primaryKey:
+    - "#Sources.source"
     columns:
     - name: source
       "@id": "#Sources.source"
@@ -13,6 +15,7 @@ tables:
       length: 100
       description: Unique identfier for an object
       ivoa:ucd: meta.id;src;meta.main
+      nullable: false
     - name: ra_deg
       "@id": "#Sources.ra_deg"
       datatype: double

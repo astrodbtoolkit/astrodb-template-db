@@ -3,8 +3,9 @@
 import pytest
 import yaml
 import sqlalchemy as sa
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine, MetaData
+from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy.ext.automap import automap_base
 from pydantic import ValidationError
 from astrodbkit.astrodb import AstrodbQuery
 
@@ -30,18 +31,15 @@ def db_object(schema):
         conn.execute(sa.text("ATTACH ':memory:' AS astrodb"))
 
     metadata.create_all(engine)
+
     return engine, metadata
 
-# TODO: Confirm ORM usage
 # TODO: Check constraints
 
 def test_inserts(db_object):
     # Attempt insert with ORM
 
     engine, metadata = db_object
-    
-    with engine.connect() as conn:
-        metadata.reflect(conn)
 
     # This requires us to use the DB name (astrodb)
     Sources = metadata.tables['astrodb.Sources']
@@ -53,10 +51,22 @@ def test_inserts(db_object):
         conn.execute(Sources.insert().values(source_data))
         conn.commit()
 
-    # Explicitly with ORM
-    # Does not work because the Table object (Sources) is not callable
+    
+
+def test_orm(db_object):
+    # Testing use via ORM objects
+
+    engine, metadata = db_object
+
+    # Use Automap to prepare Table objects
+    Base = automap_base(metadata=metadata)
+    Base.prepare()
+
+    # DB tables *must* have primary keys to be automapped
+    Sources = Base.classes.Sources
+
     # Session = sessionmaker(bind=engine, query_cls=AstrodbQuery)
-    # s = Sources(source="V4046 Sgr", ra_deg=273.54, dec_deg=-32.79, reference="Ref 1")
-    # with Session() as session:
-    #     session.add(s)
-    #     session.commit()
+    s = Sources(source="V4046 Sgr", ra_deg=273.54, ) #dec_deg=-32.79, reference="Ref 1")
+    with Session(engine) as session:
+        session.add(s)
+        session.commit()
