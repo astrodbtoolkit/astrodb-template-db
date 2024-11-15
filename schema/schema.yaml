@@ -1,12 +1,11 @@
 ---
-name: astrodb_template
+name: astrodb
 "@id": "#astrodb_template"
 description: "Template database for use by the AstroDB Toolkit"
 tables:
   - name: Sources
     "@id": "#Sources"
     description: "Main identifiers for objects along with coordinates."
-    tap:table_index: 1
     columns:
     - name: source
       "@id": "#Sources.source"
@@ -25,7 +24,6 @@ tables:
         "@type": Check
         "@id": "#Sources_check_ra_bounds"
         description: Validate RA range
-        # Not sure if this expression is written correctly yet
-        expression: ra_deg >= 0 && ra_deg <= 360
+        expression: ra_deg >= 0 & ra_deg <= 360
         
 
