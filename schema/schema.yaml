@@ -1,0 +1,31 @@
+---
+name: astrodb_template
+"@id": "#astrodb_template"
+description: "Template database for use by the AstroDB Toolkit"
+tables:
+  - name: Sources
+    "@id": "#Sources"
+    description: "Main identifiers for objects along with coordinates."
+    tap:table_index: 1
+    columns:
+    - name: source
+      "@id": "#Sources.source"
+      datatype: string
+      length: 100
+      description: Unique identfier for an object
+      ivoa:ucd: meta.id;src;meta.main
+    - name: ra_deg
+      "@id": "#Sources.ra_deg"
+      datatype: double
+      description: ICRS Right Ascension of object
+      fits:tunit: deg
+      ivoa:ucd: pos.eq.ra;meta.main
+    constraints:
+      - name: check_ra
+        "@type": Check
+        "@id": "#Sources_check_ra_bounds"
+        description: Validate RA range
+        # Not sure if this expression is written correctly yet
+        expression: ra_deg >= 0 && ra_deg <= 360
+        
+
