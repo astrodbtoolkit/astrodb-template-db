@@ -19,6 +19,12 @@ tables:
       description: ICRS Right Ascension of object
       fits:tunit: deg
       ivoa:ucd: pos.eq.ra;meta.main
+    indexes:
+      - name: PK_Sources_source
+        "@id": "#PK_Sources_source"
+        description: Primary key for Sources table
+        columns: 
+        - "#Sources.source"
     constraints:
       - name: check_ra
         "@type": Check
