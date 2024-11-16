@@ -5,6 +5,7 @@ import pytest
 import yaml
 import sqlalchemy as sa
 from sqlalchemy import create_engine
+from sqlalchemy.orm import Session
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.exc import IntegrityError
 
@@ -27,7 +28,7 @@ REFERENCE_TABLES = [
 ]
 
 
-@pytest.fixture()
+@pytest.fixture(scope="module")
 def schema():
     # Load and validate schema file
     data = yaml.safe_load(open("schema/schema.yaml", "r"))
@@ -35,7 +36,7 @@ def schema():
     return schema
 
 
-@pytest.fixture()
+@pytest.fixture(scope="module")
 def db_object(schema):
     # Build test database
 
@@ -113,7 +114,7 @@ def test_orm(db_object):
     # Running ingests
     p = Publications(reference="Ref 2")
     s = Sources(source="V4046 Sgr", ra_deg=273.54, dec_deg=-32.79, reference="Ref 2")
-    with db.session as session:
+    with Session(db.engine) as session:
         session.add(p)
         session.add(s)
         session.commit()
@@ -135,14 +136,14 @@ def test_constraints(db_object):
     # Try negative RA
     s = Sources(source="Bad RA 1", ra_deg=-273.54, dec_deg=-32.79, reference="Ref 2")
     with pytest.raises(IntegrityError, match="CHECK constraint failed: check_ra"):
-        with db.session as session:
+        with Session(db.engine) as session:
             session.add(s)
             session.commit()
 
     # Try out-of-bounds RA
     s = Sources(source="Bad RA 2", ra_deg=99999, dec_deg=-32.79, reference="Ref 2")
     with pytest.raises(IntegrityError, match="CHECK constraint failed: check_ra"):
-        with db.session as session:
+        with Session(db.engine) as session:
             session.add(s)
             session.commit()
 
