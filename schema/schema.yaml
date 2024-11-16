@@ -2,12 +2,29 @@
 name: astrodb
 "@id": "#astrodb_template"
 description: "Template database for use by the AstroDB Toolkit"
+
 tables:
+  - name: Publications
+    "@id": "#Publications"
+    description: Reference information (DOI, bibcodes, etc)
+    primaryKey: 
+    - "#Publications.reference"
+
+    columns:
+    - name: reference
+      "@id": "#Publications.reference"
+      datatype: string
+      length: 30
+      description: Publication reference identifier
+      ivoa:ucd: meta.id;meta.main
+
+
   - name: Sources
     "@id": "#Sources"
     description: "Main identifiers for objects along with coordinates."
     primaryKey:
     - "#Sources.source"
+
     columns:
     - name: source
       "@id": "#Sources.source"
@@ -22,6 +39,19 @@ tables:
       description: ICRS Right Ascension of object
       fits:tunit: deg
       ivoa:ucd: pos.eq.ra;meta.main
+    - name: dec_deg
+      "@id": "#Sources.dec_deg"
+      datatype: double
+      description: ICRS Declination of object
+      fits:tunit: deg
+      ivoa:ucd: pos.eq.dec;meta.main
+    - name: reference
+      "@id": "#Sources.reference"
+      datatype: string
+      length: 30
+      description: Publication reference
+      nullable: false
+
     indexes:
       - name: PK_Sources_source
         "@id": "#PK_Sources_source"
@@ -33,6 +63,14 @@ tables:
         "@type": Check
         "@id": "#Sources_check_ra_bounds"
         description: Validate RA range
-        expression: ra_deg >= 0 & ra_deg <= 360
+        expression: ra_deg >= 0 AND ra_deg <= 360
+      - name: Source_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_Sources_reference_Publications_reference"
+        description: Link Source reference to Publications table
+        columns:
+        - "#Sources.reference"
+        referencedColumns:
+        - "#Publications.reference"
         
 
