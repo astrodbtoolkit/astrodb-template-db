@@ -5,7 +5,6 @@ import pytest
 import yaml
 import sqlalchemy as sa
 from sqlalchemy import create_engine
-from sqlalchemy.orm import Session
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.exc import IntegrityError
 
@@ -42,7 +41,7 @@ def db_object(schema):
 
     # Remove any existing copy of the test database
     if os.path.exists(DB_NAME):
-            os.remove(DB_NAME)
+        os.remove(DB_NAME)
 
     # Using test file for sqlite; in-memory does not preseve inserts
     connection_string = "sqlite:///" + DB_NAME
@@ -72,15 +71,22 @@ def test_inserts(db_object):
 
     # Creating basic pointers to the tables
     # If using Felis metadata object (instead of AstroDB.Database), need to include the DB name (astrodb)
-    Sources = metadata.tables['Sources']
-    Publications = metadata.tables['Publications']
+    Sources = metadata.tables["Sources"]
+    Publications = metadata.tables["Publications"]
 
     # Data to be loaded, as list of dictionaries
     ref_data = [
-        {"reference": "Ref 1",},
+        {
+            "reference": "Ref 1",
+        },
     ]
     source_data = [
-        {"source": "Fake 1", "ra_deg": 9.0673755, "dec_deg": 18.352889, "reference": "Ref 1"},
+        {
+            "source": "Fake 1",
+            "ra_deg": 9.0673755,
+            "dec_deg": 18.352889,
+            "reference": "Ref 1",
+        },
     ]
 
     # Actual ingest of data
@@ -99,7 +105,7 @@ def test_orm(db_object):
     # DB tables *must* have primary keys to be automapped
     Base = automap_base(metadata=db.metadata)
     Base.prepare()
-    
+
     # Creating the actual Table objects
     Publications = Base.classes.Publications
     Sources = Base.classes.Sources
@@ -122,7 +128,7 @@ def test_constraints(db_object):
     # DB tables *must* have primary keys to be automapped
     Base = automap_base(metadata=db.metadata)
     Base.prepare()
-    
+
     # Creating the actual Table objects
     Sources = Base.classes.Sources
 
@@ -154,5 +160,8 @@ def test_queries(db_object):
     print(db.query(db.Sources).table())
     print(db.sql_query("select * from Sources", fmt="astropy"))
 
-    assert db.query(db.Sources).filter(db.Sources.c.source == "Fake V4046 Sgr").count() == 0
+    assert (
+        db.query(db.Sources).filter(db.Sources.c.source == "Fake V4046 Sgr").count()
+        == 0
+    )
     assert db.query(db.Sources).filter(db.Sources.c.source == "V4046 Sgr").count() == 1
