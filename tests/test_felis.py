@@ -1,18 +1,31 @@
 # Tests to validate schema in felis yaml format
 
+import os
 import pytest
 import yaml
 import sqlalchemy as sa
-from sqlalchemy import create_engine, MetaData
-from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy import create_engine
+from sqlalchemy.orm import Session
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.exc import IntegrityError
-# from sqlite3 import IntegrityError
-from pydantic import ValidationError
-from astrodbkit.astrodb import AstrodbQuery
 
 from felis.datamodel import Schema
 from felis.metadata import MetaDataBuilder
+
+from astrodbkit.astrodb import Database
+
+DB_NAME = "felis_test.sqlite"
+
+REFERENCE_TABLES = [
+    "Publications",
+    "Telescopes",
+    "Instruments",
+    "Modes",
+    "PhotometryFilters",
+    "Versions",
+    "Parameters",
+    "Regimes",
+]
 
 
 @pytest.fixture()
@@ -25,31 +38,42 @@ def schema():
 
 @pytest.fixture()
 def db_object(schema):
-    # Build in-memory database
-    metadata = MetaDataBuilder(schema).build()
+    # Build test database
 
-    # TODO: consider switching to real test file
-    # Noticing that each test does not know about other inserts
-    engine = create_engine("sqlite:///:memory:")
+    # Remove any existing copy of the test database
+    if os.path.exists(DB_NAME):
+            os.remove(DB_NAME)
+
+    # Using test file for sqlite; in-memory does not preseve inserts
+    connection_string = "sqlite:///" + DB_NAME
+    engine = create_engine(connection_string)
 
     # Workaround for SQLite since it doesn't support schema
     with engine.begin() as conn:
-        conn.execute(sa.text("ATTACH ':memory:' AS astrodb"))
+        conn.execute(sa.text("ATTACH '" + DB_NAME + "' AS astrodb"))
 
+    # Create database from Felis schema
+    metadata = MetaDataBuilder(schema).build()
     metadata.create_all(engine)
 
-    return engine, metadata
+    # Use AstroDB Database object
+    db = Database(connection_string, reference_tables=REFERENCE_TABLES)
+
+    # Confirm DB has been created
+    assert os.path.exists(DB_NAME)
+
+    return db
 
 
 def test_inserts(db_object):
     # Attempt insert with ORM
 
-    engine, metadata = db_object
+    engine, metadata = db_object.engine, db_object.metadata
 
     # Creating basic pointers to the tables
-    # This requires us to use the DB name (astrodb)
-    Sources = metadata.tables['astrodb.Sources']
-    Publications = metadata.tables['astrodb.Publications']
+    # If using Felis metadata object (instead of AstroDB.Database), need to include the DB name (astrodb)
+    Sources = metadata.tables['Sources']
+    Publications = metadata.tables['Publications']
 
     # Data to be loaded, as list of dictionaries
     ref_data = [
@@ -69,21 +93,21 @@ def test_inserts(db_object):
 def test_orm(db_object):
     # Testing use via ORM objects
 
-    engine, metadata = db_object
+    db = db_object
 
     # Use Automap to prepare SQLAlchemy Table objects
     # DB tables *must* have primary keys to be automapped
-    Base = automap_base(metadata=metadata)
+    Base = automap_base(metadata=db.metadata)
     Base.prepare()
     
     # Creating the actual Table objects
     Publications = Base.classes.Publications
     Sources = Base.classes.Sources
 
-    # Session = sessionmaker(bind=engine, query_cls=AstrodbQuery)
+    # Running ingests
     p = Publications(reference="Ref 2")
     s = Sources(source="V4046 Sgr", ra_deg=273.54, dec_deg=-32.79, reference="Ref 2")
-    with Session(engine) as session:
+    with db.session as session:
         session.add(p)
         session.add(s)
         session.commit()
@@ -92,37 +116,43 @@ def test_orm(db_object):
 def test_constraints(db_object):
     # Testing constraints in the DB
 
-    engine, metadata = db_object
+    db = db_object
 
     # Use Automap to prepare SQLAlchemy Table objects
     # DB tables *must* have primary keys to be automapped
-    Base = automap_base(metadata=metadata)
+    Base = automap_base(metadata=db.metadata)
     Base.prepare()
     
     # Creating the actual Table objects
-    Publications = Base.classes.Publications
     Sources = Base.classes.Sources
-
-    # Actual ingests
-    session = Session(engine)
-    p = Publications(reference="Ref 2")
-    session.add(p)
-    session.commit()
-
-    # TODO: Capture errors when they are actually raised!
 
     # Try negative RA
     s = Sources(source="Bad RA 1", ra_deg=-273.54, dec_deg=-32.79, reference="Ref 2")
     with pytest.raises(IntegrityError, match="CHECK constraint failed: check_ra"):
-        session.add(s)
-        session.commit()
-    
-    session.rollback()
+        with db.session as session:
+            session.add(s)
+            session.commit()
 
     # Try out-of-bounds RA
     s = Sources(source="Bad RA 2", ra_deg=99999, dec_deg=-32.79, reference="Ref 2")
     with pytest.raises(IntegrityError, match="CHECK constraint failed: check_ra"):
-        session.add(s)
-        session.commit()
+        with db.session as session:
+            session.add(s)
+            session.commit()
 
-    session.rollback()
+
+def test_queries(db_object):
+    # Queries using AstroDB
+
+    db = db_object
+
+    # Confirm the right tables are present
+    assert "Sources" in db.metadata.tables.keys()
+    assert "Publications" in db.metadata.tables.keys()
+
+    # TODO: Not clear why no data is present...
+    print(db.query(db.Sources).table())
+    print(db.sql_query("select * from Sources", fmt="astropy"))
+
+    assert db.query(db.Sources).filter(db.Sources.c.source == "Fake V4046 Sgr").count() == 0
+    assert db.query(db.Sources).filter(db.Sources.c.source == "V4046 Sgr").count() == 1
