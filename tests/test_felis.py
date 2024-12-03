@@ -110,13 +110,16 @@ def test_orm(db_object):
     # Creating the actual Table objects
     Publications = Base.classes.Publications
     Sources = Base.classes.Sources
+    Names = Base.classes.Names
 
     # Running ingests
     p = Publications(reference="Ref 2")
     s = Sources(source="V4046 Sgr", ra_deg=273.54, dec_deg=-32.79, reference="Ref 2")
+    n = Names(source="V4046 Sgr", other_name="Hen 3-1636")
     with Session(db.engine) as session:
         session.add(p)
         session.add(s)
+        session.add(n)
         session.commit()
 
 
@@ -168,9 +171,10 @@ def test_queries(db_object):
     db = db_object
 
     # Confirm the right tables are present
-    assert len(db.metadata.tables.keys()) == 2
+    assert len(db.metadata.tables.keys()) == 3
     assert "Sources" in db.metadata.tables.keys()
     assert "Publications" in db.metadata.tables.keys()
+    assert "Names" in db.metadata.tables.keys()
 
     # print(db.query(db.Sources).table())
     # print(db.sql_query("select * from Sources", fmt="astropy"))
@@ -183,3 +187,7 @@ def test_queries(db_object):
         == 0
     )
     assert db.query(db.Sources).filter(db.Sources.c.source == "V4046 Sgr").count() == 1
+
+    t = db.inventory("V4046 Sgr")
+    assert "Names" in t.keys()
+    assert len(t["Names"]) == 1

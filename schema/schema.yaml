@@ -87,5 +87,42 @@ tables:
         - "#Sources.reference"
         referencedColumns:
         - "#Publications.reference"
-        
 
+
+  - name: Names
+    "@id": "#Names"
+    description: "Additional identifiers for objects in Sources table"
+    primaryKey:
+    - "#Names.source"
+    - "#Names.other_name"
+
+    columns:
+    - name: source
+      "@id": "#Names.source"
+      datatype: string
+      length: 100
+      description: Main identfier for an object; links to Sources table
+      nullable: false
+    - name: other_name
+      "@id": "#Names.other_name"
+      datatype: string
+      length: 100
+      description: Alternate identifier for an object
+      nullable: false
+
+    indexes:
+      - name: PK_Names_source
+        "@id": "#PK_Names_source"
+        description: Primary key for Names table
+        columns: 
+        - "#Names.source"
+        - "#Names.other_name"
+    constraints:
+      - name: Names_source_Source_source
+        "@type": "ForeignKey"
+        "@id": "#FK_Names_source_Source_source"
+        description: Link Names primary identifer to Sources table
+        columns:
+        - "#Names.source"
+        referencedColumns:
+        - "#Sources.source"
