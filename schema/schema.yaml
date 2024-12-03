@@ -17,6 +17,21 @@ tables:
       length: 30
       description: Publication reference identifier
       ivoa:ucd: meta.id;meta.main
+    - name: bibcode
+      "@id": "#Publications.bibcode"
+      datatype: string
+      length: 100
+      description: Publication bibcode
+    - name: doi
+      "@id": "#Publications.doi"
+      datatype: string
+      length: 100
+      description: Publication DOI
+    - name: description
+      "@id": "#Publications.description"
+      datatype: string
+      length: 1000
+      description: Publication description
 
 
   - name: Sources
@@ -49,7 +64,7 @@ tables:
       "@id": "#Sources.reference"
       datatype: string
       length: 30
-      description: Publication reference
+      description: Publication reference; links to Publications table
       nullable: false
 
     indexes:

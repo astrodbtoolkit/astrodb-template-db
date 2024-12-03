@@ -146,6 +146,20 @@ def test_constraints(db_object):
         with Session(db.engine) as session:
             session.add(s)
             session.commit()
+    
+    # Try adding with missing foreign key (reference)
+    s = Sources(source="Bad ref", ra_deg=273.54, dec_deg=-32.79, reference="Missing ref")
+    with pytest.raises(IntegrityError, match="FOREIGN KEY constraint failed"):
+        with Session(db.engine) as session:
+                session.add(s)
+                session.commit()
+
+    # Try NULL value (no reference)
+    s = Sources(source="Bad ref", ra_deg=273.54, dec_deg=-32.79)
+    with pytest.raises(IntegrityError, match="NOT NULL constraint failed: Sources.reference"):
+        with Session(db.engine) as session:
+                session.add(s)
+                session.commit()
 
 
 def test_queries(db_object):
@@ -154,13 +168,16 @@ def test_queries(db_object):
     db = db_object
 
     # Confirm the right tables are present
+    assert len(db.metadata.tables.keys()) == 2
     assert "Sources" in db.metadata.tables.keys()
     assert "Publications" in db.metadata.tables.keys()
 
-    # TODO: Not clear why no data is present...
-    print(db.query(db.Sources).table())
-    print(db.sql_query("select * from Sources", fmt="astropy"))
+    # print(db.query(db.Sources).table())
+    # print(db.sql_query("select * from Sources", fmt="astropy"))
 
+    # Check counts with some constraints
+    assert db.query(db.Publications).count() == 2
+    assert db.query(db.Sources).count() == 2
     assert (
         db.query(db.Sources).filter(db.Sources.c.source == "Fake V4046 Sgr").count()
         == 0
