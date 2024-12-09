@@ -9,9 +9,8 @@ from schema.schema_template import REFERENCE_TABLES
 from schema.schema_template import *
 
 
-
 # Create a fresh template database for the data and integrity tests
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="session", autouse=False)
 def db():
     DB_NAME = "tests/astrodb_template_tests.sqlite"
     DB_PATH = "data"
