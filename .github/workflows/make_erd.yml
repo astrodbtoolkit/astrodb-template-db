@@ -4,7 +4,7 @@ name: Make ER diagram
 
 on:
   workflow_dispatch:  # manual execution
-  pull_request:
+  push:
     branches: [ "main" ]
 
 permissions:
@@ -17,9 +17,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-      with:
-        ref: ${{ github.event.pull_request.head.ref }}
-        repository: ${{ github.event.pull_request.head.repo.full_name }}
 
     - name: Set up Python 3.11
       uses: actions/setup-python@v3
