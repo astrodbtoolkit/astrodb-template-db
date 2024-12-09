@@ -1,0 +1,38 @@
+# This workflow will install Python dependencies and run a python script to generate an E-R diagram
+
+name: Make ER diagram
+
+on:
+  workflow_dispatch:  # manual execution
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.11"
+    - name: Install dependencies
+      run: |
+        apt install graphviz libgraphviz-dev
+        python -m pip install --upgrade pip
+        pip install astrodbkit
+    - name: Run script
+      run: |
+        python scripts/make_erd.py
+    - name: Commit diagram
+      run: |
+        git add schema/schema.png
+        git commit -m "Updating ER diagram"
+        git push
