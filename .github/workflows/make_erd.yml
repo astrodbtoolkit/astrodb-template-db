@@ -25,7 +25,7 @@ jobs:
         python-version: "3.11"
     - name: Install dependencies
       run: |
-        apt install graphviz libgraphviz-dev
+        sudo apt install graphviz libgraphviz-dev
         python -m pip install --upgrade pip
         pip install astrodbkit
     - name: Run script
