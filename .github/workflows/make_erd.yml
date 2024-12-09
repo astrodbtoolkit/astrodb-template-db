@@ -4,8 +4,6 @@ name: Make ER diagram
 
 on:
   workflow_dispatch:  # manual execution
-  push:
-    branches: [ "main" ]
 
 permissions:
   contents: write
