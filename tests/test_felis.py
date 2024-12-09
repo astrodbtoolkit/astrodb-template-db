@@ -17,6 +17,7 @@ from felis.db.utils import DatabaseContext
 from astrodbkit.astrodb import Database
 
 DB_NAME = "felis_test.sqlite"
+SCHEMA_NAME = "astrodb"
 CONNECTION_STRING = "sqlite:///" + DB_NAME
 # CONNECTION_STRING = "postgresql+psycopg2://postgres:password@localhost:5432/felis"
 
@@ -60,25 +61,17 @@ def db_object(schema):
     metadata = MetaDataBuilder(schema).build()
     if CONNECTION_STRING.startswith("postgresql"):
         with engine.connect() as connection:
-            connection.execute(CreateSchema("astrodb", if_not_exists=True))
+            connection.execute(CreateSchema(SCHEMA_NAME, if_not_exists=True))
             connection.commit()
     metadata.create_all(bind=engine)
 
-    # Alternate way to create database
-    # ctx = DatabaseContext(metadata, engine)
-    # ctx.initialize()
-    # ctx.create_all()
-    # result = ctx.execute("select * from Sources")
-    # print(result)
-
-    # Quick test that tables exist
-    # engine = create_engine(CONNECTION_STRING)
-    # with Session(engine) as session:
-    #     result = session.execute(sa.text("select * from Sources")).fetchall()
-    # print(result)
-
     # Use AstroDB Database object
-    db = Database(CONNECTION_STRING, reference_tables=REFERENCE_TABLES)
+    if CONNECTION_STRING.startswith("postgresql"):
+        # Set default schema to be using for postgres
+        connect_args = {"options": f"-csearch_path={SCHEMA_NAME}"}
+    else:
+        connect_args = {}
+    db = Database(CONNECTION_STRING, reference_tables=REFERENCE_TABLES, connection_arguments=connect_args)
 
     # Confirm DB has been created
     if CONNECTION_STRING.startswith("sqlite"):
@@ -160,31 +153,31 @@ def test_constraints(db_object):
 
     # Try negative RA
     s = Sources(source="Bad RA 1", ra_deg=-273.54, dec_deg=-32.79, reference="Ref 2")
-    with pytest.raises(IntegrityError, match="CHECK constraint failed: check_ra"):
+    with pytest.raises(IntegrityError):
         with Session(db.engine) as session:
             session.add(s)
             session.commit()
 
     # Try out-of-bounds RA
     s = Sources(source="Bad RA 2", ra_deg=99999, dec_deg=-32.79, reference="Ref 2")
-    with pytest.raises(IntegrityError, match="CHECK constraint failed: check_ra"):
+    with pytest.raises(IntegrityError):
         with Session(db.engine) as session:
             session.add(s)
             session.commit()
-    
+
     # Try adding with missing foreign key (reference)
     s = Sources(source="Bad ref", ra_deg=273.54, dec_deg=-32.79, reference="Missing ref")
-    with pytest.raises(IntegrityError, match="FOREIGN KEY constraint failed"):
+    with pytest.raises(IntegrityError):
         with Session(db.engine) as session:
-                session.add(s)
-                session.commit()
+            session.add(s)
+            session.commit()
 
     # Try NULL value (no reference)
     s = Sources(source="Bad ref", ra_deg=273.54, dec_deg=-32.79)
-    with pytest.raises(IntegrityError, match="NOT NULL constraint failed: Sources.reference"):
+    with pytest.raises(IntegrityError):
         with Session(db.engine) as session:
-                session.add(s)
-                session.commit()
+            session.add(s)
+            session.commit()
 
 
 def test_queries(db_object):
@@ -204,10 +197,7 @@ def test_queries(db_object):
     # Check counts with some constraints
     assert db.query(db.Publications).count() == 2
     assert db.query(db.Sources).count() == 2
-    assert (
-        db.query(db.Sources).filter(db.Sources.c.source == "Fake V4046 Sgr").count()
-        == 0
-    )
+    assert db.query(db.Sources).filter(db.Sources.c.source == "Fake V4046 Sgr").count() == 0
     assert db.query(db.Sources).filter(db.Sources.c.source == "V4046 Sgr").count() == 1
 
     t = db.inventory("V4046 Sgr")
