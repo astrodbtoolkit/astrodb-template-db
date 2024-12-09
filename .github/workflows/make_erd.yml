@@ -6,9 +6,6 @@ on:
   workflow_dispatch:  # manual execution
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-    # do we want on all pull_requests?
 
 permissions:
   contents: write
@@ -20,9 +17,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-      with:
-        ref: ${{ github.head_ref }}
-        # only needed for pull-request triggers
 
     - name: Set up Python 3.11
       uses: actions/setup-python@v3
