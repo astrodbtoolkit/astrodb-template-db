@@ -8,13 +8,17 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.schema import CreateSchema
 
 from felis.datamodel import Schema
 from felis.metadata import MetaDataBuilder
+from felis.db.utils import DatabaseContext
 
 from astrodbkit.astrodb import Database
 
 DB_NAME = "felis_test.sqlite"
+CONNECTION_STRING = "sqlite:///" + DB_NAME
+# CONNECTION_STRING = "postgresql+psycopg2://postgres:password@localhost:5432/felis"
 
 REFERENCE_TABLES = [
     "Publications",
@@ -41,26 +45,44 @@ def db_object(schema):
     # Build test database
 
     # Remove any existing copy of the test database
-    if os.path.exists(DB_NAME):
+    if CONNECTION_STRING.startswith("sqlite") and os.path.exists(DB_NAME):
         os.remove(DB_NAME)
 
     # Using test file for sqlite; in-memory does not preseve inserts
-    connection_string = "sqlite:///" + DB_NAME
-    engine = create_engine(connection_string)
+    engine = create_engine(CONNECTION_STRING)
 
     # Workaround for SQLite since it doesn't support schema
-    with engine.begin() as conn:
-        conn.execute(sa.text("ATTACH '" + DB_NAME + "' AS astrodb"))
+    if CONNECTION_STRING.startswith("sqlite"):
+        with engine.begin() as conn:
+            conn.execute(sa.text("ATTACH '" + DB_NAME + "' AS astrodb"))
 
     # Create database from Felis schema
     metadata = MetaDataBuilder(schema).build()
-    metadata.create_all(engine)
+    if CONNECTION_STRING.startswith("postgresql"):
+        with engine.connect() as connection:
+            connection.execute(CreateSchema("astrodb", if_not_exists=True))
+            connection.commit()
+    metadata.create_all(bind=engine)
+
+    # Alternate way to create database
+    # ctx = DatabaseContext(metadata, engine)
+    # ctx.initialize()
+    # ctx.create_all()
+    # result = ctx.execute("select * from Sources")
+    # print(result)
+
+    # Quick test that tables exist
+    # engine = create_engine(CONNECTION_STRING)
+    # with Session(engine) as session:
+    #     result = session.execute(sa.text("select * from Sources")).fetchall()
+    # print(result)
 
     # Use AstroDB Database object
-    db = Database(connection_string, reference_tables=REFERENCE_TABLES)
+    db = Database(CONNECTION_STRING, reference_tables=REFERENCE_TABLES)
 
     # Confirm DB has been created
-    assert os.path.exists(DB_NAME)
+    if CONNECTION_STRING.startswith("sqlite"):
+        assert os.path.exists(DB_NAME)
 
     return db
 
