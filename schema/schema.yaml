@@ -137,6 +137,37 @@ tables:
       ivoa:ucd: instr.bandwidth
 
 
+  - name: Versions
+    "@id": "#Versions"
+    description: Database version information
+    primaryKey: 
+    - "#Versions.version"
+
+    columns:
+    - name: version
+      "@id": "#Versions.version"
+      datatype: string
+      length: 30
+      description: Version identifier
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: start_date
+      "@id": "#Versions.start_date"
+      datatype: string
+      length: 30
+      description: Date when this version started being used
+    - name: end_date
+      "@id": "#Versions.end_date"
+      datatype: string
+      length: 30
+      description: Release date of this version
+    - name: description
+      "@id": "#Versions.description"
+      datatype: string
+      length: 1000
+      description: Description of changes associated with this version
+
+
   - name: Sources
     "@id": "#Sources"
     description: "Main identifiers for objects along with coordinates."
