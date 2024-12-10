@@ -93,6 +93,16 @@ tables:
       description: Publication reference; links to Publications table
       nullable: false
 
+    constraints:
+      - name: Instruments_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_Instruments_reference_Publications_reference"
+        description: Link Instruments reference to Publications table
+        columns:
+        - "#Instruments.reference"
+        referencedColumns:
+        - "#Publications.reference"
+
 
   - name: PhotometryFilters
     "@id": "#PhotometryFilters"
@@ -173,6 +183,11 @@ tables:
         "@id": "#Sources_check_ra_bounds"
         description: Validate RA range
         expression: ra_deg >= 0 AND ra_deg <= 360
+      - name: check_dec
+        "@type": Check
+        "@id": "#Sources_check_dec_bounds"
+        description: Validate Dec range
+        expression: dec_deg >= -90 AND dec_deg <= 90
       - name: Source_reference_Publications_reference
         "@type": "ForeignKey"
         "@id": "#FK_Sources_reference_Publications_reference"
