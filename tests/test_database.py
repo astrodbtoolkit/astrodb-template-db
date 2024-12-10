@@ -16,6 +16,9 @@ from schema.schema_template import (
 from astrodbkit.astrodb import or_
 import numpy as np
 
+
+###### now, we test database functionality, self-consistency, etc. #####
+
 def test_setup_db(db):
     # Some setup tasks to ensure some data exists in the database first
     ref_data = [
