@@ -4,6 +4,7 @@ name: astrodb
 description: "Template database for use by the AstroDB Toolkit"
 
 tables:
+
   - name: Publications
     "@id": "#Publications"
     description: Reference information (DOI, bibcodes, etc)
@@ -502,3 +503,5 @@ tables:
         - "#Parallax.reference"
         referencedColumns:
         - "#Publications.reference"
+
+version: "v0.1"
