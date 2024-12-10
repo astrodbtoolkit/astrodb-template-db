@@ -163,12 +163,34 @@ tables:
       description: ICRS Declination of object
       fits:tunit: deg
       ivoa:ucd: pos.eq.dec;meta.main
+    - name: epoch_year
+      "@id": "#Sources.epoch_year"
+      datatype: double
+      description: Decimal year for coordinates (eg, 2015.5)
+      fits:tunit: yr
+    - name: equinox
+      "@id": "#Sources.equinox"
+      datatype: string
+      length: 10
+      description: Equinox reference frame year (eg, J2000)
     - name: reference
       "@id": "#Sources.reference"
       datatype: string
       length: 30
       description: Publication reference; links to Publications table
+      ivoa:ucd: meta.ref;meta.main
       nullable: false
+    - name: other_references
+      "@id": "#Sources.other_references"
+      datatype: string
+      length: 100
+      description: Additional references
+      ivoa:ucd: meta.ref
+    - name: comments
+      "@id": "#Sources.comments"
+      datatype: string
+      length: 1000
+      description: Free-form comments on this Source
 
 
     indexes:
