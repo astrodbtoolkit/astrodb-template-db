@@ -33,6 +33,25 @@ tables:
       length: 1000
       description: Publication description
 
+  - name: Telescopes
+    "@id": "#Telescopes"
+    description: Telescope, mission, and survey information
+    primaryKey: 
+    - "#Telescope.telescope"
+
+    columns:
+    - name: telescope
+      "@id": "#Telescopes.telecope"
+      datatype: string
+      length: 30
+      description: Telescope, mission, or survey name
+      ivoa:ucd: meta.id;meta.main
+    - name: description
+      "@id": "#Telescopes.description"
+      datatype: string
+      length: 1000
+      description: Telescope description
+
 
   - name: Sources
     "@id": "#Sources"
