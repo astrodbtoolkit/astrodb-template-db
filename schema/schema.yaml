@@ -168,6 +168,22 @@ tables:
       description: Description of changes associated with this version
 
 
+  - name: Regimes
+    "@id": "#Regimes"
+    description: Regime lookup table
+    primaryKey: 
+    - "#Regimes.regime"
+
+    columns:
+    - name: regime
+      "@id": "#Regimes.regime"
+      datatype: string
+      length: 30
+      description: Regime identifier string
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+
+
   - name: Sources
     "@id": "#Sources"
     description: "Main identifiers for objects along with coordinates."
