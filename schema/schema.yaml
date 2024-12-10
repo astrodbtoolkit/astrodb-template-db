@@ -110,7 +110,6 @@ tables:
       length: 30
       description: Publication reference; links to Publications table
       ivoa:ucd: meta.ref
-      nullable: false
 
     constraints:
       - name: Instruments_reference_Publications_reference
