@@ -233,12 +233,14 @@ tables:
       datatype: string
       length: 100
       description: Main identfier for an object; links to Sources table
+      ivoa:ucd: meta.id;meta.main
       nullable: false
     - name: other_name
       "@id": "#Names.other_name"
       datatype: string
       length: 100
       description: Alternate identifier for an object
+      ivoa:ucd: meta.id
       nullable: false
 
     indexes:
