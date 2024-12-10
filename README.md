@@ -31,3 +31,4 @@ We plan to support passing Astropy units to the database, with the database  aut
 internal units of each table upon ingest. We aim to have internal tests require that each table with a quantity
 has units in the table metadata that resolve to an Astropy unit.
 
+Test change
