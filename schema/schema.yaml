@@ -23,11 +23,13 @@ tables:
       datatype: string
       length: 100
       description: Publication bibcode
+      ivoa:ucd: meta.bib.bibcode
     - name: doi
       "@id": "#Publications.doi"
       datatype: string
       length: 100
       description: Publication DOI
+      ivoa:ucd: meta.ref.doi
     - name: description
       "@id": "#Publications.description"
       datatype: string
@@ -107,6 +109,7 @@ tables:
       datatype: string
       length: 30
       description: Publication reference; links to Publications table
+      ivoa:ucd: meta.ref
       nullable: false
 
     constraints:
