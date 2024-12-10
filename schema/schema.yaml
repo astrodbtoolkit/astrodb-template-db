@@ -16,7 +16,7 @@ tables:
       datatype: string
       length: 30
       description: Publication reference identifier
-      ivoa:ucd: meta.id;meta.main
+      ivoa:ucd: meta.ref;meta.main
       nullable: false
     - name: bibcode
       "@id": "#Publications.bibcode"
@@ -68,7 +68,7 @@ tables:
       datatype: string
       length: 30
       description: Instrument name
-      ivoa:ucd: meta.id;meta.main
+      ivoa:ucd: instr;meta.main
       nullable: false
     - name: mode
       "@id": "#Instruments.mode"
@@ -92,6 +92,39 @@ tables:
       length: 30
       description: Publication reference; links to Publications table
       nullable: false
+
+
+  - name: PhotometryFilters
+    "@id": "#PhotometryFilters"
+    description: Photometry filter information
+    primaryKey: 
+    - "#PhotometryFilters.band"
+
+    columns:
+    - name: band
+      "@id": "#PhotometryFilters.band"
+      datatype: string
+      length: 30
+      description: Band name.
+      ivoa:ucd: instr.bandpass;meta.main
+      nullable: false
+    - name: ucd
+      "@id": "#PhotometryFilters.ucd"
+      datatype: string
+      length: 100
+      description: Unified Content Descriptor of the photometry filter
+    - name: effective_wavelength_angstroms
+      "@id": "#PhotometryFilters.effective_wavelength_angstroms"
+      datatype: double
+      description: Effective wavelength of the photometry filter in Angstroms
+      fits:tunit: Angstrom
+      nullable: false
+    - name: width_angstroms
+      "@id": "#PhotometryFilters.width_angstroms"
+      datatype: double
+      fits:tunit: Angstrom
+      description: Width of the ephotometry filter in Angstroms
+      ivoa:ucd: instr.bandwidth
 
 
   - name: Sources
@@ -126,6 +159,7 @@ tables:
       length: 30
       description: Publication reference; links to Publications table
       nullable: false
+
 
     indexes:
       - name: PK_Sources_source
