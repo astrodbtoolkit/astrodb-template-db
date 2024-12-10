@@ -79,6 +79,8 @@ tables:
     description: Instrument information
     primaryKey: 
     - "#Instruments.instrument"
+    - "#Instruments.mode"
+    - "#Instruments.telescope"
 
     columns:
     - name: instrument
@@ -93,6 +95,7 @@ tables:
       datatype: string
       length: 30
       description: Instrument mode
+      nullable: false
     - name: telescope
       "@id": "#Instruments.telescope"
       datatype: string
@@ -368,7 +371,6 @@ tables:
       datatype: string
       length: 30
       description: Telescope, mission, or survey name; links to Telescopes table
-      nullable: false
     - name: epoch
       "@id": "#Photometry.epoch"
       datatype: double
