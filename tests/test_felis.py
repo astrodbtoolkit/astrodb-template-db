@@ -186,7 +186,7 @@ def test_queries(db_object):
     db = db_object
 
     # Confirm the right tables are present
-    assert len(db.metadata.tables.keys()) == 10
+    assert len(db.metadata.tables.keys()) == 11
     assert "Sources" in db.metadata.tables.keys()
     assert "Publications" in db.metadata.tables.keys()
     assert "Names" in db.metadata.tables.keys()
@@ -194,9 +194,11 @@ def test_queries(db_object):
     assert "Instruments" in db.metadata.tables.keys()
     assert "PhotometryFilters" in db.metadata.tables.keys()
     assert "Versions" in db.metadata.tables.keys()
-    assert "Regimes" in db.metadata.tables.keys()
+    assert "Parallaxes" in db.metadata.tables.keys()
+    assert "RadialVelocities" in db.metadata.tables.keys()
     assert "Photometry" in db.metadata.tables.keys()
-    assert "Parallax" in db.metadata.tables.keys()
+    assert "Regimes" in db.metadata.tables.keys()
+
 
     # print(db.query(db.Sources).table())
     # print(db.sql_query("select * from Sources", fmt="astropy"))
