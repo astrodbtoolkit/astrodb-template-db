@@ -11,5 +11,12 @@
             "other_references": "Perlmutter99",
             "comments": "This is a cool dark matter source!"
         }
+    ],
+    "RadialVelocities": [
+        {
+            "radial_velocity_km_s": 35.4,
+            "radial_velocity_error_km_s": 0.4,
+            "reference": "Rubin80"
+        }
     ]
 }
