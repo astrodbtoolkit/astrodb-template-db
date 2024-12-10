@@ -580,6 +580,11 @@ tables:
         - "#RadialVelocities.reference"
         referencedColumns:
         - "#Publications.reference"
+      - name: check_radial_velocity_error
+        "@type": Check
+        "@id": "#check_radial_velocity_error"
+        description: Validate radial velocity error
+        expression: radial_velocity_error_kms >= 0
 
 
 version: "v0.1"
