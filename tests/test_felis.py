@@ -186,10 +186,12 @@ def test_queries(db_object):
     db = db_object
 
     # Confirm the right tables are present
-    assert len(db.metadata.tables.keys()) == 3
+    assert len(db.metadata.tables.keys()) == 4
     assert "Sources" in db.metadata.tables.keys()
     assert "Publications" in db.metadata.tables.keys()
     assert "Names" in db.metadata.tables.keys()
+    assert "Telescopes" in db.metadata.tables.keys()
+
 
     # print(db.query(db.Sources).table())
     # print(db.sql_query("select * from Sources", fmt="astropy"))

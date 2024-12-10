@@ -17,6 +17,7 @@ tables:
       length: 30
       description: Publication reference identifier
       ivoa:ucd: meta.id;meta.main
+      nullable: false
     - name: bibcode
       "@id": "#Publications.bibcode"
       datatype: string
@@ -33,19 +34,21 @@ tables:
       length: 1000
       description: Publication description
 
+
   - name: Telescopes
     "@id": "#Telescopes"
     description: Telescope, mission, and survey information
     primaryKey: 
-    - "#Telescope.telescope"
+    - "#Telescopes.telescope"
 
     columns:
     - name: telescope
-      "@id": "#Telescopes.telecope"
+      "@id": "#Telescopes.telescope"
       datatype: string
       length: 30
       description: Telescope, mission, or survey name
       ivoa:ucd: meta.id;meta.main
+      nullable: false
     - name: description
       "@id": "#Telescopes.description"
       datatype: string
