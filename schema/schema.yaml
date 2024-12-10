@@ -62,7 +62,6 @@ tables:
       datatype: string
       length: 30
       description: Publication reference; links to Publications table
-      nullable: false
 
     constraints:
       - name: Telescopes_reference_Publications_reference
@@ -111,7 +110,6 @@ tables:
       length: 30
       description: Publication reference; links to Publications table
       ivoa:ucd: meta.ref
-      nullable: false
 
     constraints:
       - name: Instruments_reference_Publications_reference
@@ -240,6 +238,12 @@ tables:
       datatype: string
       length: 10
       description: Equinox reference frame year (eg, J2000)
+    - name: shortname
+      "@id": "#Sources.shortname"
+      datatype: string
+      length: 30
+      description: Short identfier for an object
+      ivoa:ucd: meta.id
     - name: reference
       "@id": "#Sources.reference"
       datatype: string
