@@ -416,3 +416,70 @@ tables:
         - "#Photometry.regime"
         referencedColumns:
         - "#Regimes.regime"
+
+
+  - name: Parallax
+    "@id": "#Parallax"
+    description: Parallaxes for Sources
+    primaryKey: 
+    - "#Parallax.source"
+    - "#Parallax.reference"
+
+    columns:
+    - name: source
+      "@id": "#Parallax.source"
+      datatype: string
+      length: 100
+      description: Main identfier for an object; links to Sources table
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: parallax_mas
+      "@id": "#Parallax.parallax_mas"
+      datatype: double
+      description: Parallax value for this entry
+      fits:tunit: mas
+    - name: parallax_error
+      "@id": "#Parallax.magnitude_error"
+      datatype: double
+      description: Uncertainty of this parallax value
+      fits:tunit: mas
+    - name: adopted
+      "@id": "#Parallax.adopted"
+      datatype: boolean
+      description: Flag to indicate if this is the adopted entry
+    - name: comments
+      "@id": "#Parallax.comments"
+      datatype: string
+      length: 1000
+      description: Free-form comments for this entry
+    - name: reference
+      "@id": "#Parallax.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+      nullable: false
+
+    indexes:
+      - name: PK_Parallax
+        "@id": "#PK_Parallax"
+        description: Primary key for Parallax table
+        columns: 
+        - "#Parallax.source"
+        - "#Parallax.reference"
+    constraints:
+      - name: Parallax_source_Sources_source
+        "@type": "ForeignKey"
+        "@id": "#FK_Parallax_source_Sources_source"
+        description: Link Parallax source to Sources table
+        columns:
+        - "#Parallax.source"
+        referencedColumns:
+        - "#Sources.source"
+      - name: Parallax_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_Parallax_reference_Publications_reference"
+        description: Link Parallax reference to Publications table
+        columns:
+        - "#Parallax.reference"
+        referencedColumns:
+        - "#Publications.reference"
