@@ -186,11 +186,13 @@ def test_queries(db_object):
     db = db_object
 
     # Confirm the right tables are present
-    assert len(db.metadata.tables.keys()) == 4
+    assert len(db.metadata.tables.keys()) == 5
     assert "Sources" in db.metadata.tables.keys()
     assert "Publications" in db.metadata.tables.keys()
     assert "Names" in db.metadata.tables.keys()
     assert "Telescopes" in db.metadata.tables.keys()
+    assert "Instruments" in db.metadata.tables.keys()
+
 
 
     # print(db.query(db.Sources).table())

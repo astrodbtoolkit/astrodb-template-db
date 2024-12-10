@@ -56,6 +56,44 @@ tables:
       description: Telescope description
 
 
+  - name: Instruments
+    "@id": "#Instruments"
+    description: Instrument information
+    primaryKey: 
+    - "#Instruments.instrument"
+
+    columns:
+    - name: instrument
+      "@id": "#Instruments.instrument"
+      datatype: string
+      length: 30
+      description: Instrument name
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: mode
+      "@id": "#Instruments.mode"
+      datatype: string
+      length: 30
+      description: Instrument mode
+    - name: telescope
+      "@id": "#Instruments.telescope"
+      datatype: string
+      length: 30
+      description: Telescope, mission, or survey name; links to Telescopes table
+      nullable: false
+    - name: description
+      "@id": "#Instruments.description"
+      datatype: string
+      length: 1000
+      description: Instrument description
+    - name: reference
+      "@id": "#Instruments.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+      nullable: false
+
+
   - name: Sources
     "@id": "#Sources"
     description: "Main identifiers for objects along with coordinates."
