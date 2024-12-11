@@ -2,16 +2,20 @@
 
 import sys
 
-from astrodbkit.astrodb import Database, create_database
+import yaml
 from eralchemy2 import render_er
+from felis.datamodel import Schema
+from felis.metadata import MetaDataBuilder
 
 sys.path.append("./")  # needed for github actions to find the template module
-from schema.schema_template import REFERENCE_TABLES
 
-# Connect to an in-memory sqlite database
-create_database(connection_string="sqlite://", felis_schema="schema/schema.yaml")
-db = Database("sqlite://", reference_tables=REFERENCE_TABLES)
+# Load up schema
+data = yaml.safe_load(open("schema/schema.yaml", "r"))
+schema = Schema.model_validate(data)
+
+# Create from Felis schema
+metadata = MetaDataBuilder(schema).build()
 
 # Create ER model from the database metadata
 filename = "schema/schema.png"
-render_er(db.metadata, filename)
+render_er(metadata, filename)
