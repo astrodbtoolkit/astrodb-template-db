@@ -1,11 +1,7 @@
 astrodb-template-db
 ---------------------------
 
-[![build](https://github.com/astrodbtoolkit/astrotemplate-db/actions/workflows/run_tests.yml/badge.svg)](https://github.com/astrodbtoolkit/astrotemplate-db/actions/workflows/run_tests.yml)
-
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/astrodbtoolkit/astrotemplate-db/run_tests.yml)
-
-![GitHub License](https://img.shields.io/github/license/astrodbtoolkit/astrodb-template-db)
+[![build](https://github.com/astrodbtoolkit/astrotemplate-db/actions/workflows/run_tests.yml/badge.svg)](https://github.com/astrodbtoolkit/astrotemplate-db/actions/workflows/run_tests.yml)  ![GitHub License](https://img.shields.io/github/license/astrodbtoolkit/astrodb-template-db)
 
 
 
