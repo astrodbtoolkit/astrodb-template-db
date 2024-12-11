@@ -21,12 +21,3 @@ At the user level, customizing this database involves working with the [schema](
 
 Under the hood, this template leans heavily on [AstrodbKit](https://github.com/astrodbtoolkit/AstrodbKit), a codebase built on [SQLAlchemy](https://www.sqlalchemy.org/).
 
-Units
----------------------------
-Per [Chen et al. 2022](https://iopscience.iop.org/article/10.3847/1538-4365/ac6268), we explicitly define the units
-for each table in their name (e.g., in the `Sources` table, the column with Right Ascension values
-is named `ra_deg`). Doing so removes unit ambiguity when querying and modifying the database.
-
-We plan to support passing Astropy units to the database, with the database  automatically converting into the
-internal units of each table upon ingest. We aim to have internal tests require that each table with a quantity
-has units in the table metadata that resolve to an Astropy unit.
