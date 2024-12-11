@@ -30,4 +30,3 @@ is named `ra_deg`). Doing so removes unit ambiguity when querying and modifying 
 We plan to support passing Astropy units to the database, with the database  automatically converting into the
 internal units of each table upon ingest. We aim to have internal tests require that each table with a quantity
 has units in the table metadata that resolve to an Astropy unit.
-
