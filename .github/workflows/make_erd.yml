@@ -29,7 +29,7 @@ jobs:
       run: |
         sudo apt install graphviz libgraphviz-dev
         python -m pip install --upgrade pip
-        pip install astrodbkit eralchemy2
+        pip install astrodbkit eralchemy2 lsst-felis
 
     - name: Run script
       run: |
