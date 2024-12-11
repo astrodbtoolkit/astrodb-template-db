@@ -216,7 +216,7 @@ tables:
       "@id": "#Sources.source"
       datatype: string
       length: 100
-      description: Unique identfier for an object
+      description: Unique identifier for an object
       ivoa:ucd: meta.id;src;meta.main
       nullable: false
     - name: ra_deg
@@ -245,7 +245,7 @@ tables:
       "@id": "#Sources.shortname"
       datatype: string
       length: 30
-      description: Short identfier for an object
+      description: Short identifier for an object
       ivoa:ucd: meta.id
     - name: reference
       "@id": "#Sources.reference"
@@ -306,7 +306,7 @@ tables:
       "@id": "#Names.source"
       datatype: string
       length: 100
-      description: Main identfier for an object; links to Sources table
+      description: Main identifier for an object; links to Sources table
       ivoa:ucd: meta.id;meta.main
       nullable: false
     - name: other_name
@@ -348,7 +348,7 @@ tables:
       "@id": "#Photometry.source"
       datatype: string
       length: 100
-      description: Main identfier for an object; links to Sources table
+      description: Main identifier for an object; links to Sources table
       ivoa:ucd: meta.id;meta.main
       nullable: false
     - name: band
@@ -456,7 +456,7 @@ tables:
       "@id": "#Parallaxes.source"
       datatype: string
       length: 100
-      description: Main identfier for an object; links to Sources table
+      description: Main identifier for an object; links to Sources table
       ivoa:ucd: meta.id;meta.main
       nullable: false
     - name: parallax_mas
@@ -526,7 +526,7 @@ tables:
       "@id": "#RadialVelocities.source"
       datatype: string
       length: 100
-      description: Main identfier for an object; links to Sources table
+      description: Main identifier for an object; links to Sources table
       ivoa:ucd: meta.id;meta.main
       nullable: false
     - name: radial_velocity_kms
