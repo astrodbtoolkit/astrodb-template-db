@@ -1,5 +1,5 @@
 ---
-name: astrodb
+name: astrodb_template
 "@id": "#astrodb_template"
 description: "Template database for use by the AstroDB Toolkit"
 
