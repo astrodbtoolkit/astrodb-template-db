@@ -2,19 +2,9 @@
 Functions to test the database and example files
 """
 
-from schema.schema_template import (
-    Instruments,
-    Names,
-    Photometry,
-    PhotometryFilters,
-    Publications,
-    Sources,
-    Telescopes,
-    Versions,
-    Regimes
-)
 from astrodbkit.astrodb import or_
-import numpy as np
+from sqlalchemy.ext.automap import automap_base
+
 
 def test_setup_db(db):
     # Some setup tasks to ensure some data exists in the database first
@@ -60,16 +50,27 @@ def test_table_presence(db):
 def test_orm_use(db):
     # Tests validation using the SQLAlchemy ORM
 
+    Base = automap_base(metadata=db.metadata)
+    Base.prepare()
+
+    # Creating the actual Table objects
+    Sources = Base.classes.Sources
+    Names = Base.classes.Names
+
     # Adding and removing a basic source
     s = Sources(source="V4046 Sgr", ra_deg=273.54, dec_deg=-32.79, reference="Ref 1")
+    n = Names(source="V4046 Sgr", other_name="Hen 3-1636")
     with db.session as session:
         session.add(s)
+        session.add(n)
         session.commit()
 
     assert db.query(db.Sources).filter(db.Sources.c.source == "V4046 Sgr").count() == 1
+    assert db.query(db.Names).filter(db.Names.c.other_name == "Hen 3-1636").count() == 1
 
     # Remove added source so other tests don't include it
     with db.session as session:
+        session.delete(n)  # delete Names before Sources
         session.delete(s)
         session.commit()
 
@@ -80,6 +81,17 @@ def test_photometry(db):
     
     # Confirm the source isn't already present
     assert db.query(db.Sources).filter(db.Sources.c.source == "Fake V4046 Sgr").count() == 0
+
+    Base = automap_base(metadata=db.metadata)
+    Base.prepare()
+
+    # Creating the actual Table objects
+    Sources = Base.classes.Sources
+    Publications = Base.classes.Publications
+    Telescopes = Base.classes.Telescopes
+    Photometry = Base.classes.Photometry
+    PhotometryFilters = Base.classes.PhotometryFilters
+    Regimes = Base.classes.Regimes
 
     # Insert supporting data to (Sources, Publications, Telescopes, PhotometryFilters)
     s = Sources(source="V4046 Sgr", ra_deg=273.54, dec_deg=-32.79, reference="Ref 1")
