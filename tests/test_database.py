@@ -134,10 +134,10 @@ def test_magnitudes(db):
 def test_parallax_error(db):
     # Verify that all sources have valid parallax errors
     t = (
-        db.query(db.Parallax.c.parallax_error)
+        db.query(db.Parallaxes.c.parallax_error)
         .filter(
             or_(
-                db.Parallax.c.parallax_error < 0,
+                db.Parallaxes.c.parallax_error < 0,
               
               )
         )
@@ -178,7 +178,7 @@ def test_coordinates(db):
 def test_sig_figs_parallax(db):
     # verify that the precision on parallax isn't greater than the error's precision
     t = (
-        db.query(db.Parallax.c.parallax_mas, db.Parallax.c.parallax_error)
+        db.query(db.Parallaxes.c.parallax_mas, db.Parallaxes.c.parallax_error)
         .astropy()
     )
     # create empty table to add the results to

@@ -17,9 +17,13 @@ CONNECTION_STRING = "sqlite:///" + DB_NAME
 @pytest.fixture(scope="session", autouse=True)
 def db():
 
+    # Confirm the schema yaml file is present
+    assert os.path.exists(SCHEMA_PATH)
+
     # Remove any existing copy of the test database
     if os.path.exists(DB_NAME):
         os.remove(DB_NAME)
+        assert not os.path.exists(DB_NAME)
 
     # Create the database using the Felis schema
     create_database(CONNECTION_STRING, felis_schema=SCHEMA_PATH)
