@@ -4,9 +4,14 @@ import sys
 import pytest
 from astrodbkit.astrodb import Database, create_database
 
-sys.path.append("./")  # needed for github actions to find the template module
-from schema.schema_template import REFERENCE_TABLES
-
+REFERENCE_TABLES = [
+    "Publications",
+    "Telescopes",
+    "Instruments",
+    "PhotometryFilters",
+    "Versions",
+    "Regimes"
+]
 DB_PATH = "data"
 DB_NAME = "tests/astrodb_template_tests.sqlite"
 SCHEMA_PATH = "schema/schema.yaml"
