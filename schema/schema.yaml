@@ -721,6 +721,8 @@ tables:
         - "#CompanionRelationships.reference"
         referencedColumns:
         - "#Publications.reference"
+
+
   - name: Associations
     "@id": "#Associations"
     description: Association Membership for Sources
