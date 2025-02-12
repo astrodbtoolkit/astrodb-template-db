@@ -43,8 +43,8 @@ def test_table_presence(db):
     assert "RadialVelocities" in db.metadata.tables.keys()
     assert "Photometry" in db.metadata.tables.keys()
     assert "Regimes" in db.metadata.tables.keys()
+    assert "AssociationList" in db.metadata.tables.keys()
     assert "Associations" in db.metadata.tables.keys()
-    assert "AssociationMembership" in db.metadata.tables.keys()
 
 
 def test_orm_use(db):

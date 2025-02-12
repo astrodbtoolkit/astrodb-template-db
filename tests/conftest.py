@@ -11,7 +11,7 @@ REFERENCE_TABLES = [
     "PhotometryFilters",
     "Versions",
     "Regimes",
-    "Associations",
+    "AssociationList",
 ]
 DB_PATH = "data"
 DB_NAME = "tests/astrodb_template_tests.sqlite"

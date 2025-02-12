@@ -205,51 +205,51 @@ tables:
       nullable: false
 
 
-  - name: Associations
-    "@id": "#Associations"
+  - name: AssociationList
+    "@id": "#AssociationList"
     description: Associations lookup table
     primaryKey: 
-    - "#Associations.association"
+    - "#AssociationList.association"
 
     columns:
     - name: association
-      "@id": "#Associations.association"
+      "@id": "#AssociationList.association"
       datatype: string
       length: 100
       description: Main identifier for an association
       ivoa:ucd: meta.id;meta.main
       nullable: false
     - name: association_type
-      "@id": "#Associations.association_type"
+      "@id": "#AssociationList.association_type"
       datatype: string
       length: 30
       description: Type of association
     - name: comments
-      "@id": "#Associations.comments"
+      "@id": "#AssociationList.comments"
       datatype: string
       length: 100
       description: Free-form comments for this entry
     - name: reference
-      "@id": "#Associations.reference"
+      "@id": "#AssociationList.reference"
       datatype: string
       length: 30
       description: Publication reference; links to Publications table
       ivoa:ucd: meta.ref
 
     indexes:
-      - name: PK_Associations
-        "@id": "#PK_Associations"
-        description: Primary key for Associations table
+      - name: PK_AssociationList
+        "@id": "#PK_AssociationList"
+        description: Primary key for AssociationList table
         columns: 
-        - "#Associations.association"
+        - "#AssociationList.association"
 
     constraints:
-      - name: Associations_reference_Publications_reference
+      - name: AssociationList_reference_Publications_reference
         "@type": "ForeignKey"
-        "@id": "#FK_Associations_reference_Publications_reference"
-        description: Link Associations reference to Publications table
+        "@id": "#FK_AssociationList_reference_Publications_reference"
+        description: Link AssociationList reference to Publications table
         columns:
-        - "#Associations.reference"
+        - "#AssociationList.reference"
         referencedColumns:
         - "#Publications.reference"
 
@@ -638,44 +638,44 @@ tables:
         expression: radial_velocity_error_kms >= 0
 
 
-  - name: AssociationMembership
-    "@id": "#AssociationMembership"
+  - name: Associations
+    "@id": "#Associations"
     description: Association Membership for Sources
     primaryKey: 
-    - "#AssociationMembership.source"
-    - "#AssociationMembership.association"
+    - "#Associations.source"
+    - "#Associations.association"
 
     columns:
     - name: source
-      "@id": "#AssociationMembership.source"
+      "@id": "#Associations.source"
       datatype: string
       length: 100
       description: Main identifier for an object; links to Sources table
       ivoa:ucd: meta.id;meta.main
       nullable: false
     - name: association
-      "@id": "#AssociationMembership.association"
+      "@id": "#Associations.association"
       datatype: string
       length: 100
       description: Association name; links to Associations table
       ivoa:ucd: meta.id
       nullable: false
     - name: membership_probability
-      "@id": "#AssociationMembership.membership_probability"
+      "@id": "#Associations.membership_probability"
       datatype: double
       description: Probability of membership in this association
       ivoa:ucd: stat.probability
     - name: comments
-      "@id": "#AssociationMembership.comments"
+      "@id": "#Associations.comments"
       datatype: string
       length: 1000
       description: Free-form comments for this entry
     - name: adopted
-      "@id": "#AssociationMembership.adopted"
+      "@id": "#Associations.adopted"
       datatype: boolean
       description: Flag to indicate if this is the adopted entry
     - name: reference
-      "@id": "#AssociationMembership.reference"
+      "@id": "#Associations.reference"
       datatype: string
       length: 30
       description: Publication reference; links to Publications table
@@ -683,36 +683,36 @@ tables:
       nullable: false
 
     indexes:
-      - name: PK_AssociationMembership
-        "@id": "#PK_AssociationMembership"
-        description: Primary key for AssociationMembership table
+      - name: PK_Associations
+        "@id": "#PK_Associations"
+        description: Primary key for Associations table
         columns: 
-        - "#AssociationMembership.source"
-        - "#AssociationMembership.association"
+        - "#Associations.source"
+        - "#Associations.association"
 
     constraints:
-      - name: AssociationMembership_source_Sources_source
+      - name: Associations_source_Sources_source
         "@type": "ForeignKey"
-        "@id": "#FK_AssociationMembership_source_Sources_source"
-        description: Link AssociationMembership source to Sources table
+        "@id": "#FK_Associations_source_Sources_source"
+        description: Link Associations source to Sources table
         columns:
-        - "#AssociationMembership.source"
+        - "#Associations.source"
         referencedColumns:
         - "#Sources.source"
-      - name: AssociationMembership_association_Associations_association
+      - name: Associations_association_AssociationList_association
         "@type": "ForeignKey"
-        "@id": "#FK_AssociationMembership_association_Associations_association"
-        description: Link AssociationMembership association to Associations table
+        "@id": "#FK_Associations_association_AssociationList_association"
+        description: Link Associations association to AssociationList table
         columns:
-        - "#AssociationMembership.association"
-        referencedColumns:
         - "#Associations.association"
-      - name: AssociationMembership_reference_Publications_reference
+        referencedColumns:
+        - "#AssociationList.association"
+      - name: Associations_reference_Publications_reference
         "@type": "ForeignKey"
-        "@id": "#FK_AssociationMembership_reference_Publications_reference"
-        description: Link AssociationMembership reference to Publications table
+        "@id": "#FK_Associations_reference_Publications_reference"
+        description: Link Associations reference to Publications table
         columns:
-        - "#AssociationMembership.reference"
+        - "#Associations.reference"
         referencedColumns:
         - "#Publications.reference"
       - name: check_membership_probability
