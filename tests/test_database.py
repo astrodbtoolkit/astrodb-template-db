@@ -16,24 +16,39 @@ def test_setup_db(db):
         },
         {"reference": "Ref 2", "doi": "Doi2", "bibcode": "2012yCat.2311....0C"},
         {"reference": "Burn08", "doi": "Doi3", "bibcode": "2008MNRAS.391..320B"},
+        {"reference": "Eros99", "doi": None, "bibcode": "1999A&A...351L...5E"},
+        {"reference": "Fake Ref", "doi": None, "bibcode": None},
     ]
 
     source_data = [
         {"source": "Fake 1", "ra_deg": 9.0673755, "dec_deg": 18.352889, "reference": "Ref 1"},
         {"source": "Fake 2", "ra_deg": 9.0673755, "dec_deg": 18.352889, "reference": "Ref 1"},
         {"source": "Fake 3", "ra_deg": 9.0673755, "dec_deg": 18.352889, "reference": "Ref 2"},
+        {"source": "TWA 26", "ra_deg": 174.96308, "dec_deg": -31.989305, "reference": "Eros99"},
+    ]
+
+    associations_data = [
+        {"association": "TW Hydra Association", "association_type": "association", 
+         "reference": "Fake Ref"},
+    ]
+
+    association_membership_data = [
+        {"source": "TWA 26", "association": "TW Hydra Association", "membership_probability": 0.99, 
+         "reference": "Fake Ref", "adopted": True},
     ]
 
     with db.engine.connect() as conn:
         conn.execute(db.Publications.insert().values(ref_data))
         conn.execute(db.Sources.insert().values(source_data))
+        conn.execute(db.Associations.insert().values(associations_data))
+        conn.execute(db.AssociationMembership.insert().values(association_membership_data))
         conn.commit()
 
 
 def test_table_presence(db):
     # Confirm the tables that should be present
 
-    assert len(db.metadata.tables.keys()) == 11
+    assert len(db.metadata.tables.keys()) == 13
     assert "Sources" in db.metadata.tables.keys()
     assert "Publications" in db.metadata.tables.keys()
     assert "Names" in db.metadata.tables.keys()
@@ -45,6 +60,8 @@ def test_table_presence(db):
     assert "RadialVelocities" in db.metadata.tables.keys()
     assert "Photometry" in db.metadata.tables.keys()
     assert "Regimes" in db.metadata.tables.keys()
+    assert "Associations" in db.metadata.tables.keys()
+    assert "AssociationMembership" in db.metadata.tables.keys()
 
 
 def test_orm_use(db):
@@ -138,6 +155,7 @@ def test_photometry(db):
         == 1
     )
 
+
 def test_magnitudes(db):
     # Check that magnitudes make sense.
     t = (
@@ -158,7 +176,6 @@ def test_magnitudes(db):
 
     assert len(t) == 0, f"{len(t)} Photometry failed magnitude checks"
           
-    
 
 def test_parallax_error(db):
     # Verify that all sources have valid parallax errors
@@ -178,7 +195,8 @@ def test_parallax_error(db):
       print(t)
 
     assert len(t) == 0, f"{len(t)} Parallax failed parallax error checks"
-              
+
+       
 def test_coordinates(db):
     # Verify that all sources have valid coordinates
     t = (

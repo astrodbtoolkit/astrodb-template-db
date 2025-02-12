@@ -209,11 +209,11 @@ tables:
     "@id": "#Associations"
     description: Associations lookup table
     primaryKey: 
-    - "#Associations.name"
+    - "#Associations.association"
 
     columns:
-    - name: name
-      "@id": "#Associations.name"
+    - name: association
+      "@id": "#Associations.association"
       datatype: string
       length: 100
       description: Main identifier for an association
@@ -229,13 +229,29 @@ tables:
       datatype: string
       length: 100
       description: Free-form comments for this entry
+    - name: reference
+      "@id": "#Associations.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+      ivoa:ucd: meta.ref
 
     indexes:
       - name: PK_Associations
         "@id": "#PK_Associations"
         description: Primary key for Associations table
         columns: 
-        - "#Associations.name"
+        - "#Associations.association"
+
+    constraints:
+      - name: Associations_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_Associations_reference_Publications_reference"
+        description: Link Associations reference to Publications table
+        columns:
+        - "#Associations.reference"
+        referencedColumns:
+        - "#Publications.reference"
 
 
   - name: Sources
@@ -658,6 +674,13 @@ tables:
       "@id": "#AssociationMembership.adopted"
       datatype: boolean
       description: Flag to indicate if this is the adopted entry
+    - name: reference
+      "@id": "#AssociationMembership.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+      ivoa:ucd: meta.ref
+      nullable: false
 
     indexes:
       - name: PK_AssociationMembership
@@ -666,4 +689,35 @@ tables:
         columns: 
         - "#AssociationMembership.source"
         - "#AssociationMembership.association"
+
+    constraints:
+      - name: AssociationMembership_source_Sources_source
+        "@type": "ForeignKey"
+        "@id": "#FK_AssociationMembership_source_Sources_source"
+        description: Link AssociationMembership source to Sources table
+        columns:
+        - "#AssociationMembership.source"
+        referencedColumns:
+        - "#Sources.source"
+      - name: AssociationMembership_association_Associations_association
+        "@type": "ForeignKey"
+        "@id": "#FK_AssociationMembership_association_Associations_association"
+        description: Link AssociationMembership association to Associations table
+        columns:
+        - "#AssociationMembership.association"
+        referencedColumns:
+        - "#Associations.association"
+      - name: AssociationMembership_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_AssociationMembership_reference_Publications_reference"
+        description: Link AssociationMembership reference to Publications table
+        columns:
+        - "#AssociationMembership.reference"
+        referencedColumns:
+        - "#Publications.reference"
+      - name: check_membership_probability
+        "@type": Check
+        "@id": "#check_membership_probability"
+        description: Validate membership probability
+        expression: membership_probability >= 0 AND membership_probability <= 1
 
