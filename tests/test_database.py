@@ -15,33 +15,17 @@ def test_setup_db(db):
             "bibcode": "2020MNRAS.496.1922B",
         },
         {"reference": "Ref 2", "doi": "Doi2", "bibcode": "2012yCat.2311....0C"},
-        # {"reference": "Burn08", "doi": "Doi3", "bibcode": "2008MNRAS.391..320B"},
-        # {"reference": "Eros99", "doi": None, "bibcode": "1999A&A...351L...5E"},
-        # {"reference": "Kastner97", "doi": None, "bibcode": "1997Sci...277...67K"},
     ]
 
     source_data = [
         {"source": "Fake 1", "ra_deg": 9.0673755, "dec_deg": 18.352889, "reference": "Ref 1"},
         {"source": "Fake 2", "ra_deg": 9.0673755, "dec_deg": 18.352889, "reference": "Ref 1"},
         {"source": "Fake 3", "ra_deg": 9.0673755, "dec_deg": 18.352889, "reference": "Ref 2"},
-        # {"source": "TWA 26", "ra_deg": 174.96308, "dec_deg": -31.989305, "reference": "Eros99"},
     ]
-
-    # associations_data = [
-    #     {"association": "TW Hydra Association", "association_type": "association", 
-    #      "reference": "Kastner97"},
-    # ]
-
-    # association_membership_data = [
-    #     {"source": "TWA 26", "association": "TW Hydra Association", "membership_probability": 0.99, 
-    #      "reference": "Fake Ref", "adopted": True},
-    # ]
 
     with db.engine.connect() as conn:
         conn.execute(db.Publications.insert().values(ref_data))
         conn.execute(db.Sources.insert().values(source_data))
-        # conn.execute(db.Associations.insert().values(associations_data))
-        # conn.execute(db.AssociationMembership.insert().values(association_membership_data))
         conn.commit()
 
 def test_table_presence(db):
