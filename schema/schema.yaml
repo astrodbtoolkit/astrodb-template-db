@@ -672,6 +672,3 @@ tables:
         - "#CompanionRelationships.reference"
         referencedColumns:
         - "#Publications.reference"
-
-        
-  version: "v0.1"
