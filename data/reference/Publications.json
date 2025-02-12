@@ -46,5 +46,11 @@
         "bibcode": "2023A&A...674A...1G",
         "doi": "10.1051/0004-6361/202243940",
         "description": "Gaia Data Release 3. Summary of the content and survey properties"
+    },
+    {
+        "reference": "Naka95",
+        "bibcode": "1995Natur.378..463N",
+        "doi": "10.1038/378463a0",
+        "description": "Discovery of a cool brown dwarf"
     }
 ]

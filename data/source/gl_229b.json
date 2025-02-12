@@ -1,0 +1,31 @@
+{
+    "Sources": [
+        {
+            "source": "Gl 229b",
+            "ra_deg": 92.6442,
+            "dec_deg": -21.8646,
+            "epoch_year": 2000.0,
+            "equinox": "J2000",
+            "shortname": null,
+            "reference": "Naka95",
+            "other_references": null,
+            "comments": null
+        }
+    ],
+    "CompanionRelationships": [
+        {
+            "companion": "Gl 229",
+            "relationship": "Child",
+            "projected_separation_arcsec": null,
+            "projected_separation_error": null,
+            "comments": null,
+            "reference": "Naka95",
+            "other_companion_names": null
+        }
+    ],
+    "Names": [
+        {
+            "other_name": "Gl 229b"
+        }
+    ]
+}
