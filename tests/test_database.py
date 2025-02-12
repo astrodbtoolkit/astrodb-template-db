@@ -17,7 +17,7 @@ def test_setup_db(db):
         {"reference": "Ref 2", "doi": "Doi2", "bibcode": "2012yCat.2311....0C"},
         # {"reference": "Burn08", "doi": "Doi3", "bibcode": "2008MNRAS.391..320B"},
         # {"reference": "Eros99", "doi": None, "bibcode": "1999A&A...351L...5E"},
-        # {"reference": "Kastner97", "doi": None, "bibcode": None},
+        # {"reference": "Kastner97", "doi": None, "bibcode": "1997Sci...277...67K"},
     ]
 
     source_data = [
