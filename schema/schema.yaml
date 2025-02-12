@@ -205,6 +205,55 @@ tables:
       nullable: false
 
 
+  - name: AssociationList
+    "@id": "#AssociationList"
+    description: Associations lookup table
+    primaryKey: 
+    - "#AssociationList.association"
+
+    columns:
+    - name: association
+      "@id": "#AssociationList.association"
+      datatype: string
+      length: 100
+      description: Main identifier for an association
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: association_type
+      "@id": "#AssociationList.association_type"
+      datatype: string
+      length: 30
+      description: Type of association
+    - name: comments
+      "@id": "#AssociationList.comments"
+      datatype: string
+      length: 100
+      description: Free-form comments for this entry
+    - name: reference
+      "@id": "#AssociationList.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+      ivoa:ucd: meta.ref
+
+    indexes:
+      - name: PK_AssociationList
+        "@id": "#PK_AssociationList"
+        description: Primary key for AssociationList table
+        columns: 
+        - "#AssociationList.association"
+
+    constraints:
+      - name: AssociationList_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_AssociationList_reference_Publications_reference"
+        description: Link AssociationList reference to Publications table
+        columns:
+        - "#AssociationList.reference"
+        referencedColumns:
+        - "#Publications.reference"
+
+
   - name: Sources
     "@id": "#Sources"
     description: "Main identifiers for objects along with coordinates."
@@ -672,3 +721,88 @@ tables:
         - "#CompanionRelationships.reference"
         referencedColumns:
         - "#Publications.reference"
+
+
+  - name: Associations
+    "@id": "#Associations"
+    description: Association Membership for Sources
+    primaryKey: 
+    - "#Associations.source"
+    - "#Associations.association"
+
+    columns:
+    - name: source
+      "@id": "#Associations.source"
+      datatype: string
+      length: 50
+      description: Main identifier for an object; links to Sources table
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: association
+      "@id": "#Associations.association"
+      datatype: string
+      length: 100
+      description: Association name; links to Associations table
+      ivoa:ucd: meta.id
+      nullable: false
+    - name: membership_probability
+      "@id": "#Associations.membership_probability"
+      datatype: double
+      description: Probability of membership in this association
+      ivoa:ucd: stat.probability
+    - name: comments
+      "@id": "#Associations.comments"
+      datatype: string
+      length: 100
+      description: Free-form comments for this entry
+    - name: adopted
+      "@id": "#Associations.adopted"
+      datatype: boolean
+      description: Flag to indicate if this is the adopted entry
+    - name: reference
+      "@id": "#Associations.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+      ivoa:ucd: meta.ref
+      nullable: false
+
+    indexes:
+      - name: PK_Associations
+        "@id": "#PK_Associations"
+        description: Primary key for Associations table
+        columns: 
+        - "#Associations.source"
+        - "#Associations.association"
+
+    constraints:
+      - name: Associations_source_Sources_source
+        "@type": "ForeignKey"
+        "@id": "#FK_Associations_source_Sources_source"
+        description: Link Associations source to Sources table
+        columns:
+        - "#Associations.source"
+        referencedColumns:
+        - "#Sources.source"
+      - name: Associations_association_AssociationList_association
+        "@type": "ForeignKey"
+        "@id": "#FK_Associations_association_AssociationList_association"
+        description: Link Associations association to AssociationList table
+        columns:
+        - "#Associations.association"
+        referencedColumns:
+        - "#AssociationList.association"
+      - name: Associations_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_Associations_reference_Publications_reference"
+        description: Link Associations reference to Publications table
+        columns:
+        - "#Associations.reference"
+        referencedColumns:
+        - "#Publications.reference"
+      - name: check_membership_probability
+        "@type": Check
+        "@id": "#check_membership_probability"
+        description: Validate membership probability
+        expression: membership_probability >= 0 AND membership_probability <= 1
+

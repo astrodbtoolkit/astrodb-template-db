@@ -15,7 +15,6 @@ def test_setup_db(db):
             "bibcode": "2020MNRAS.496.1922B",
         },
         {"reference": "Ref 2", "doi": "Doi2", "bibcode": "2012yCat.2311....0C"},
-        {"reference": "Burn08", "doi": "Doi3", "bibcode": "2008MNRAS.391..320B"},
     ]
 
     source_data = [
@@ -44,11 +43,10 @@ def test_setup_db(db):
         conn.execute(db.Sources.insert().values(source_data))
         conn.commit()
 
-
 def test_table_presence(db):
     # Confirm the tables that should be present
 
-    assert len(db.metadata.tables.keys()) == 12
+    assert len(db.metadata.tables.keys()) == 14
     assert "Sources" in db.metadata.tables.keys()
     assert "Publications" in db.metadata.tables.keys()
     assert "Names" in db.metadata.tables.keys()
@@ -60,6 +58,8 @@ def test_table_presence(db):
     assert "RadialVelocities" in db.metadata.tables.keys()
     assert "Photometry" in db.metadata.tables.keys()
     assert "Regimes" in db.metadata.tables.keys()
+    assert "AssociationList" in db.metadata.tables.keys()
+    assert "Associations" in db.metadata.tables.keys()
     assert "CompanionRelationships" in db.metadata.tables.keys()
 
 

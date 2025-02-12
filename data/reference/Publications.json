@@ -48,9 +48,27 @@
         "description": "Gaia Data Release 3. Summary of the content and survey properties"
     },
     {
+        "reference": "Burn08",
+        "bibcode": "2008MNRAS.391..320B",
+        "doi": "Doi3",
+        "description": null
+    },
+    {
         "reference": "Naka95",
         "bibcode": "1995Natur.378..463N",
         "doi": "10.1038/378463a0",
         "description": "Discovery of a cool brown dwarf"
+    },
+    {
+        "reference": "Eros99",
+        "bibcode": "1999A&A...351L...5E",
+        "doi": null,
+        "description": null
+    },
+    {
+        "reference": "Kastner97",
+        "bibcode": "1997Sci...277...67K",
+        "doi": null,
+        "description": null
     }
 ]

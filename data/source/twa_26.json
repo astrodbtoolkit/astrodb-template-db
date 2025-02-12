@@ -1,0 +1,24 @@
+{
+    "Sources": [
+        {
+            "source": "TWA 26",
+            "ra_deg": 174.96308,
+            "dec_deg": -31.989305,
+            "epoch_year": null,
+            "equinox": null,
+            "shortname": null,
+            "reference": "Eros99",
+            "other_references": null,
+            "comments": null
+        }
+    ],
+    "Associations": [
+        {
+            "association": "TW Hydra Association",
+            "membership_probability": null,
+            "comments": null,
+            "adopted": true,
+            "reference": "Eros99"
+        }
+    ]
+}
