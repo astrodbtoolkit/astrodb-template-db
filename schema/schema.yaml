@@ -264,7 +264,7 @@ tables:
     - name: source
       "@id": "#Sources.source"
       datatype: string
-      length: 100
+      length: 50
       description: Unique identifier for an object
       ivoa:ucd: meta.id;src;meta.main
       nullable: false
@@ -306,13 +306,13 @@ tables:
     - name: other_references
       "@id": "#Sources.other_references"
       datatype: string
-      length: 100
+      length: 50
       description: Additional references
       ivoa:ucd: meta.ref
     - name: comments
       "@id": "#Sources.comments"
       datatype: string
-      length: 1000
+      length: 100
       description: Free-form comments on this Source
 
 
@@ -638,6 +638,89 @@ tables:
         expression: radial_velocity_error_kms >= 0
 
 
+  - name: CompanionRelationships
+    "@id": "#CompanionRelationships"
+    description: Relationships between sources
+    primaryKey: 
+    - "#CompanionRelationships.source"
+    - "#CompanionRelationships.companion" # or companion_name
+
+    columns:
+    - name: source
+      "@id": "#CompanionRelationships.source"
+      datatype: string
+      length: 50
+      description: Main identifier for an object; links to Sources table
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: companion
+      "@id": "#CompanionRelationships.companion"
+      datatype: string
+      length: 50
+      description: External identifier for a companion object. Does not link to Sources table.
+      ivoa:ucd: meta.id
+      nullable: false
+    - name: relationship
+      "@id": "#CompanionRelationships.relationship"
+      datatype: string
+      length: 30
+      description: Relationship of the source to the companion, e.g., "parent", "child", "sibling"
+      nullable: false
+    - name: projected_separation_arcsec
+      "@id": "#CompanionRelationships.projected_separation_arcsec"
+      datatype: double
+      description: Projected separation between the source and companion in arcseconds
+      fits:tunit: arcsec
+      ivoa:ucd: pos.angDistance
+    - name: projected_separation_error
+      "@id": "#CompanionRelationships.projected_separation_error"
+      datatype: double
+      description: Uncertainty of the projected separation in arcseconds
+      fits:tunit: arcsec
+      ivoa:ucd: stat.error;pos.angDistance
+    - name: comments
+      "@id": "#CompanionRelationships.comments"
+      datatype: string
+      length: 100
+      description: Free-form comments for this entry
+    - name: reference
+      "@id": "#CompanionRelationships.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+      ivoa:ucd: meta.ref
+      nullable: false
+    - name: other_companion_names
+      "@id": "#CompanionRelationships.other_companion_names"
+      datatype: string
+      length: 100
+      description: Additional names for the companion object, comma delimited.
+      ivoa:ucd: meta.id
+
+    indexes:
+      - name: PK_CompanionRelationships
+        "@id": "#PK_CompanionRelationships"
+        description: Primary key for CompanionRelationships table
+        columns: 
+        - "#CompanionRelationships.source"
+        - "#CompanionRelationships.companion"
+    constraints:
+      - name: CompanionRelationships_source_Sources_source
+        "@type": "ForeignKey"
+        "@id": "#FK_CompanionRelationships_source_Sources_source"
+        description: Link CompanionRelationships source to Sources table
+        columns:
+        - "#CompanionRelationships.source"
+        referencedColumns:
+        - "#Sources.source"
+      - name: CompanionRelationships_reference_Publications_reference"
+        "@type": "ForeignKey"
+        "@id": "#FK_CompanionRelationships_reference_Publications_reference"
+        description: Link CompanionRelationships reference to Publications table
+        columns:
+        - "#CompanionRelationships.reference"
+        referencedColumns:
+        - "#Publications.reference"
   - name: Associations
     "@id": "#Associations"
     description: Association Membership for Sources
@@ -649,7 +732,7 @@ tables:
     - name: source
       "@id": "#Associations.source"
       datatype: string
-      length: 100
+      length: 50
       description: Main identifier for an object; links to Sources table
       ivoa:ucd: meta.id;meta.main
       nullable: false
@@ -668,7 +751,7 @@ tables:
     - name: comments
       "@id": "#Associations.comments"
       datatype: string
-      length: 1000
+      length: 100
       description: Free-form comments for this entry
     - name: adopted
       "@id": "#Associations.adopted"

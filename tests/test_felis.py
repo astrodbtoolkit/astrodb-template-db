@@ -12,6 +12,6 @@ def test_schema():
     data = yaml.safe_load(open(SCHEMA_PATH, "r"))
 
     try:
-        schema = Schema.model_validate(data)
+        schema = Schema.model_validate(data)  # noqa: F841
     except ValidationError as e:
         print(e)
