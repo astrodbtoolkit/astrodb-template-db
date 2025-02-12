@@ -1,8 +1,8 @@
 import os
-import sys
-
 import pytest
+
 from astrodbkit.astrodb import Database, create_database
+
 
 REFERENCE_TABLES = [
     "Publications",
