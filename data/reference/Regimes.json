@@ -1,0 +1,23 @@
+[
+    {
+        "regime": "gamma-ray"
+    },
+    {
+        "regime": "x-ray"
+    },
+    {
+        "regime": "ultraviolet"
+    },
+    {
+        "regime": "optical"
+    },
+    {
+        "regime": "infrared"
+    },
+    {
+        "regime": "millimeter"
+    },
+    {
+        "regime": "radio"
+    }
+]

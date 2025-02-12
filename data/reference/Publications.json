@@ -46,5 +46,23 @@
         "bibcode": "2023A&A...674A...1G",
         "doi": "10.1051/0004-6361/202243940",
         "description": "Gaia Data Release 3. Summary of the content and survey properties"
+    },
+    {
+        "reference": "Burn08",
+        "bibcode": "2008MNRAS.391..320B",
+        "doi": "Doi3",
+        "description": null
+    },
+    {
+        "reference": "Eros99",
+        "bibcode": "1999A&A...351L...5E",
+        "doi": null,
+        "description": null
+    },
+    {
+        "reference": "Kastner97",
+        "bibcode": null,
+        "doi": null,
+        "description": null
     }
 ]
