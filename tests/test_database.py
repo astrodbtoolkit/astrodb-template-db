@@ -19,9 +19,24 @@ def test_setup_db(db):
     ]
 
     source_data = [
-        {"source": "Fake 1", "ra_deg": 9.0673755, "dec_deg": 18.352889, "reference": "Ref 1"},
-        {"source": "Fake 2", "ra_deg": 9.0673755, "dec_deg": 18.352889, "reference": "Ref 1"},
-        {"source": "Fake 3", "ra_deg": 9.0673755, "dec_deg": 18.352889, "reference": "Ref 2"},
+        {
+            "source": "Fake 1",
+            "ra_deg": 9.0673755,
+            "dec_deg": 18.352889,
+            "reference": "Ref 1",
+        },
+        {
+            "source": "Fake 2",
+            "ra_deg": 9.0673755,
+            "dec_deg": 18.352889,
+            "reference": "Ref 1",
+        },
+        {
+            "source": "Fake 3",
+            "ra_deg": 9.0673755,
+            "dec_deg": 18.352889,
+            "reference": "Ref 2",
+        },
     ]
 
     with db.engine.connect() as conn:
@@ -33,7 +48,7 @@ def test_setup_db(db):
 def test_table_presence(db):
     # Confirm the tables that should be present
 
-    assert len(db.metadata.tables.keys()) == 11
+    assert len(db.metadata.tables.keys()) == 12
     assert "Sources" in db.metadata.tables.keys()
     assert "Publications" in db.metadata.tables.keys()
     assert "Names" in db.metadata.tables.keys()
@@ -45,6 +60,7 @@ def test_table_presence(db):
     assert "RadialVelocities" in db.metadata.tables.keys()
     assert "Photometry" in db.metadata.tables.keys()
     assert "Regimes" in db.metadata.tables.keys()
+    assert "CompanionRelationships" in db.metadata.tables.keys()
 
 
 def test_orm_use(db):
@@ -78,9 +94,12 @@ def test_orm_use(db):
 
 
 def test_photometry(db):
-    
+
     # Confirm the source isn't already present
-    assert db.query(db.Sources).filter(db.Sources.c.source == "Fake V4046 Sgr").count() == 0
+    assert (
+        db.query(db.Sources).filter(db.Sources.c.source == "Fake V4046 Sgr").count()
+        == 0
+    )
 
     Base = automap_base(metadata=db.metadata)
     Base.prepare()
@@ -107,7 +126,9 @@ def test_photometry(db):
     # Verify supporting information was stored
     assert db.query(db.Sources).filter(db.Sources.c.source == "V4046 Sgr").count() == 1
     assert (
-        db.query(db.Telescopes).filter(db.Telescopes.c.telescope == "Fake 2MASS").count()
+        db.query(db.Telescopes)
+        .filter(db.Telescopes.c.telescope == "Fake 2MASS")
+        .count()
         == 1
     )
     assert (
@@ -138,6 +159,7 @@ def test_photometry(db):
         == 1
     )
 
+
 def test_magnitudes(db):
     # Check that magnitudes make sense.
     t = (
@@ -147,18 +169,17 @@ def test_magnitudes(db):
                 db.Photometry.c.magnitude.is_(None),
                 db.Photometry.c.magnitude > 100,
                 db.Photometry.c.magnitude < -1,
-              )
+            )
         )
         .astropy()
     )
-    
+
     if len(t) > 0:
-      print(f"\n{len(t)} Photometry failed magnitude checks")
-      print(t)
+        print(f"\n{len(t)} Photometry failed magnitude checks")
+        print(t)
 
     assert len(t) == 0, f"{len(t)} Photometry failed magnitude checks"
-          
-    
+
 
 def test_parallax_error(db):
     # Verify that all sources have valid parallax errors
@@ -167,18 +188,18 @@ def test_parallax_error(db):
         .filter(
             or_(
                 db.Parallaxes.c.parallax_error < 0,
-              
-              )
+            )
         )
         .astropy()
     )
 
     if len(t) > 0:
-      print(f"\n{len(t)} Parallax failed parallax error checks")
-      print(t)
+        print(f"\n{len(t)} Parallax failed parallax error checks")
+        print(t)
 
     assert len(t) == 0, f"{len(t)} Parallax failed parallax error checks"
-              
+
+
 def test_coordinates(db):
     # Verify that all sources have valid coordinates
     t = (
@@ -202,3 +223,13 @@ def test_coordinates(db):
         print(t)
 
     assert len(t) == 0, f"{len(t)} Sources failed coordinate checks"
+
+
+def test_companion_relationships(db):
+    # Verify that all companion relationships have valid relationships
+    t = db.query(db.CompanionRelationships.c.relationship).astropy()
+
+    n_companion_relationships = 1
+    assert (
+        len(t) == n_companion_relationships
+    ), f"Found {len(t)} entries in the Companion Relationships table, expected {n_companion_relationships}"
