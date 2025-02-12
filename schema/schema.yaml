@@ -608,7 +608,7 @@ tables:
       "@id": "#CompanionRelationships.companion"
       datatype: string
       length: 50
-      description: Identifier for a companion object
+      description: External identifier for a companion object. Does not link to Sources table.
       ivoa:ucd: meta.id
       nullable: false
     - name: relationship
