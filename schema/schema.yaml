@@ -205,6 +205,39 @@ tables:
       nullable: false
 
 
+  - name: Associations
+    "@id": "#Associations"
+    description: Associations lookup table
+    primaryKey: 
+    - "#Associations.name"
+
+    columns:
+    - name: name
+      "@id": "#Associations.name"
+      datatype: string
+      length: 100
+      description: Main identifier for an association
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: association_type
+      "@id": "#Associations.association_type"
+      datatype: string
+      length: 30
+      description: Type of association
+    - name: comments
+      "@id": "#Associations.comments"
+      datatype: string
+      length: 100
+      description: Free-form comments for this entry
+
+    indexes:
+      - name: PK_Associations
+        "@id": "#PK_Associations"
+        description: Primary key for Associations table
+        columns: 
+        - "#Associations.name"
+
+
   - name: Sources
     "@id": "#Sources"
     description: "Main identifiers for objects along with coordinates."
@@ -589,4 +622,48 @@ tables:
         expression: radial_velocity_error_kms >= 0
 
 
-version: "v0.1"
+  - name: AssociationMembership
+    "@id": "#AssociationMembership"
+    description: Association Membership for Sources
+    primaryKey: 
+    - "#AssociationMembership.source"
+    - "#AssociationMembership.association"
+
+    columns:
+    - name: source
+      "@id": "#AssociationMembership.source"
+      datatype: string
+      length: 100
+      description: Main identifier for an object; links to Sources table
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: association
+      "@id": "#AssociationMembership.association"
+      datatype: string
+      length: 100
+      description: Association name; links to Associations table
+      ivoa:ucd: meta.id
+      nullable: false
+    - name: membership_probability
+      "@id": "#AssociationMembership.membership_probability"
+      datatype: double
+      description: Probability of membership in this association
+      ivoa:ucd: stat.probability
+    - name: comments
+      "@id": "#AssociationMembership.comments"
+      datatype: string
+      length: 1000
+      description: Free-form comments for this entry
+    - name: adopted
+      "@id": "#AssociationMembership.adopted"
+      datatype: boolean
+      description: Flag to indicate if this is the adopted entry
+
+    indexes:
+      - name: PK_AssociationMembership
+        "@id": "#PK_AssociationMembership"
+        description: Primary key for AssociationMembership table
+        columns: 
+        - "#AssociationMembership.source"
+        - "#AssociationMembership.association"
+
