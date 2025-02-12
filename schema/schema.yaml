@@ -215,7 +215,7 @@ tables:
     - name: source
       "@id": "#Sources.source"
       datatype: string
-      length: 100
+      length: 50
       description: Unique identifier for an object
       ivoa:ucd: meta.id;src;meta.main
       nullable: false
@@ -257,13 +257,13 @@ tables:
     - name: other_references
       "@id": "#Sources.other_references"
       datatype: string
-      length: 100
+      length: 50
       description: Additional references
       ivoa:ucd: meta.ref
     - name: comments
       "@id": "#Sources.comments"
       datatype: string
-      length: 1000
+      length: 100
       description: Free-form comments on this Source
 
 
@@ -600,14 +600,14 @@ tables:
     - name: source
       "@id": "#CompanionRelationships.source"
       datatype: string
-      length: 100
+      length: 50
       description: Main identifier for an object; links to Sources table
       ivoa:ucd: meta.id;meta.main
       nullable: false
     - name: companion
       "@id": "#CompanionRelationships.companion"
       datatype: string
-      length: 100
+      length: 50
       description: Identifier for a companion object
       ivoa:ucd: meta.id
       nullable: false
@@ -623,8 +623,8 @@ tables:
       description: Projected separation between the source and companion in arcseconds
       fits:tunit: arcsec
       ivoa:ucd: pos.angDistance
-    - name: projected_separation_error_arcsec
-      "@id": "#CompanionRelationships.projected_separation_error_arcsec"
+    - name: projected_separation_error
+      "@id": "#CompanionRelationships.projected_separation_error"
       datatype: double
       description: Uncertainty of the projected separation in arcseconds
       fits:tunit: arcsec
@@ -632,7 +632,7 @@ tables:
     - name: comments
       "@id": "#CompanionRelationships.comments"
       datatype: string
-      length: 1000
+      length: 100
       description: Free-form comments for this entry
     - name: reference
       "@id": "#CompanionRelationships.reference"
@@ -645,7 +645,7 @@ tables:
       "@id": "#CompanionRelationships.other_companion_names"
       datatype: string
       length: 100
-      description: Additional names for the companion object
+      description: Additional names for the companion object, comma delimited.
       ivoa:ucd: meta.id
 
     indexes:
