@@ -81,14 +81,14 @@ def ingest_gl229_parameters(db):
     #     ignore_ads=True,
     # )
 
-    gl229b_data = [      
+    gl229b_data = [
         {
             "source": "Gl 229b",
             "companion": "Gl 229",
             "parameter": "age",
             "value": 3.8,
-            "value_error": 0.5,
-            "value_unit": "Gyr",
+            "error": 0.5,
+            "unit": "Gyr",
             "reference": "Gaid23",
         }
     ]

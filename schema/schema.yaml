@@ -844,12 +844,12 @@ tables:
       "@id": "#CompanionParameters.value"
       datatype: double
       description: Value of the parameter
-    - name: value_error
-      "@id": "#CompanionParameters.value_error"
+    - name: error
+      "@id": "#CompanionParameters.error"
       datatype: double
       description: Uncertainty of the parameter value
-    - name: value_unit
-      "@id": "#CompanionParameters.value_unit"
+    - name: unit
+      "@id": "#CompanionParameters.unit"
       datatype: string
       length: 30
       description: Unit of the parameter value. Should be astropy units compatible.
