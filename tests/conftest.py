@@ -12,6 +12,7 @@ REFERENCE_TABLES = [
     "Versions",
     "Regimes",
     "AssociationList",
+    "SourceTypeList"
 ]
 DB_PATH = "data"
 DB_NAME = "tests/astrodb_template_tests.sqlite"
