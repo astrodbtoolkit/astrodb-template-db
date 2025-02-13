@@ -208,6 +208,12 @@ tables:
       ivoa:ucd: meta.id;meta.main
       nullable: false
 
+    indexes:  
+      - name: PK_Regimes
+        "@id": "#PK_Regimes"
+        description: Primary key for Regimes table
+        columns: 
+        - "#Regimes.regime"
 
   - name: AssociationList
     "@id": "#AssociationList"
@@ -258,32 +264,32 @@ tables:
         - "#Publications.reference"
 
 
-  - name: ParametersList
-    "@id": "#ParametersList"
+  - name: ParameterList
+    "@id": "#ParameterList"
     description: Parameters lookup table
     primaryKey: 
-    - "#ParametersList.parameter"
+    - "#ParameterList.parameter"
 
     columns:
     - name: parameter
-      "@id": "#ParametersList.parameter"
+      "@id": "#ParameterList.parameter"
       datatype: string
       length: 30
       description: Main identifier for a parameter
       ivoa:ucd: meta.id;meta.main
       nullable: false
     - name: description
-      "@id": "#ParametersList.description"
+      "@id": "#ParameterList.description"
       datatype: string
       length: 1000
       description: Description of the parameter
 
     indexes:
-      - name: PK_ParametersList
-        "@id": "#PK_ParametersList"
-        description: Primary key for ParametersList table
+      - name: PK_ParameterList
+        "@id": "#PK_ParameterList"
+        description: Primary key for ParameterList table
         columns: 
-        - "#ParametersList.parameter"
+        - "#ParameterList.parameter"
 
 
 ######################################################

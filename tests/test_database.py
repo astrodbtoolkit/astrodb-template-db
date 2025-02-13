@@ -61,7 +61,7 @@ def test_table_presence(db):
     assert "AssociationList" in db.metadata.tables.keys()
     assert "Associations" in db.metadata.tables.keys()
     assert "CompanionRelationships" in db.metadata.tables.keys()
-    assert "ParametersList" in db.metadata.tables.keys()
+    assert "ParameterList" in db.metadata.tables.keys()
     assert "CompanionParameters" in db.metadata.tables.keys()
 
 
