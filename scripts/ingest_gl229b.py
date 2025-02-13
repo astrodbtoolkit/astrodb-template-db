@@ -22,17 +22,33 @@ REFERENCE_TABLES = [
     "AssociationList",
     "ParameterList",
     "CompanionList",
+    "SourceTypeList",
 ]
 
-db = load_astrodb(DB_NAME, recreatedb=True, felis_schema=SCHEMA_PATH, reference_tables=REFERENCE_TABLES)
+db = load_astrodb(
+    DB_NAME,
+    recreatedb=True,
+    felis_schema=SCHEMA_PATH,
+    reference_tables=REFERENCE_TABLES,
+)
+
 
 def ingest_gl229b(db):
     # ingest_publication(db, doi="10.1038/378463a0")
     ingest_source(db, "Gl 229b", reference="Naka95")
 
 
-def ingest_companion(db):
+# ingest_publication(
+#     db,
+#     doi="10.1093/mnras/stad343",
+#     bibcode="2023MNRAS.520.5283G",
+#     reference="Gaid23",
+#     description="The TIME Table: rotation and ages of cool exoplanet host stars",
+#     ignore_ads=True,
+# )
 
+
+def ingest_companion(db):
     gl229_data = [
         {
             "companion": "Gl 229",
@@ -52,7 +68,6 @@ def ingest_companion_data(db):
             "reference": "Naka95",
         },
     ]
-
     with db.engine.connect() as conn:
         conn.execute(db.CompanionRelationships.insert().values(companion_data))
         conn.commit()
@@ -72,15 +87,6 @@ def ingest_age_parameter(db):
 
 
 def ingest_gl229_parameters(db):
-    # ingest_publication(
-    #     db,
-    #     doi="10.1093/mnras/stad343",
-    #     bibcode="2023MNRAS.520.5283G",
-    #     reference="Gaid23",
-    #     description="The TIME Table: rotation and ages of cool exoplanet host stars",
-    #     ignore_ads=True,
-    # )
-
     gl229b_data = [
         {
             "source": "Gl 229b",
@@ -98,12 +104,30 @@ def ingest_gl229_parameters(db):
         conn.commit()
 
 
+def ingest_sourcetype(db):
+    source_type_list_data = [
+        {
+            "source_type": "T7",
+            "comments": "T7 dwarf",
+        },
+    ]
+    source_types_data = [
+        {"source": "Gl 229b", "source_type": "T7", "reference": "Burg06"},
+    ]
+
+    with db.engine.connect() as conn:
+        conn.execute(db.SourceTypeList.insert().values(source_type_list_data))
+        conn.execute(db.SourceTypes.insert().values(source_types_data))
+        conn.commit()
+
+
 DB_SAVE = True
 ingest_gl229b(db)  # add to Sources table
 # ingest_age_parameter(db)  # add to ParameterList table
 ingest_companion(db)  # add to CompanionList table
 ingest_gl229_parameters(db)  # add to CompanionParameters table
 ingest_companion_data(db)  # add to CompanionRelationships table
+ingest_sourcetype(db)  # add to SourceTypes table
 
 if DB_SAVE:
     db.save_database("data/")

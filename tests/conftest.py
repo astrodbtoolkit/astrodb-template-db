@@ -12,6 +12,7 @@ REFERENCE_TABLES = [
     "Versions",
     "Regimes",
     "AssociationList",
+    "SourceTypeList",
     "ParameterList",
     "CompanionList",
 ]

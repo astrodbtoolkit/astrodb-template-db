@@ -318,6 +318,28 @@ tables:
       ivoa:ucd: meta.note
 
 
+  - name: SourceTypeList
+    "@id": "#SourceTypeList"
+    description: Source types lookup table
+    primaryKey: 
+    - "#SourceTypeList.source_type"
+
+    columns:
+    - name: source_type
+      "@id": "#SourceTypeList.source_type"
+      datatype: string
+      length: 30
+      description: Source type identifier string
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: comments
+      "@id": "#SourceTypeList.comments"
+      datatype: string
+      length: 100
+      description: Free-form comments for this entry
+      ivoa:ucd: meta.note
+
+
 ######################################################
 # MAIN TABLES
 # Sources - primary table for the database 
@@ -993,3 +1015,78 @@ tables:
         description: Validate membership probability
         expression: membership_probability >= 0 AND membership_probability <= 1
 
+
+  - name: SourceTypes
+    "@id": "#SourceTypes"
+    description: Source Types for Sources
+    primaryKey: 
+    - "#SourceTypes.source"
+    - "#SourceTypes.source_type"
+
+    columns:
+    - name: source
+      "@id": "#SourceTypes.source"
+      datatype: string
+      length: 50
+      description: Main identifier for an object; links to Sources table
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: source_type
+      "@id": "#SourceTypes.source_type"
+      datatype: string
+      length: 30
+      description: Source type; links to SourceTypeList table
+      ivoa:ucd: meta.id
+      nullable: false
+    - name: comments
+      "@id": "#SourceTypes.comments"
+      datatype: string
+      length: 100
+      description: Free-form comments for this entry
+      ivoa:ucd: meta.note
+    - name: adopted
+      "@id": "#SourceTypes.adopted"
+      datatype: boolean
+      description: Flag to indicate if this is the adopted entry
+      ivoa:ucd: meta.code
+    - name: reference
+      "@id": "#SourceTypes.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+      ivoa:ucd: meta.ref
+      nullable: false
+
+    indexes:
+      - name: PK_SourceTypes
+        "@id": "#PK_SourceTypes"
+        description: Primary key for SourceTypes table
+        columns: 
+        - "#SourceTypes.source"
+        - "#SourceTypes.source_type"
+
+    constraints:
+      - name: SourceTypes_source_Sources_source
+        "@type": "ForeignKey"
+        "@id": "#FK_SourceTypes_source_Sources_source"
+        description: Link SourceTypes source to Sources table
+        columns:
+        - "#SourceTypes.source"
+        referencedColumns:
+        - "#Sources.source"
+      - name: SourceTypes_source_type_SourceTypeList_source_type
+        "@type": "ForeignKey"
+        "@id": "#FK_SourceTypes_source_type_SourceTypeList_source_type"
+        description: Link SourceTypes source type to SourceTypeList table
+        columns:
+        - "#SourceTypes.source_type"
+        referencedColumns:
+        - "#SourceTypeList.source_type"
+      - name: SourceTypes_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_SourceTypes_reference_Publications_reference"
+        description: Link SourceTypes reference to Publications table
+        columns:
+        - "#SourceTypes.reference"
+        referencedColumns:
+        - "#Publications.reference"

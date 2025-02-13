@@ -38,5 +38,13 @@
         {
             "other_name": "Gl 229b"
         }
+    ],
+    "SourceTypes": [
+        {
+            "source_type": "T7",
+            "comments": null,
+            "adopted": null,
+            "reference": "Burg06"
+        }
     ]
 }

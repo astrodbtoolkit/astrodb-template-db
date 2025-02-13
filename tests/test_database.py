@@ -46,7 +46,7 @@ def test_setup_db(db):
 def test_table_presence(db):
     # Confirm the tables that should be present
 
-    assert len(db.metadata.tables.keys()) == 17
+    assert len(db.metadata.tables.keys()) == 19
     assert "Sources" in db.metadata.tables.keys()
     assert "Publications" in db.metadata.tables.keys()
     assert "Names" in db.metadata.tables.keys()
@@ -64,6 +64,8 @@ def test_table_presence(db):
     assert "ParameterList" in db.metadata.tables.keys()
     assert "CompanionParameters" in db.metadata.tables.keys()
     assert "CompanionList" in db.metadata.tables.keys()
+    assert "SourceTypeList" in db.metadata.tables.keys()
+    assert "SourceTypes" in db.metadata.tables.keys()
 
 
 def test_orm_use(db):
