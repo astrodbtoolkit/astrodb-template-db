@@ -273,7 +273,7 @@ tables:
       datatype: string
       length: 100
       description: Free-form comments for this entry
-      ivod:ucd: meta.note
+      ivoa:ucd: meta.note
 
 
   - name: Sources
@@ -856,12 +856,12 @@ tables:
       datatype: string
       length: 100
       description: Free-form comments for this entry
-      ivod:ucd: meta.note
+      ivoa:ucd: meta.note
     - name: adopted
       "@id": "#SourceTypes.adopted"
       datatype: boolean
       description: Flag to indicate if this is the adopted entry
-      ivod:ucd: meta.code
+      ivoa:ucd: meta.code
     - name: reference
       "@id": "#SourceTypes.reference"
       datatype: string
