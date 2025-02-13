@@ -215,6 +215,7 @@ tables:
         columns: 
         - "#Regimes.regime"
 
+
   - name: AssociationList
     "@id": "#AssociationList"
     description: Associations lookup table
@@ -819,7 +820,7 @@ tables:
       "@id": "#CompanionParameters.value_unit"
       datatype: string
       length: 30
-      description: Unit of the parameter value
+      description: Unit of the parameter value. Should be astropy units compatible.
     - name: comments
       "@id": "#CompanionParameters.comments"
       datatype: string
@@ -851,16 +852,16 @@ tables:
         - "#CompanionParameters.source"
         referencedColumns:
         - "#Sources.source"
-      - name: CompanionParameters_companion_CompanionRelationships_companion
-        "@type": "ForeignKey"
-        "@id": "#FK_CompanionParameters_companion_CompanionRelationships_companion"
-        description: Link CompanionParameters companion to CompanionRelationships table
-        columns:
-        - "#CompanionParameters.source"
-        - "#CompanionParameters.companion"
-        referencedColumns:
-        - "#CompanionRelationships.source"
-        - "#CompanionRelationships.companion"
+      # - name: CompanionParameters_companion_CompanionRelationships_companion
+      #   "@type": "ForeignKey"
+      #   "@id": "#FK_CompanionParameters_companion_CompanionRelationships_companion"
+      #   description: Link CompanionParameters companion to CompanionRelationships table
+      #   columns:
+      #   - "#CompanionParameters.source"
+      #   - "#CompanionParameters.companion"
+      #   referencedColumns:
+      #   - "#CompanionRelationships.source"
+      #   - "#CompanionRelationships.companion"
       - name: CompanionParameters_reference_Publications_reference
         "@type": "ForeignKey"
         "@id": "#FK_CompanionParameters_reference_Publications_reference"

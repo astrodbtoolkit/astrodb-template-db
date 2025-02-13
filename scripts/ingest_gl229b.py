@@ -11,7 +11,19 @@ from astrodb_utils.publications import ingest_publication
 # Load the database
 DB_NAME = "tests/astrodb_template_tests.sqlite"
 SCHEMA_PATH = "schema/schema.yaml"
-db = load_astrodb(DB_NAME, recreatedb=True, felis_schema=SCHEMA_PATH)
+
+REFERENCE_TABLES = [
+        "Publications",
+        "Telescopes",
+        "Instruments",
+        "Versions",
+        "PhotometryFilters",
+        "Regimes",
+        "AssociationList",
+        "ParameterList",
+    ]
+
+db = load_astrodb(DB_NAME, recreatedb=True, felis_schema=SCHEMA_PATH, reference_tables=REFERENCE_TABLES)
 
 def ingest_gl229b(db):
     ingest_publication(db, doi="10.1038/378463a0")
@@ -42,15 +54,19 @@ def ingest_age_parameter(db):
     ]
 
     with db.engine.connect() as conn:
-        conn.execute(db.ParametersList.insert().values(parameters_data))
+        conn.execute(db.ParameterList.insert().values(parameters_data))
         conn.commit()
 
 
 def ingest_gl229_parameters(db):
-    ingest_publication(db, doi="10.1093/mnras/stad343")
-    
-    
-
+    ingest_publication(
+        db,
+        doi="10.1093/mnras/stad343",
+        bibcode="2023MNRAS.520.5283G",
+        reference="Gaid23",
+        description="The TIME Table: rotation and ages of cool exoplanet host stars",
+        ignore_ads=True,
+    )
 
     gl229b_data = [      
         {
@@ -69,9 +85,9 @@ def ingest_gl229_parameters(db):
         conn.commit()
 
 
-DB_SAVE = False
-#ingest_gl229b(db)
-#ingest_age_parameter(db)
+DB_SAVE = True
+# ingest_gl229b(db)
+# ingest_age_parameter(db)
 ingest_age_parameter(db)
 ingest_gl229_parameters(db)
 

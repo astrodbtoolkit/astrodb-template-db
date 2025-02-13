@@ -228,14 +228,10 @@ def test_coordinates(db):
 
 
 def test_companion_relationships(db):
-    # Verify that all companion relationships have valid relationships
+    # Test that Companion Relationships has expected number of entries
     t = db.query(db.CompanionRelationships.c.relationship).astropy()
 
     n_companion_relationships = 1
     assert (
         len(t) == n_companion_relationships
     ), f"Found {len(t)} entries in the Companion Relationships table, expected {n_companion_relationships}"
-
-
-#def test_companion_parameters(db):
-    # check all units are resovalble as astropy units
