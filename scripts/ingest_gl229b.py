@@ -11,9 +11,9 @@ from astrodb_utils.publications import ingest_publication
 # Load the database
 DB_NAME = "tests/astrodb_template_tests.sqlite"
 SCHEMA_PATH = "schema/schema.yaml"
-db = load_astrodb(DB_NAME, recreatedb=False, felis_schema=SCHEMA_PATH)
+db = load_astrodb(DB_NAME, recreatedb=True, felis_schema=SCHEMA_PATH)
 
-def already_ingested(db):
+def ingest_gl229b(db):
     ingest_publication(db, doi="10.1038/378463a0")
     ingest_source(db, "Gl 229b", reference="Naka95")
 
@@ -69,7 +69,11 @@ def ingest_gl229_parameters(db):
         conn.commit()
 
 
+DB_SAVE = False
+#ingest_gl229b(db)
 #ingest_age_parameter(db)
+ingest_age_parameter(db)
 ingest_gl229_parameters(db)
 
-db.save_database("data/")
+if DB_SAVE:
+    db.save_database("data/")

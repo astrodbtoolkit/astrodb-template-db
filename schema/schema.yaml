@@ -844,14 +844,16 @@ tables:
         columns:
         - "#CompanionParameters.source"
         referencedColumns:
-        - "#CompanionRelationships.source"
+        - "#Sources.source"
       - name: CompanionParameters_companion_CompanionRelationships_companion
         "@type": "ForeignKey"
         "@id": "#FK_CompanionParameters_companion_CompanionRelationships_companion"
         description: Link CompanionParameters companion to CompanionRelationships table
         columns:
+        - "#CompanionParameters.source"
         - "#CompanionParameters.companion"
         referencedColumns:
+        - "#CompanionRelationships.source"
         - "#CompanionRelationships.companion"
       - name: CompanionParameters_reference_Publications_reference
         "@type": "ForeignKey"
