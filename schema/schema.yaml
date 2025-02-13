@@ -3,6 +3,14 @@ name: astrodb_template
 "@id": "#astrodb_template"
 description: "Template database for use by the AstroDB Toolkit"
 
+######################################################
+# CONVENTIONS
+# - Source length is 50 characters
+# - Comments length is 100 characters
+# - Reference is 30 characters
+# - Description is 100 characters. ivoa:ucd: meta.note
+######################################################
+
 tables:
 ####################################################
 # LOOKUP TABLES 
@@ -208,13 +216,6 @@ tables:
       ivoa:ucd: meta.id;meta.main
       nullable: false
 
-    indexes:  
-      - name: PK_Regimes
-        "@id": "#PK_Regimes"
-        description: Primary key for Regimes table
-        columns: 
-        - "#Regimes.regime"
-
 
   - name: AssociationList
     "@id": "#AssociationList"
@@ -282,8 +283,9 @@ tables:
     - name: description
       "@id": "#ParameterList.description"
       datatype: string
-      length: 1000
+      length: 100
       description: Description of the parameter
+      ivoa:ucd: meta.note
 
     indexes:
       - name: PK_ParameterList
