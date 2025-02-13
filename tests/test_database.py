@@ -46,7 +46,7 @@ def test_setup_db(db):
 def test_table_presence(db):
     # Confirm the tables that should be present
 
-    assert len(db.metadata.tables.keys()) == 20
+    assert len(db.metadata.tables.keys()) == 21
     assert "Sources" in db.metadata.tables.keys()
     assert "Publications" in db.metadata.tables.keys()
     assert "Names" in db.metadata.tables.keys()
@@ -67,6 +67,7 @@ def test_table_presence(db):
     assert "SourceTypeList" in db.metadata.tables.keys()
     assert "SourceTypes" in db.metadata.tables.keys()
     assert "ProperMotions" in db.metadata.tables.keys()
+    assert "ModeledParameters" in db.metadata.tables.keys()
 
 
 def test_orm_use(db):
@@ -239,3 +240,11 @@ def test_companion_relationships(db):
     assert (
         len(t) == n_companion_relationships
     ), f"Found {len(t)} entries in the Companion Relationships table, expected {n_companion_relationships}"
+
+
+def test_modeled_parameters(db):
+    # Test that ModeledParameters has expected number of entries
+    t = db.query(db.ModeledParameters.c.parameter).astropy()
+
+    n_parameters = 1
+    assert len(t) == n_parameters, f"Found {len(t)} entries in the ModeledParameters table, expected {n_parameters}"

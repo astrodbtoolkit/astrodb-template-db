@@ -34,6 +34,16 @@
             "other_companion_names": null
         }
     ],
+    "ModeledParameters": [
+        {
+            "parameter": "age",
+            "value": 3.8,
+            "error": 0.5,
+            "unit": "Gyr",
+            "comments": null,
+            "reference": "Gaid23"
+        }
+    ],
     "Names": [
         {
             "other_name": "Gl 229b"
