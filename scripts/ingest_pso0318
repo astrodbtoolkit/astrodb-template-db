@@ -1,4 +1,5 @@
-from astrodb_utils import load_astrodb, ingest_source
+from astrodb_utils import load_astrodb
+from astrodb_utils.sources import ingest_source, ingest_names
 from astrodb_utils.publications import ingest_publication
 
 # Load the database
@@ -26,10 +27,18 @@ db = load_astrodb(
 )
 
 def ingest_PSO_J318(db):
-    ingest_publication(db, doi="10.1088/2041-8205/777/2/L20")
+    ingest_publication(
+        db,
+        doi="10.1088/2041-8205/777/2/L20",
+        bibcode="2013ApJ...777L..20L",
+        description="The Extremely Red, Young L Dwarf PSO J318.5338-22.8603: A Free-floating Planetary-mass Analog to Directly Imaged Young Gas-giant Planets",
+        reference="Liu_13",
+        ignore_ads=True,
+    )
 
     ingest_source(db, "2MASS J21140802-2251358", reference="Liu_13")    
 
+    ingest_names(db, "2MASS J21140802-2251358", "PSO J318.5-22")
 
 def ingest_radial_velocity(db):
     # Add radial velocity data for PSO J318.5
@@ -38,10 +47,10 @@ def ingest_radial_velocity(db):
     rv_data = [
         {
             "source": "2MASS J21140802-2251358",
-            "value": -6.0,
-            "error": 1.1,
-            "unit": "km/s",
-            "comment": "uncertainty reported as +0.8 and -1.1 km/s",
+            "rv_kms": -6.0,
+            "rv_error": 1.1,
+            "adopted": True,
+            "comments": "uncertainty reported as +0.8 and -1.1 km/s",
             "reference": "Alle16",
         }
     ]
@@ -50,10 +59,10 @@ def ingest_radial_velocity(db):
         conn.commit()
 
 
-DB_SAVE = False
+DB_SAVE = True
 
 ingest_PSO_J318(db)
-# ingest_radial_velocity(db)
+ingest_radial_velocity(db)
 
 if DB_SAVE:
-    db.save("data/")
+    db.save_database("data/")

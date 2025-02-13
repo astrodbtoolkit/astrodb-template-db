@@ -4,6 +4,7 @@ Functions to test the database and example files
 
 from astrodbkit.astrodb import or_
 from sqlalchemy.ext.automap import automap_base
+from sqlalchemy import func
 
 
 def test_setup_db(db):
@@ -238,3 +239,27 @@ def test_companion_relationships(db):
     assert (
         len(t) == n_companion_relationships
     ), f"Found {len(t)} entries in the Companion Relationships table, expected {n_companion_relationships}"
+
+
+def test_radial_velocities(db):
+    # Test that Radial Velocities has expected number of entries
+    t = db.query(db.RadialVelocities.c.radial_velocity_kms).astropy()
+
+    n_radial_velocities = 1
+    assert (
+        len(t) == n_radial_velocities
+    ), f"Found {len(t)} entries in the Radial Velocities table, expected {n_radial_velocities}"
+
+    t = (
+        db.query(
+            db.RadialVelocities.c.source,
+            func.sum(db.RadialVelocities.c.adopted).label("adopted_counts"),
+        )
+        .group_by(db.RadialVelocities.c.source)
+        .having(func.sum(db.RadialVelocities.c.adopted) != 1)
+        .astropy()
+    )
+    if len(t) > 0:
+        print("\nRadial velocity measurements with incorrect 'adopted' labels")
+        print(t)
+    assert len(t) == 0
