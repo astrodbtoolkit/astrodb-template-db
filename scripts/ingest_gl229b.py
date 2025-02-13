@@ -103,6 +103,34 @@ def ingest_gl229_parameters(db):
         conn.commit()
 
 
+def ingest_proper_motions(db):
+    publication_data = [
+        {
+            "reference": "vanL07",
+            "doi": "10.1051/0004-6361:20078357",
+            "bibcode": "2007A&A...474..653V",
+            "description": "Validation of the new Hipparcos reduction",
+        }
+    ]
+
+    proper_mition_data = [
+        {
+            "source": "Gl 229b",
+            "pm_ra": -137.14,
+            "pm_dec": -714.17,
+            "pm_ra_error": 0.52,
+            "pm_dec_error": 0.79,
+            "adopted": True,
+            "reference": "vanL07",
+        }
+    ]
+
+    with db.engine.connect() as conn:
+        conn.execute(db.Publications.insert().values(publication_data))
+        conn.execute(db.ProperMotions.insert().values(proper_mition_data))
+        conn.commit()
+
+
 def ingest_sourcetype(db):
     source_type_list_data = [
         {
@@ -121,12 +149,13 @@ def ingest_sourcetype(db):
 
 
 DB_SAVE = True
-ingest_gl229b(db)  # add to Sources table
+# ingest_gl229b(db)  # add to Sources table
 # ingest_age_parameter(db)  # add to ParameterList table
-ingest_companion(db)  # add to CompanionList table
-ingest_gl229_parameters(db)  # add to CompanionParameters table
-ingest_companion_data(db)  # add to CompanionRelationships table
-ingest_sourcetype(db)  # add to SourceTypes table
+# ingest_companion(db)  # add to CompanionList table
+# ingest_gl229_parameters(db)  # add to CompanionParameters table
+# ingest_companion_data(db)  # add to CompanionRelationships table
+# ingest_sourcetype(db)  # add to SourceTypes table
+ingest_proper_motions(db)  # add to ProperMotions table
 
 if DB_SAVE:
     db.save_database("data/")

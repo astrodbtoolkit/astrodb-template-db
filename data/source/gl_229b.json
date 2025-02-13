@@ -39,6 +39,17 @@
             "other_name": "Gl 229b"
         }
     ],
+    "ProperMotions": [
+        {
+            "pm_ra": -137.14,
+            "pm_dec": -714.17,
+            "pm_ra_error": 0.52,
+            "pm_dec_error": 0.79,
+            "adopted": true,
+            "comments": null,
+            "reference": "vanL07"
+        }
+    ],
     "SourceTypes": [
         {
             "source_type": "T7",
