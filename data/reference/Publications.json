@@ -88,5 +88,17 @@
         "bibcode": "2023MNRAS.520.5283G",
         "doi": "10.1093/mnras/stad343",
         "description": "The TIME Table: rotation and ages of cool exoplanet host stars"
+    },
+    {
+        "reference": "Liu_13",
+        "bibcode": "2013ApJ...777L..20L",
+        "doi": "10.1088/2041-8205/777/2/L20",
+        "description": "The Extremely Red, Young L Dwarf PSO J318.5338-22.8603: A Free-floating Planetary-mass Analog to Directly Imaged Young Gas-giant Planets"
+    },
+    {
+        "reference": "Alle16",
+        "bibcode": "2016ApJ...819..133A",
+        "doi": "10.3847/0004-637X/819/2/133",
+        "description": "The Radial and Rotational Velocities of PSO J318.5338-22.8603, a Newly Confirmed Planetary-mass Member of the \u03b2 Pictoris Moving Group"
     }
 ]
