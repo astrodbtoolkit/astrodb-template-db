@@ -42,10 +42,11 @@ db = load_astrodb(DB_NAME, recreatedb=True, felis_schema=SCHEMA_PATH, reference_
 #     conn.commit()
 
 source_type_list_data = [
-    {"source_type": "T7 Dwarf"},
+    {"source_type": "T7",
+     "comments": "T7 dwarf",},
 ]
 source_types_data = [
-    {"source": "Gl 229b", "source_type": "T7 Dwarf", "reference": "Burg06"},
+    {"source": "Gl 229b", "source_type": "T7", "reference": "Burg06"},
 ]
 
 with db.engine.connect() as conn:

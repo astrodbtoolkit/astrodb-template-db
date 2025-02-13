@@ -23,7 +23,7 @@
     ],
     "SourceTypes": [
         {
-            "source_type": "M9 Dwarf",
+            "source_type": "M9",
             "comments": null,
             "adopted": null,
             "reference": "Burg06"

@@ -1,14 +1,14 @@
 [
     {
-        "source_type": "Dwarf Irregular Galaxy",
-        "comments": null
+        "source_type": "dIrr",
+        "comments": "Dwarf irregular galaxy"
     },
     {
-        "source_type": "M9 Dwarf",
-        "comments": null
+        "source_type": "M9",
+        "comments": "M9 dwarf"
     },
     {
-        "source_type": "T7 Dwarf",
-        "comments": null
+        "source_type": "T7",
+        "comments": "T7 dwarf"
     }
 ]

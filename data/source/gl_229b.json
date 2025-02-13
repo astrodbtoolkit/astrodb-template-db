@@ -30,7 +30,7 @@
     ],
     "SourceTypes": [
         {
-            "source_type": "T7 Dwarf",
+            "source_type": "T7",
             "comments": null,
             "adopted": null,
             "reference": "Burg06"
