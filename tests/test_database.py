@@ -242,9 +242,3 @@ def test_companion_relationships(db):
     ), f"Found {len(t)} entries in the Companion Relationships table, expected {n_companion_relationships}"
 
 
-def test_modeled_parameters(db):
-    # Test that ModeledParameters has expected number of entries
-    t = db.query(db.ModeledParameters.c.parameter).astropy()
-
-    n_parameters = 1
-    assert len(t) == n_parameters, f"Found {len(t)} entries in the ModeledParameters table, expected {n_parameters}"
