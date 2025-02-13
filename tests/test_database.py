@@ -2,9 +2,8 @@
 Functions to test the database and example files
 """
 
-from astrodbkit.astrodb import or_
 from sqlalchemy.ext.automap import automap_base
-from sqlalchemy import func
+from sqlalchemy import func, or_
 
 
 def test_setup_db(db):
@@ -251,6 +250,7 @@ def test_radial_velocities(db):
         len(t) == n_radial_velocities
     ), f"Found {len(t)} entries in the Radial Velocities table, expected {n_radial_velocities}"
 
+    # Test that there is one adopted radial velocity measurement per source
     t = (
         db.query(
             db.RadialVelocities.c.source,
@@ -258,7 +258,6 @@ def test_radial_velocities(db):
         )
         .group_by(db.RadialVelocities.c.source)
         .having(func.sum(db.RadialVelocities.c.adopted) != 1)
-        .astropy()
     )
 
     assert (
@@ -275,7 +274,7 @@ def test_proper_motions(db):
         len(t) == n_proper_motions
     ), f"Found {len(t)} entries in the Proper Motions table, expected {n_proper_motions}"
 
-    # Test that there is one adopted value per source
+    # Test that there is one adopted proper motion measurement per source
     t = (
         db.query(
             db.ProperMotions.c.source,
@@ -283,7 +282,6 @@ def test_proper_motions(db):
         )
         .group_by(db.ProperMotions.c.source)
         .having(func.sum(db.ProperMotions.c.adopted) != 1)
-        .astropy()
     )
 
     assert (
