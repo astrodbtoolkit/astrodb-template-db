@@ -3,22 +3,255 @@ name: astrodb_template
 "@id": "#astrodb_template"
 description: "Template database for use by the AstroDB Toolkit"
 
-######################################################
-# CONVENTIONS
-# - Source length is 50 characters
-# - Comments length is 100 characters
-# - References are 30 characters
-# - 
-######################################################
-
-
 tables:
 
-######################################################
-# MAIN TABLES
-# Sources - primary table for the database 
-# Names - used to store additional identifiers for sources
-######################################################
+  - name: Publications
+    "@id": "#Publications"
+    description: Reference information (DOI, bibcodes, etc)
+    primaryKey: 
+    - "#Publications.reference"
+
+    columns:
+    - name: reference
+      "@id": "#Publications.reference"
+      datatype: string
+      length: 30
+      description: Publication reference identifier
+      ivoa:ucd: meta.ref;meta.main
+      nullable: false
+    - name: bibcode
+      "@id": "#Publications.bibcode"
+      datatype: string
+      length: 100
+      description: Publication bibcode
+      ivoa:ucd: meta.bib.bibcode
+    - name: doi
+      "@id": "#Publications.doi"
+      datatype: string
+      length: 100
+      description: Publication DOI
+      ivoa:ucd: meta.ref.doi
+    - name: description
+      "@id": "#Publications.description"
+      datatype: string
+      length: 1000
+      description: Publication description
+
+
+  - name: Telescopes
+    "@id": "#Telescopes"
+    description: Telescope, mission, and survey information
+    primaryKey: 
+    - "#Telescopes.telescope"
+
+    columns:
+    - name: telescope
+      "@id": "#Telescopes.telescope"
+      datatype: string
+      length: 30
+      description: Telescope, mission, or survey name
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: description
+      "@id": "#Telescopes.description"
+      datatype: string
+      length: 1000
+      description: Telescope description
+    - name: reference
+      "@id": "#Telescopes.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+
+    constraints:
+      - name: Telescopes_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_Telescopes_reference_Publications_reference"
+        description: Link Telescopes reference to Publications table
+        columns:
+        - "#Telescopes.reference"
+        referencedColumns:
+        - "#Publications.reference"
+
+
+  - name: Instruments
+    "@id": "#Instruments"
+    description: Instrument information
+    primaryKey: 
+    - "#Instruments.instrument"
+    - "#Instruments.mode"
+    - "#Instruments.telescope"
+
+    columns:
+    - name: instrument
+      "@id": "#Instruments.instrument"
+      datatype: string
+      length: 30
+      description: Instrument name
+      ivoa:ucd: instr;meta.main
+      nullable: false
+    - name: mode
+      "@id": "#Instruments.mode"
+      datatype: string
+      length: 30
+      description: Instrument mode
+      nullable: false
+    - name: telescope
+      "@id": "#Instruments.telescope"
+      datatype: string
+      length: 30
+      description: Telescope, mission, or survey name; links to Telescopes table
+      nullable: false
+    - name: description
+      "@id": "#Instruments.description"
+      datatype: string
+      length: 1000
+      description: Instrument description
+    - name: reference
+      "@id": "#Instruments.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+      ivoa:ucd: meta.ref
+
+    constraints:
+      - name: Instruments_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_Instruments_reference_Publications_reference"
+        description: Link Instruments reference to Publications table
+        columns:
+        - "#Instruments.reference"
+        referencedColumns:
+        - "#Publications.reference"
+
+
+  - name: PhotometryFilters
+    "@id": "#PhotometryFilters"
+    description: Photometry filter information
+    primaryKey: 
+    - "#PhotometryFilters.band"
+
+    columns:
+    - name: band
+      "@id": "#PhotometryFilters.band"
+      datatype: string
+      length: 30
+      description: Band name.
+      ivoa:ucd: instr.bandpass;meta.main
+      nullable: false
+    - name: ucd
+      "@id": "#PhotometryFilters.ucd"
+      datatype: string
+      length: 100
+      description: Unified Content Descriptor of the photometry filter
+    - name: effective_wavelength_angstroms
+      "@id": "#PhotometryFilters.effective_wavelength_angstroms"
+      datatype: double
+      description: Effective wavelength of the photometry filter in Angstroms
+      fits:tunit: Angstrom
+      nullable: false
+    - name: width_angstroms
+      "@id": "#PhotometryFilters.width_angstroms"
+      datatype: double
+      fits:tunit: Angstrom
+      description: Width of the ephotometry filter in Angstroms
+      ivoa:ucd: instr.bandwidth
+
+
+  - name: Versions
+    "@id": "#Versions"
+    description: Database version information
+    primaryKey: 
+    - "#Versions.version"
+
+    columns:
+    - name: version
+      "@id": "#Versions.version"
+      datatype: string
+      length: 30
+      description: Version identifier
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: start_date
+      "@id": "#Versions.start_date"
+      datatype: string
+      length: 30
+      description: Date when this version started being used
+    - name: end_date
+      "@id": "#Versions.end_date"
+      datatype: string
+      length: 30
+      description: Release date of this version
+    - name: description
+      "@id": "#Versions.description"
+      datatype: string
+      length: 1000
+      description: Description of changes associated with this version
+
+
+  - name: Regimes
+    "@id": "#Regimes"
+    description: Regime lookup table
+    primaryKey: 
+    - "#Regimes.regime"
+
+    columns:
+    - name: regime
+      "@id": "#Regimes.regime"
+      datatype: string
+      length: 30
+      description: Regime identifier string
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+
+
+  - name: AssociationList
+    "@id": "#AssociationList"
+    description: Associations lookup table
+    primaryKey: 
+    - "#AssociationList.association"
+
+    columns:
+    - name: association
+      "@id": "#AssociationList.association"
+      datatype: string
+      length: 100
+      description: Main identifier for an association
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: association_type
+      "@id": "#AssociationList.association_type"
+      datatype: string
+      length: 30
+      description: Type of association
+    - name: comments
+      "@id": "#AssociationList.comments"
+      datatype: string
+      length: 100
+      description: Free-form comments for this entry
+    - name: reference
+      "@id": "#AssociationList.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+      ivoa:ucd: meta.ref
+
+    indexes:
+      - name: PK_AssociationList
+        "@id": "#PK_AssociationList"
+        description: Primary key for AssociationList table
+        columns: 
+        - "#AssociationList.association"
+
+    constraints:
+      - name: AssociationList_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_AssociationList_reference_Publications_reference"
+        description: Link AssociationList reference to Publications table
+        columns:
+        - "#AssociationList.reference"
+        referencedColumns:
+        - "#Publications.reference"
 
 
   - name: Sources
@@ -149,14 +382,6 @@ tables:
         - "#Names.source"
         referencedColumns:
         - "#Sources.source"
-
-#########################################################
-# DATA TABLES
-# These are examples and can be removed as needed.
-# Helper functions in the `astrodb_utils` package are 
-# designed to help with adding data to these tables.
-# Additional tables can be added using these as templates.
-##########################################################
 
 
   - name: Photometry
@@ -418,7 +643,7 @@ tables:
     description: Relationships between sources
     primaryKey: 
     - "#CompanionRelationships.source"
-    - "#CompanionRelationships.companion"
+    - "#CompanionRelationships.companion" # or companion_name
 
     columns:
     - name: source
@@ -497,98 +722,6 @@ tables:
         referencedColumns:
         - "#Publications.reference"
 
-
-  - name: CompanionParameters
-    "@id": "#CompanionParameters"
-    description: Parameters for companion objects relevant to sources
-    primaryKey: 
-    - "#CompanionParameters.source"
-    - "#CompanionParameters.companion"
-    - "#CompanionParameters.parameter"
-
-    columns:
-    - name: source
-      "@id": "#CompanionParameters.source"
-      datatype: string
-      length: 50
-      description: Main identifier for an object; links to Sources table
-      ivoa:ucd: meta.id;meta.main
-      nullable: false
-    - name: companion
-      "@id": "#CompanionParameters.companion"
-      datatype: string
-      length: 50
-      description: Main identifier for a companion object
-      ivoa:ucd: meta.id
-      nullable: false
-    - name: parameter
-      "@id": "#CompanionParameters.parameter"
-      datatype: string
-      length: 30
-      description: Parameter name
-      ivoa:ucd: meta.id
-      nullable: false
-    - name: value
-      "@id": "#CompanionParameters.value"
-      datatype: double
-      description: Value of the parameter
-    - name: value_error
-      "@id": "#CompanionParameters.value_error"
-      datatype: double
-      description: Uncertainty of the parameter value
-    - name: value_unit
-      "@id": "#CompanionParameters.value_unit"
-      datatype: string
-      length: 30
-      description: Unit of the parameter value
-    - name: comments
-      "@id": "#CompanionParameters.comments"
-      datatype: string
-      length: 100
-      description: Free-form comments for this entry
-    - name: reference
-      "@id": "#CompanionParameters.reference"
-      datatype: string
-      length: 30
-      description: Publication reference; links to Publications table
-      ivoa:ucd: meta.ref
-      nullable: false
-
-    indexes:
-      - name: PK_CompanionParameters
-        "@id": "#PK_CompanionParameters"
-        description: Primary key for CompanionParameters table
-        columns: 
-        - "#CompanionParameters.source"
-        - "#CompanionParameters.companion"
-        - "#CompanionParameters.parameter"
-        - "#CompanionParameters.reference"
-    constraints:
-      # - name: CompanionParameters_source_Sources_source
-      #   "@type": "ForeignKey"
-      #   "@id": "#FK_CompanionParameters_source_Sources_source"
-      #   description: Link CompanionParameters source to Sources table
-      #   columns:
-      #   - "#CompanionParameters.source"
-      #   referencedColumns:
-      #   - "#CompanionRelationships.source"
-      # - name: CompanionParameters_companion_CompanionRelationships_companion
-      #   "@type": "ForeignKey"
-      #   "@id": "#FK_CompanionParameters_companion_CompanionRelationships_companion"
-      #   description: Link CompanionParameters companion to CompanionRelationships table
-      #   columns:
-      #   - "#CompanionParameters.companion"
-      #   referencedColumns:
-      #   - "#CompanionRelationships.companion"
-      - name: CompanionParameters_reference_Publications_reference
-        "@type": "ForeignKey"
-        "@id": "#FK_CompanionParameters_reference_Publications_reference"
-        description: Link CompanionParameters reference to Publications table
-        columns:
-        - "#CompanionParameters.reference"
-        referencedColumns:
-        - "#Publications.reference"
-  
 
   - name: Associations
     "@id": "#Associations"
@@ -673,291 +806,3 @@ tables:
         description: Validate membership probability
         expression: membership_probability >= 0 AND membership_probability <= 1
 
-
-####################################################
-# LOOKUP TABLES 
-# These tables are expected and used by other tables
-# ###################################################
-
-
-  - name: Publications
-    "@id": "#Publications"
-    description: Reference information (DOI, bibcodes, etc)
-    primaryKey: 
-    - "#Publications.reference"
-
-    columns:
-    - name: reference
-      "@id": "#Publications.reference"
-      datatype: string
-      length: 30
-      description: Publication reference identifier
-      ivoa:ucd: meta.ref;meta.main
-      nullable: false
-    - name: bibcode
-      "@id": "#Publications.bibcode"
-      datatype: string
-      length: 100
-      description: Publication bibcode
-      ivoa:ucd: meta.bib.bibcode
-    - name: doi
-      "@id": "#Publications.doi"
-      datatype: string
-      length: 100
-      description: Publication DOI
-      ivoa:ucd: meta.ref.doi
-    - name: description
-      "@id": "#Publications.description"
-      datatype: string
-      length: 1000
-      description: Publication description
-
-
-  - name: Telescopes
-    "@id": "#Telescopes"
-    description: Telescope, mission, and survey information
-    primaryKey: 
-    - "#Telescopes.telescope"
-
-    columns:
-    - name: telescope
-      "@id": "#Telescopes.telescope"
-      datatype: string
-      length: 30
-      description: Telescope, mission, or survey name
-      ivoa:ucd: meta.id;meta.main
-      nullable: false
-    - name: description
-      "@id": "#Telescopes.description"
-      datatype: string
-      length: 1000
-      description: Telescope description
-    - name: reference
-      "@id": "#Telescopes.reference"
-      datatype: string
-      length: 30
-      description: Publication reference; links to Publications table
-
-    constraints:
-      - name: Telescopes_reference_Publications_reference
-        "@type": "ForeignKey"
-        "@id": "#FK_Telescopes_reference_Publications_reference"
-        description: Link Telescopes reference to Publications table
-        columns:
-        - "#Telescopes.reference"
-        referencedColumns:
-        - "#Publications.reference"
-
-
-  - name: Instruments
-    "@id": "#Instruments"
-    description: Instrument information
-    primaryKey: 
-    - "#Instruments.instrument"
-    - "#Instruments.mode"
-    - "#Instruments.telescope"
-
-    columns:
-    - name: instrument
-      "@id": "#Instruments.instrument"
-      datatype: string
-      length: 30
-      description: Instrument name
-      ivoa:ucd: instr;meta.main
-      nullable: false
-    - name: mode
-      "@id": "#Instruments.mode"
-      datatype: string
-      length: 30
-      description: Instrument mode
-      nullable: false
-    - name: telescope
-      "@id": "#Instruments.telescope"
-      datatype: string
-      length: 30
-      description: Telescope, mission, or survey name; links to Telescopes table
-      nullable: false
-    - name: description
-      "@id": "#Instruments.description"
-      datatype: string
-      length: 1000
-      description: Instrument description
-    - name: reference
-      "@id": "#Instruments.reference"
-      datatype: string
-      length: 30
-      description: Publication reference; links to Publications table
-      ivoa:ucd: meta.ref
-
-    constraints:
-      - name: Instruments_reference_Publications_reference
-        "@type": "ForeignKey"
-        "@id": "#FK_Instruments_reference_Publications_reference"
-        description: Link Instruments reference to Publications table
-        columns:
-        - "#Instruments.reference"
-        referencedColumns:
-        - "#Publications.reference"
-
-
-  - name: PhotometryFilters
-    "@id": "#PhotometryFilters"
-    description: Photometry filter information
-    primaryKey: 
-    - "#PhotometryFilters.band"
-
-    columns:
-    - name: band
-      "@id": "#PhotometryFilters.band"
-      datatype: string
-      length: 30
-      description: Band name.
-      ivoa:ucd: instr.bandpass;meta.main
-      nullable: false
-    - name: ucd
-      "@id": "#PhotometryFilters.ucd"
-      datatype: string
-      length: 100
-      description: Unified Content Descriptor of the photometry filter
-    - name: effective_wavelength_angstroms
-      "@id": "#PhotometryFilters.effective_wavelength_angstroms"
-      datatype: double
-      description: Effective wavelength of the photometry filter in Angstroms
-      fits:tunit: Angstrom
-      nullable: false
-    - name: width_angstroms
-      "@id": "#PhotometryFilters.width_angstroms"
-      datatype: double
-      fits:tunit: Angstrom
-      description: Width of the ephotometry filter in Angstroms
-      ivoa:ucd: instr.bandwidth
-
-
-  - name: Regimes
-    "@id": "#Regimes"
-    description: Regime lookup table
-    primaryKey: 
-    - "#Regimes.regime"
-
-    columns:
-    - name: regime
-      "@id": "#Regimes.regime"
-      datatype: string
-      length: 30
-      description: Regime identifier string
-      ivoa:ucd: meta.id;meta.main
-      nullable: false
-
-
-  - name: AssociationList
-    "@id": "#AssociationList"
-    description: Associations lookup table
-    primaryKey: 
-    - "#AssociationList.association"
-
-    columns:
-    - name: association
-      "@id": "#AssociationList.association"
-      datatype: string
-      length: 100
-      description: Main identifier for an association
-      ivoa:ucd: meta.id;meta.main
-      nullable: false
-    - name: association_type
-      "@id": "#AssociationList.association_type"
-      datatype: string
-      length: 30
-      description: Type of association
-    - name: comments
-      "@id": "#AssociationList.comments"
-      datatype: string
-      length: 100
-      description: Free-form comments for this entry
-    - name: reference
-      "@id": "#AssociationList.reference"
-      datatype: string
-      length: 30
-      description: Publication reference; links to Publications table
-      ivoa:ucd: meta.ref
-
-    indexes:
-      - name: PK_AssociationList
-        "@id": "#PK_AssociationList"
-        description: Primary key for AssociationList table
-        columns: 
-        - "#AssociationList.association"
-
-    constraints:
-      - name: AssociationList_reference_Publications_reference
-        "@type": "ForeignKey"
-        "@id": "#FK_AssociationList_reference_Publications_reference"
-        description: Link AssociationList reference to Publications table
-        columns:
-        - "#AssociationList.reference"
-        referencedColumns:
-        - "#Publications.reference"
-
-
-  - name: ParametersList
-    "@id": "#ParametersList"
-    description: Parameters lookup table
-    primaryKey: 
-    - "#ParametersList.parameter"
-
-    columns:
-    - name: parameter
-      "@id": "#ParametersList.parameter"
-      datatype: string
-      length: 30
-      description: Main identifier for a parameter
-      ivoa:ucd: meta.id;meta.main
-      nullable: false
-    - name: description
-      "@id": "#ParametersList.description"
-      datatype: string
-      length: 1000
-      description: Description of the parameter
-
-    indexes:
-      - name: PK_ParametersList
-        "@id": "#PK_ParametersList"
-        description: Primary key for ParametersList table
-        columns: 
-        - "#ParametersList.parameter"
-
-
-#####################################################
-# RECOMMENDED TABLES
-# - Versions - for tracking database versions
-#####################################################
-
-
-  - name: Versions
-    "@id": "#Versions"
-    description: Database version information
-    primaryKey: 
-    - "#Versions.version"
-
-    columns:
-    - name: version
-      "@id": "#Versions.version"
-      datatype: string
-      length: 30
-      description: Version identifier
-      ivoa:ucd: meta.id;meta.main
-      nullable: false
-    - name: start_date
-      "@id": "#Versions.start_date"
-      datatype: string
-      length: 30
-      description: Date when this version started being used
-    - name: end_date
-      "@id": "#Versions.end_date"
-      datatype: string
-      length: 30
-      description: Release date of this version
-    - name: description
-      "@id": "#Versions.description"
-      datatype: string
-      length: 1000
-      description: Description of changes associated with this version

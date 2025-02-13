@@ -61,8 +61,8 @@ def test_table_presence(db):
     assert "AssociationList" in db.metadata.tables.keys()
     assert "Associations" in db.metadata.tables.keys()
     assert "CompanionRelationships" in db.metadata.tables.keys()
-    assert "CompanionParameters" in db.metadata.tables.keys()
     assert "ParametersList" in db.metadata.tables.keys()
+    assert "CompanionParameters" in db.metadata.tables.keys()
 
 
 def test_orm_use(db):
@@ -235,3 +235,7 @@ def test_companion_relationships(db):
     assert (
         len(t) == n_companion_relationships
     ), f"Found {len(t)} entries in the Companion Relationships table, expected {n_companion_relationships}"
+
+
+#def test_companion_parameters(db):
+    # check all units are resovalble as astropy units
