@@ -6,7 +6,7 @@ description: "Template database for use by the AstroDB Toolkit"
 ######################################################
 # CONVENTIONS
 # - Source length is 50 characters
-# - Comments length is 100 characters
+# - Comments length is 100 characters. ivoa:ucd: meta.note
 # - Reference is 30 characters
 # - Description is 100 characters. ivoa:ucd: meta.note
 ######################################################
@@ -241,6 +241,7 @@ tables:
       datatype: string
       length: 100
       description: Free-form comments for this entry
+      ivoa:ucd: meta.note
     - name: reference
       "@id": "#AssociationList.reference"
       datatype: string
@@ -384,6 +385,7 @@ tables:
       datatype: string
       length: 100
       description: Free-form comments on this Source
+      ivoa:ucd: meta.note
 
 
     indexes:
@@ -507,8 +509,9 @@ tables:
     - name: comments
       "@id": "#Photometry.comments"
       datatype: string
-      length: 1000
+      length: 100
       description: Free-form comments for this entry
+      ivoa:ucd: meta.note
     - name: reference
       "@id": "#Photometry.reference"
       datatype: string
@@ -606,8 +609,9 @@ tables:
     - name: comments
       "@id": "#Parallaxes.comments"
       datatype: string
-      length: 1000
+      length: 100
       description: Free-form comments for this entry
+      ivoa:ucd: meta.note
     - name: reference
       "@id": "#Parallaxes.reference"
       datatype: string
@@ -676,8 +680,9 @@ tables:
     - name: comments
       "@id": "#RadialVelocities.comments"
       datatype: string
-      length: 1000
+      length: 100
       description: Free-form comments for this entry
+      ivoa:ucd: meta.note
     - name: reference
       "@id": "#RadialVelocities.reference"
       datatype: string
@@ -762,6 +767,7 @@ tables:
       datatype: string
       length: 100
       description: Free-form comments for this entry
+      ivoa:ucd: meta.note
     - name: reference
       "@id": "#CompanionRelationships.reference"
       datatype: string
@@ -858,6 +864,7 @@ tables:
       datatype: string
       length: 100
       description: Free-form comments for this entry
+      ivoa:ucd: meta.note
     - name: reference
       "@id": "#CompanionParameters.reference"
       datatype: string
@@ -934,6 +941,7 @@ tables:
       datatype: string
       length: 100
       description: Free-form comments for this entry
+      ivoa:ucd: meta.note
     - name: adopted
       "@id": "#Associations.adopted"
       datatype: boolean
