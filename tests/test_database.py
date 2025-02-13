@@ -2,8 +2,8 @@
 Functions to test the database and example files
 """
 
-from astrodbkit.astrodb import or_
 from sqlalchemy.ext.automap import automap_base
+from sqlalchemy import func, or_
 
 
 def test_setup_db(db):
@@ -242,3 +242,51 @@ def test_companion_relationships(db):
     ), f"Found {len(t)} entries in the Companion Relationships table, expected {n_companion_relationships}"
 
 
+def test_radial_velocities(db):
+    # Test that Radial Velocities has expected number of entries
+    t = db.query(db.RadialVelocities.c.rv_kms).astropy()
+
+    n_radial_velocities = 1
+    assert (
+        len(t) == n_radial_velocities
+    ), f"Found {len(t)} entries in the Radial Velocities table, expected {n_radial_velocities}"
+
+    # Test that there is one adopted radial velocity measurement per source
+    t = (
+        db.query(
+            db.RadialVelocities.c.source,
+            func.sum(db.RadialVelocities.c.adopted).label("adopted_counts"),
+        )
+        .group_by(db.RadialVelocities.c.source)
+        .having(func.sum(db.RadialVelocities.c.adopted) != 1)
+        .astropy()
+    )
+
+    assert (
+        len(t) == 0
+    ), f"Found {len(t)} radial velocity measurements with incorrect 'adopted' labels"
+
+
+def test_proper_motions(db):
+    # Test that Radial Velocities has expected number of entries
+    t = db.query(db.ProperMotions.c.pm_ra).astropy()
+
+    n_proper_motions = 1
+    assert (
+        len(t) == n_proper_motions
+    ), f"Found {len(t)} entries in the Proper Motions table, expected {n_proper_motions}"
+
+    # Test that there is one adopted proper motion measurement per source
+    t = (
+        db.query(
+            db.ProperMotions.c.source,
+            func.sum(db.ProperMotions.c.adopted).label("adopted_counts"),
+        )
+        .group_by(db.ProperMotions.c.source)
+        .having(func.sum(db.ProperMotions.c.adopted) != 1)
+        .astropy()
+    )
+
+    assert (
+        len(t) == 0
+    ), f"Found {len(t)} proper motion measurements with incorrect 'adopted' labels"

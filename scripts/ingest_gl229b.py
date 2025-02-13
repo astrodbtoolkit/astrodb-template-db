@@ -34,18 +34,17 @@ db = load_astrodb(
 
 
 def ingest_gl229b(db):
-    # ingest_publication(db, doi="10.1038/378463a0")
+    ingest_publication(db, doi="10.1038/378463a0")
     ingest_source(db, "Gl 229b", reference="Naka95")
 
-
-# ingest_publication(
-#     db,
-#     doi="10.1093/mnras/stad343",
-#     bibcode="2023MNRAS.520.5283G",
-#     reference="Gaid23",
-#     description="The TIME Table: rotation and ages of cool exoplanet host stars",
-#     ignore_ads=True,
-# )
+    ingest_publication(
+        db,
+        doi="10.1093/mnras/stad343",
+        bibcode="2023MNRAS.520.5283G",
+        reference="Gaid23",
+        description="The TIME Table: rotation and ages of cool exoplanet host stars",
+        ignore_ads=True,
+    )
 
 
 def ingest_companion(db):
