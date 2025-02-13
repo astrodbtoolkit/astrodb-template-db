@@ -295,6 +295,28 @@ tables:
         - "#ParameterList.parameter"
 
 
+  - name: CompanionList
+    "@id": "#CompanionList"
+    description: Companions lookup table
+    primaryKey:
+    - "#CompanionList.companion"
+
+    columns:
+    - name: companion
+      "@id": "#CompanionList.companion"
+      datatype: string
+      length: 50
+      description: Main identifier for a companion object
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: description
+      "@id": "#CompanionList.description"
+      datatype: string
+      length: 100
+      description: Description of the companion object
+      ivoa:ucd: meta.note
+
+
 ######################################################
 # MAIN TABLES
 # Sources - primary table for the database 
@@ -770,6 +792,14 @@ tables:
         - "#CompanionRelationships.source"
         referencedColumns:
         - "#Sources.source"
+      - name: CompanionRelationships_companion_CompanionList_companion
+        "@type": "ForeignKey"
+        "@id": "#FK_CompanionRelationships_companion_CompanionList_companion"
+        description: Link CompanionRelationships companion to CompanionList table
+        columns:
+        - "#CompanionRelationships.companion"
+        referencedColumns:
+        - "#CompanionList.companion"
       - name: CompanionRelationships_reference_Publications_reference"
         "@type": "ForeignKey"
         "@id": "#FK_CompanionRelationships_reference_Publications_reference"
@@ -854,16 +884,14 @@ tables:
         - "#CompanionParameters.source"
         referencedColumns:
         - "#Sources.source"
-      # - name: CompanionParameters_companion_CompanionRelationships_companion
-      #   "@type": "ForeignKey"
-      #   "@id": "#FK_CompanionParameters_companion_CompanionRelationships_companion"
-      #   description: Link CompanionParameters companion to CompanionRelationships table
-      #   columns:
-      #   - "#CompanionParameters.source"
-      #   - "#CompanionParameters.companion"
-      #   referencedColumns:
-      #   - "#CompanionRelationships.source"
-      #   - "#CompanionRelationships.companion"
+      - name: CompanionParameters_companion_CompanionList_companion
+        "@type": "ForeignKey"
+        "@id": "#FK_CompanionParameters_companion_CompanionList_companion"
+        description: Link CompanionParameters companion to CompanionList table
+        columns:
+        - "#CompanionParameters.companion"
+        referencedColumns:
+        - "#CompanionList.companion"
       - name: CompanionParameters_reference_Publications_reference
         "@type": "ForeignKey"
         "@id": "#FK_CompanionParameters_reference_Publications_reference"
