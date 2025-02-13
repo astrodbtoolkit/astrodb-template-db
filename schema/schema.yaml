@@ -4,6 +4,10 @@ name: astrodb_template
 description: "Template database for use by the AstroDB Toolkit"
 
 tables:
+####################################################
+# LOOKUP TABLES 
+# These tables are expected and used by other tables
+# ###################################################
 
   - name: Publications
     "@id": "#Publications"
@@ -254,6 +258,41 @@ tables:
         - "#Publications.reference"
 
 
+  - name: ParametersList
+    "@id": "#ParametersList"
+    description: Parameters lookup table
+    primaryKey: 
+    - "#ParametersList.parameter"
+
+    columns:
+    - name: parameter
+      "@id": "#ParametersList.parameter"
+      datatype: string
+      length: 30
+      description: Main identifier for a parameter
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: description
+      "@id": "#ParametersList.description"
+      datatype: string
+      length: 1000
+      description: Description of the parameter
+
+    indexes:
+      - name: PK_ParametersList
+        "@id": "#PK_ParametersList"
+        description: Primary key for ParametersList table
+        columns: 
+        - "#ParametersList.parameter"
+
+
+######################################################
+# MAIN TABLES
+# Sources - primary table for the database 
+# Names - used to store additional identifiers for sources
+######################################################
+
+
   - name: Sources
     "@id": "#Sources"
     description: "Main identifiers for objects along with coordinates."
@@ -382,6 +421,15 @@ tables:
         - "#Names.source"
         referencedColumns:
         - "#Sources.source"
+
+
+#########################################################
+# DATA TABLES
+# These are examples and can be removed as needed.
+# Helper functions in the `astrodb_utils` package are 
+# designed to help with adding data to these tables.
+# Additional tables can be added using these as templates.
+##########################################################
 
 
   - name: Photometry
@@ -722,6 +770,98 @@ tables:
         referencedColumns:
         - "#Publications.reference"
 
+
+  - name: CompanionParameters
+    "@id": "#CompanionParameters"
+    description: Parameters for companion objects relevant to sources
+    primaryKey: 
+    - "#CompanionParameters.source"
+    - "#CompanionParameters.companion"
+    - "#CompanionParameters.parameter"
+
+    columns:
+    - name: source
+      "@id": "#CompanionParameters.source"
+      datatype: string
+      length: 50
+      description: Main identifier for an object; links to Sources table
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: companion
+      "@id": "#CompanionParameters.companion"
+      datatype: string
+      length: 50
+      description: Main identifier for a companion object
+      ivoa:ucd: meta.id
+      nullable: false
+    - name: parameter
+      "@id": "#CompanionParameters.parameter"
+      datatype: string
+      length: 30
+      description: Parameter name
+      ivoa:ucd: meta.id
+      nullable: false
+    - name: value
+      "@id": "#CompanionParameters.value"
+      datatype: double
+      description: Value of the parameter
+    - name: value_error
+      "@id": "#CompanionParameters.value_error"
+      datatype: double
+      description: Uncertainty of the parameter value
+    - name: value_unit
+      "@id": "#CompanionParameters.value_unit"
+      datatype: string
+      length: 30
+      description: Unit of the parameter value
+    - name: comments
+      "@id": "#CompanionParameters.comments"
+      datatype: string
+      length: 100
+      description: Free-form comments for this entry
+    - name: reference
+      "@id": "#CompanionParameters.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+      ivoa:ucd: meta.ref
+      nullable: false
+
+    indexes:
+      - name: PK_CompanionParameters
+        "@id": "#PK_CompanionParameters"
+        description: Primary key for CompanionParameters table
+        columns: 
+        - "#CompanionParameters.source"
+        - "#CompanionParameters.companion"
+        - "#CompanionParameters.parameter"
+        - "#CompanionParameters.reference"
+    constraints:
+      # - name: CompanionParameters_source_Sources_source
+      #   "@type": "ForeignKey"
+      #   "@id": "#FK_CompanionParameters_source_Sources_source"
+      #   description: Link CompanionParameters source to Sources table
+      #   columns:
+      #   - "#CompanionParameters.source"
+      #   referencedColumns:
+      #   - "#CompanionRelationships.source"
+      # - name: CompanionParameters_companion_CompanionRelationships_companion
+      #   "@type": "ForeignKey"
+      #   "@id": "#FK_CompanionParameters_companion_CompanionRelationships_companion"
+      #   description: Link CompanionParameters companion to CompanionRelationships table
+      #   columns:
+      #   - "#CompanionParameters.companion"
+      #   referencedColumns:
+      #   - "#CompanionRelationships.companion"
+      - name: CompanionParameters_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_CompanionParameters_reference_Publications_reference"
+        description: Link CompanionParameters reference to Publications table
+        columns:
+        - "#CompanionParameters.reference"
+        referencedColumns:
+        - "#Publications.reference"
+  
 
   - name: Associations
     "@id": "#Associations"
