@@ -88,5 +88,11 @@
         "bibcode": "2023MNRAS.520.5283G",
         "doi": "10.1093/mnras/stad343",
         "description": "The TIME Table: rotation and ages of cool exoplanet host stars"
+    },
+    {
+        "reference": "vanL07",
+        "bibcode": "2007A&A...474..653V",
+        "doi": "10.1051/0004-6361:20078357",
+        "description": "Validation of the new Hipparcos reduction"
     }
 ]

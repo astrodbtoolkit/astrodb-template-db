@@ -1090,3 +1090,87 @@ tables:
         - "#SourceTypes.reference"
         referencedColumns:
         - "#Publications.reference"
+
+
+  - name: ProperMotions
+    "@id": "#ProperMotions"
+    description: Proper Motions for Sources
+    primaryKey: 
+    - "#ProperMotions.source"
+    - "#ProperMotions.reference"
+
+    columns:
+    - name: source
+      "@id": "#ProperMotions.source"
+      datatype: string
+      length: 50
+      description: Main identifier for an object; links to Sources table
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: pm_ra
+      "@id": "#ProperMotions.pm_ra"
+      datatype: double
+      description: Proper motion in RA*cos(Dec) in mas/yr
+      fits:tunit: mas/yr
+      ivoa:ucd: pos.pm;pos.eq.ra
+    - name: pm_dec
+      "@id": "#ProperMotions.pm_dec"
+      datatype: double
+      description: Proper motion in Dec in mas/yr
+      fits:tunit: mas/yr
+      ivoa:ucd: pos.pm;pos.eq.dec
+    - name: pm_ra_error
+      "@id": "#ProperMotions.pm_ra_error"
+      datatype: double
+      description: Uncertainty of the proper motion in RA
+      fits:tunit: mas/yr
+      ivoa:ucd: stat.error;pos.pm;pos.eq.ra
+    - name: pm_dec_error
+      "@id": "#ProperMotions.pm_dec_error"
+      datatype: double
+      description: Uncertainty of the proper motion in Dec
+      fits:tunit: mas/yr
+      ivoa:ucd: stat.error;pos.pm;pos.eq.dec
+    - name: adopted
+      "@id": "#ProperMotions.adopted"
+      datatype: boolean
+      description: Flag to indicate if this is the adopted entry
+    - name: comments
+      "@id": "#ProperMotions.comments"
+      datatype: string
+      length: 100
+      description: Free-form comments for this entry
+      ivoa:ucd: meta.note
+    - name: reference
+      "@id": "#ProperMotions.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+      ivoa:ucd: meta.ref
+      nullable: false
+
+    indexes:
+      - name: PK_ProperMotions
+        "@id": "#PK_ProperMotions"
+        description: Primary key for ProperMotions table
+        columns: 
+        - "#ProperMotions.source"
+        - "#ProperMotions.reference"
+
+    constraints:
+      - name: ProperMotions_source_Sources_source
+        "@type": "ForeignKey"
+        "@id": "#FK_ProperMotions_source_Sources_source"
+        description: Link ProperMotions source to Sources table
+        columns:
+        - "#ProperMotions.source"
+        referencedColumns:
+        - "#Sources.source"
+      - name: ProperMotions_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_ProperMotions_reference_Publications_reference"
+        description: Link ProperMotions reference to Publications table
+        columns:
+        - "#ProperMotions.reference"
+        referencedColumns:
+        - "#Publications.reference"
