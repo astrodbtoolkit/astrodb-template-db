@@ -85,7 +85,7 @@ def ingest_age_parameter(db):
         conn.commit()
 
 
-def ingest_gl229_parameters(db):
+def ingest_gl229_companion_parameters(db):
     gl229b_data = [
         {
             "source": "Gl 229b",
@@ -102,6 +102,22 @@ def ingest_gl229_parameters(db):
         conn.execute(db.CompanionParameters.insert().values(gl229b_data))
         conn.commit()
 
+def ingest_modeled_parameters(db):
+    parameters_data = [
+        {
+            "source": "Gl 229b",
+            "parameter": "age",
+            "value": 3.8,
+            "error": 0.5,
+            "unit": "Gyr",
+            "reference": "Gaid23",
+        },
+    ]
+
+    with db.engine.connect() as conn:
+        conn.execute(db.ModeledParameters.insert().values(parameters_data))
+        conn.commit()
+
 
 def ingest_proper_motions(db):
     publication_data = [
@@ -113,10 +129,11 @@ def ingest_proper_motions(db):
         }
     ]
 
+    # In mas/yr
     proper_mition_data = [
         {
             "source": "Gl 229b",
-            "pm_ra": -137.14,
+            "pm_ra": -137.14, # mas/yr
             "pm_dec": -714.17,
             "pm_ra_error": 0.52,
             "pm_dec_error": 0.79,
@@ -152,10 +169,11 @@ DB_SAVE = True
 # ingest_gl229b(db)  # add to Sources table
 # ingest_age_parameter(db)  # add to ParameterList table
 # ingest_companion(db)  # add to CompanionList table
-# ingest_gl229_parameters(db)  # add to CompanionParameters table
+# ingest_gl229_companion_parameters(db)  # add to CompanionParameters table
 # ingest_companion_data(db)  # add to CompanionRelationships table
 # ingest_sourcetype(db)  # add to SourceTypes table
-ingest_proper_motions(db)  # add to ProperMotions table
+# ingest_proper_motions(db)  # add to ProperMotions table
+ingest_modeled_parameters(db)  # add to ModeledParameters table
 
 if DB_SAVE:
     db.save_database("data/")
