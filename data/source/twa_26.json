@@ -20,5 +20,13 @@
             "adopted": true,
             "reference": "Eros99"
         }
+    ],
+    "SourceTypes": [
+        {
+            "source_type": "M9 Dwarf",
+            "comments": null,
+            "adopted": null,
+            "reference": "Burg06"
+        }
     ]
 }

@@ -70,5 +70,17 @@
         "bibcode": "1997Sci...277...67K",
         "doi": null,
         "description": null
+    },
+    {
+        "reference": "Burg06",
+        "bibcode": "2006ApJ...637.1067B",
+        "doi": "10.1086/498563",
+        "description": null
+    },
+    {
+        "reference": "Fahe12",
+        "bibcode": "2012ApJ...752...56F",
+        "doi": "10.1088/0004-637X/752/1/56",
+        "description": null
     }
 ]
