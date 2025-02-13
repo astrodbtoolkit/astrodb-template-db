@@ -258,6 +258,7 @@ def test_radial_velocities(db):
         )
         .group_by(db.RadialVelocities.c.source)
         .having(func.sum(db.RadialVelocities.c.adopted) != 1)
+        .astropy()
     )
 
     assert (
@@ -282,6 +283,7 @@ def test_proper_motions(db):
         )
         .group_by(db.ProperMotions.c.source)
         .having(func.sum(db.ProperMotions.c.adopted) != 1)
+        .astropy()
     )
 
     assert (
