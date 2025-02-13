@@ -687,14 +687,14 @@ tables:
       description: Main identifier for an object; links to Sources table
       ivoa:ucd: meta.id;meta.main
       nullable: false
-    - name: radial_velocity_kms
-      "@id": "#RadialVelocities.radial_velocity_kms"
+    - name: rv_kms
+      "@id": "#RadialVelocities.rv_kms"
       datatype: double
       description: Radial velocity value for this entry
       fits:tunit: km/s
       ivoa:ucd: spect.dopplerVeloc
-    - name: radial_velocity_error
-      "@id": "#RadialVelocities.magnitude_error"
+    - name: rv_error
+      "@id": "#RadialVelocities.rv_error"
       datatype: double
       description: Uncertainty of the radial velocity value
       fits:tunit: km/s
@@ -746,7 +746,7 @@ tables:
         "@type": Check
         "@id": "#check_radial_velocity_error"
         description: Validate radial velocity error
-        expression: radial_velocity_error >= 0
+        expression: rv_error >= 0
 
 
   - name: CompanionRelationships
