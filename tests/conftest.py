@@ -1,8 +1,8 @@
 import os
-import sys
-
 import pytest
+
 from astrodbkit.astrodb import Database, create_database
+
 
 REFERENCE_TABLES = [
     "Publications",
@@ -13,6 +13,8 @@ REFERENCE_TABLES = [
     "Regimes",
     "AssociationList",
     "SourceTypeList"
+    "ParameterList",
+    "CompanionList",
 ]
 DB_PATH = "data"
 DB_NAME = "tests/astrodb_template_tests.sqlite"

@@ -3,7 +3,19 @@ name: astrodb_template
 "@id": "#astrodb_template"
 description: "Template database for use by the AstroDB Toolkit"
 
+######################################################
+# CONVENTIONS
+# - Source length is 50 characters
+# - Comments length is 100 characters. ivoa:ucd: meta.note
+# - Reference is 30 characters
+# - Description is 100 characters. ivoa:ucd: meta.note
+######################################################
+
 tables:
+####################################################
+# LOOKUP TABLES 
+# These tables are expected and used by other tables
+# ###################################################
 
   - name: Publications
     "@id": "#Publications"
@@ -229,6 +241,7 @@ tables:
       datatype: string
       length: 100
       description: Free-form comments for this entry
+      ivoa:ucd: meta.note
     - name: reference
       "@id": "#AssociationList.reference"
       datatype: string
@@ -254,6 +267,57 @@ tables:
         - "#Publications.reference"
 
 
+  - name: ParameterList
+    "@id": "#ParameterList"
+    description: Parameters lookup table
+    primaryKey: 
+    - "#ParameterList.parameter"
+
+    columns:
+    - name: parameter
+      "@id": "#ParameterList.parameter"
+      datatype: string
+      length: 30
+      description: Main identifier for a parameter
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: description
+      "@id": "#ParameterList.description"
+      datatype: string
+      length: 100
+      description: Description of the parameter
+      ivoa:ucd: meta.note
+
+    indexes:
+      - name: PK_ParameterList
+        "@id": "#PK_ParameterList"
+        description: Primary key for ParameterList table
+        columns: 
+        - "#ParameterList.parameter"
+
+
+  - name: CompanionList
+    "@id": "#CompanionList"
+    description: Companions lookup table
+    primaryKey:
+    - "#CompanionList.companion"
+
+    columns:
+    - name: companion
+      "@id": "#CompanionList.companion"
+      datatype: string
+      length: 50
+      description: Main identifier for a companion object
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: description
+      "@id": "#CompanionList.description"
+      datatype: string
+      length: 100
+      description: Description of the companion object
+      ivoa:ucd: meta.note
+
+
   - name: SourceTypeList
     "@id": "#SourceTypeList"
     description: Source types lookup table
@@ -274,6 +338,13 @@ tables:
       length: 100
       description: Free-form comments for this entry
       ivoa:ucd: meta.note
+
+
+######################################################
+# MAIN TABLES
+# Sources - primary table for the database 
+# Names - used to store additional identifiers for sources
+######################################################
 
 
   - name: Sources
@@ -336,6 +407,7 @@ tables:
       datatype: string
       length: 100
       description: Free-form comments on this Source
+      ivoa:ucd: meta.note
 
 
     indexes:
@@ -406,6 +478,15 @@ tables:
         - "#Sources.source"
 
 
+#########################################################
+# DATA TABLES
+# These are examples and can be removed as needed.
+# Helper functions in the `astrodb_utils` package are 
+# designed to help with adding data to these tables.
+# Additional tables can be added using these as templates.
+##########################################################
+
+
   - name: Photometry
     "@id": "#Photometry"
     description: Photometry for Sources
@@ -450,8 +531,9 @@ tables:
     - name: comments
       "@id": "#Photometry.comments"
       datatype: string
-      length: 1000
+      length: 100
       description: Free-form comments for this entry
+      ivoa:ucd: meta.note
     - name: reference
       "@id": "#Photometry.reference"
       datatype: string
@@ -549,8 +631,9 @@ tables:
     - name: comments
       "@id": "#Parallaxes.comments"
       datatype: string
-      length: 1000
+      length: 100
       description: Free-form comments for this entry
+      ivoa:ucd: meta.note
     - name: reference
       "@id": "#Parallaxes.reference"
       datatype: string
@@ -619,8 +702,9 @@ tables:
     - name: comments
       "@id": "#RadialVelocities.comments"
       datatype: string
-      length: 1000
+      length: 100
       description: Free-form comments for this entry
+      ivoa:ucd: meta.note
     - name: reference
       "@id": "#RadialVelocities.reference"
       datatype: string
@@ -705,6 +789,7 @@ tables:
       datatype: string
       length: 100
       description: Free-form comments for this entry
+      ivoa:ucd: meta.note
     - name: reference
       "@id": "#CompanionRelationships.reference"
       datatype: string
@@ -735,6 +820,14 @@ tables:
         - "#CompanionRelationships.source"
         referencedColumns:
         - "#Sources.source"
+      - name: CompanionRelationships_companion_CompanionList_companion
+        "@type": "ForeignKey"
+        "@id": "#FK_CompanionRelationships_companion_CompanionList_companion"
+        description: Link CompanionRelationships companion to CompanionList table
+        columns:
+        - "#CompanionRelationships.companion"
+        referencedColumns:
+        - "#CompanionList.companion"
       - name: CompanionRelationships_reference_Publications_reference"
         "@type": "ForeignKey"
         "@id": "#FK_CompanionRelationships_reference_Publications_reference"
@@ -744,6 +837,99 @@ tables:
         referencedColumns:
         - "#Publications.reference"
 
+
+  - name: CompanionParameters
+    "@id": "#CompanionParameters"
+    description: Parameters for companion objects relevant to sources
+    primaryKey: 
+    - "#CompanionParameters.source"
+    - "#CompanionParameters.companion"
+    - "#CompanionParameters.parameter"
+
+    columns:
+    - name: source
+      "@id": "#CompanionParameters.source"
+      datatype: string
+      length: 50
+      description: Main identifier for an object; links to Sources table
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: companion
+      "@id": "#CompanionParameters.companion"
+      datatype: string
+      length: 50
+      description: Main identifier for a companion object
+      ivoa:ucd: meta.id
+      nullable: false
+    - name: parameter
+      "@id": "#CompanionParameters.parameter"
+      datatype: string
+      length: 30
+      description: Parameter name
+      ivoa:ucd: meta.id
+      nullable: false
+    - name: value
+      "@id": "#CompanionParameters.value"
+      datatype: double
+      description: Value of the parameter
+    - name: error
+      "@id": "#CompanionParameters.error"
+      datatype: double
+      description: Uncertainty of the parameter value
+    - name: unit
+      "@id": "#CompanionParameters.unit"
+      datatype: string
+      length: 30
+      description: Unit of the parameter value. Should be astropy units compatible.
+    - name: comments
+      "@id": "#CompanionParameters.comments"
+      datatype: string
+      length: 100
+      description: Free-form comments for this entry
+      ivoa:ucd: meta.note
+    - name: reference
+      "@id": "#CompanionParameters.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+      ivoa:ucd: meta.ref
+      nullable: false
+
+    indexes:
+      - name: PK_CompanionParameters
+        "@id": "#PK_CompanionParameters"
+        description: Primary key for CompanionParameters table
+        columns: 
+        - "#CompanionParameters.source"
+        - "#CompanionParameters.companion"
+        - "#CompanionParameters.parameter"
+        - "#CompanionParameters.reference"
+    constraints:
+      - name: CompanionParameters_source_Sources_source
+        "@type": "ForeignKey"
+        "@id": "#FK_CompanionParameters_source_Sources_source"
+        description: Link CompanionParameters source to Sources table
+        columns:
+        - "#CompanionParameters.source"
+        referencedColumns:
+        - "#Sources.source"
+      - name: CompanionParameters_companion_CompanionList_companion
+        "@type": "ForeignKey"
+        "@id": "#FK_CompanionParameters_companion_CompanionList_companion"
+        description: Link CompanionParameters companion to CompanionList table
+        columns:
+        - "#CompanionParameters.companion"
+        referencedColumns:
+        - "#CompanionList.companion"
+      - name: CompanionParameters_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_CompanionParameters_reference_Publications_reference"
+        description: Link CompanionParameters reference to Publications table
+        columns:
+        - "#CompanionParameters.reference"
+        referencedColumns:
+        - "#Publications.reference"
+  
 
   - name: Associations
     "@id": "#Associations"
@@ -777,6 +963,7 @@ tables:
       datatype: string
       length: 100
       description: Free-form comments for this entry
+      ivoa:ucd: meta.note
     - name: adopted
       "@id": "#Associations.adopted"
       datatype: boolean
