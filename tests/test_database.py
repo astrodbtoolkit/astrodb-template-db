@@ -243,7 +243,7 @@ def test_companion_relationships(db):
 
 def test_radial_velocities(db):
     # Test that Radial Velocities has expected number of entries
-    t = db.query(db.RadialVelocities.c.radial_velocity_kms).astropy()
+    t = db.query(db.RadialVelocities.c.rv_kms).astropy()
 
     n_radial_velocities = 1
     assert (
