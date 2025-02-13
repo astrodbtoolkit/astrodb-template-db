@@ -837,22 +837,22 @@ tables:
         - "#CompanionParameters.parameter"
         - "#CompanionParameters.reference"
     constraints:
-      # - name: CompanionParameters_source_Sources_source
-      #   "@type": "ForeignKey"
-      #   "@id": "#FK_CompanionParameters_source_Sources_source"
-      #   description: Link CompanionParameters source to Sources table
-      #   columns:
-      #   - "#CompanionParameters.source"
-      #   referencedColumns:
-      #   - "#CompanionRelationships.source"
-      # - name: CompanionParameters_companion_CompanionRelationships_companion
-      #   "@type": "ForeignKey"
-      #   "@id": "#FK_CompanionParameters_companion_CompanionRelationships_companion"
-      #   description: Link CompanionParameters companion to CompanionRelationships table
-      #   columns:
-      #   - "#CompanionParameters.companion"
-      #   referencedColumns:
-      #   - "#CompanionRelationships.companion"
+      - name: CompanionParameters_source_Sources_source
+        "@type": "ForeignKey"
+        "@id": "#FK_CompanionParameters_source_Sources_source"
+        description: Link CompanionParameters source to Sources table
+        columns:
+        - "#CompanionParameters.source"
+        referencedColumns:
+        - "#CompanionRelationships.source"
+      - name: CompanionParameters_companion_CompanionRelationships_companion
+        "@type": "ForeignKey"
+        "@id": "#FK_CompanionParameters_companion_CompanionRelationships_companion"
+        description: Link CompanionParameters companion to CompanionRelationships table
+        columns:
+        - "#CompanionParameters.companion"
+        referencedColumns:
+        - "#CompanionRelationships.companion"
       - name: CompanionParameters_reference_Publications_reference
         "@type": "ForeignKey"
         "@id": "#FK_CompanionParameters_reference_Publications_reference"
