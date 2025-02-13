@@ -70,5 +70,11 @@
         "bibcode": "1997Sci...277...67K",
         "doi": null,
         "description": null
+    },
+    {
+        "reference": "Gaid23",
+        "bibcode": "2023MNRAS.520.5283G",
+        "doi": "10.1093/mnras/stad343",
+        "description": "The TIME Table: rotation and ages of cool exoplanet host stars"
     }
 ]

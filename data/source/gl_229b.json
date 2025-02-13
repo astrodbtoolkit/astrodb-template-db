@@ -12,6 +12,17 @@
             "comments": null
         }
     ],
+    "CompanionParameters": [
+        {
+            "companion": "Gl 229",
+            "parameter": "age",
+            "value": 3.8,
+            "value_error": 0.5,
+            "value_unit": "Gyr",
+            "comments": null,
+            "reference": "Gaid23"
+        }
+    ],
     "CompanionRelationships": [
         {
             "companion": "Gl 229",
