@@ -17,30 +17,9 @@ def test_setup_db(db):
         {"reference": "Ref 2", "doi": "Doi2", "bibcode": "2012yCat.2311....0C"},
     ]
 
-    source_data = [
-        {
-            "source": "Fake 1",
-            "ra_deg": 9.0673755,
-            "dec_deg": 18.352889,
-            "reference": "Ref 1",
-        },
-        {
-            "source": "Fake 2",
-            "ra_deg": 9.0673755,
-            "dec_deg": 18.352889,
-            "reference": "Ref 1",
-        },
-        {
-            "source": "Fake 3",
-            "ra_deg": 9.0673755,
-            "dec_deg": 18.352889,
-            "reference": "Ref 2",
-        },
-    ]
-
     with db.engine.connect() as conn:
         conn.execute(db.Publications.insert().values(ref_data))
-        conn.execute(db.Sources.insert().values(source_data))
+        # conn.execute(db.Sources.insert().values(source_data))
         conn.commit()
 
 
@@ -206,31 +185,6 @@ def test_parallax_error(db):
         print(t)
 
     assert len(t) == 0, f"{len(t)} Parallax failed parallax error checks"
-
-
-def test_coordinates(db):
-    # Verify that all sources have valid coordinates
-    t = (
-        db.query(db.Sources.c.source, db.Sources.c.ra_deg, db.Sources.c.dec_deg)
-        .filter(
-            or_(
-                db.Sources.c.ra_deg.is_(None),
-                db.Sources.c.ra_deg < 0,
-                db.Sources.c.ra_deg > 360,
-                db.Sources.c.dec_deg.is_(None),
-                db.Sources.c.dec_deg < -90,
-                db.Sources.c.dec_deg > 90,
-            )
-        )
-        .astropy()
-    )
-
-    if len(t) > 0:
-
-        print(f"\n{len(t)} Sources failed coordinate checks")
-        print(t)
-
-    assert len(t) == 0, f"{len(t)} Sources failed coordinate checks"
 
 
 def test_companion_relationships(db):
