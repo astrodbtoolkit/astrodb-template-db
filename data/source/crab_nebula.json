@@ -6,7 +6,6 @@
             "dec_deg": 14.28,
             "epoch_year": 2000.0,
             "equinox": "J2000",
-            "shortname": "DE1",
             "reference": "Perlmutter99",
             "other_references": "Rubin80",
             "comments": null
