@@ -387,12 +387,6 @@ tables:
       datatype: string
       length: 10
       description: Equinox reference frame year (eg, J2000)
-    - name: shortname
-      "@id": "#Sources.shortname"
-      datatype: string
-      length: 30
-      description: Short identifier for an object
-      ivoa:ucd: meta.id
     - name: reference
       "@id": "#Sources.reference"
       datatype: string
