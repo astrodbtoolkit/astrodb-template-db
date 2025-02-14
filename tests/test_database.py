@@ -2,18 +2,9 @@
 Functions to test the database and example files
 """
 
-from schema.schema_template import (
-    Instruments,
-    Names,
-    Photometry,
-    PhotometryFilters,
-    Publications,
-    Sources,
-    Telescopes,
-    Versions,
-    Regimes
-)
-from astrodbkit2.astrodb import or_
+from sqlalchemy.ext.automap import automap_base
+from sqlalchemy import func, or_
+
 
 def test_setup_db(db):
     # Some setup tasks to ensure some data exists in the database first
@@ -24,13 +15,27 @@ def test_setup_db(db):
             "bibcode": "2020MNRAS.496.1922B",
         },
         {"reference": "Ref 2", "doi": "Doi2", "bibcode": "2012yCat.2311....0C"},
-        {"reference": "Burn08", "doi": "Doi3", "bibcode": "2008MNRAS.391..320B"},
     ]
 
     source_data = [
-        {"source": "WASP-76", "ra_deg": 9.0673755, "dec_deg": 18.352889, "reference": "Ref 1"},
-        {"source": "GJ 1214", "ra_deg": 9.0673755, "dec_deg": 18.352889, "reference": "Ref 1"},
-        {"source": "HD 209458", "ra_deg": 9.0673755, "dec_deg": 18.352889, "reference": "Ref 2"},
+        {
+            "source": "Fake 1",
+            "ra_deg": 9.0673755,
+            "dec_deg": 18.352889,
+            "reference": "Ref 1",
+        },
+        {
+            "source": "Fake 2",
+            "ra_deg": 9.0673755,
+            "dec_deg": 18.352889,
+            "reference": "Ref 1",
+        },
+        {
+            "source": "Fake 3",
+            "ra_deg": 9.0673755,
+            "dec_deg": 18.352889,
+            "reference": "Ref 2",
+        },
     ]
 
     with db.engine.connect() as conn:
@@ -39,19 +44,57 @@ def test_setup_db(db):
         conn.commit()
 
 
+def test_table_presence(db):
+    # Confirm the tables that should be present
+
+    assert len(db.metadata.tables.keys()) == 21
+    assert "Sources" in db.metadata.tables.keys()
+    assert "Publications" in db.metadata.tables.keys()
+    assert "Names" in db.metadata.tables.keys()
+    assert "Telescopes" in db.metadata.tables.keys()
+    assert "Instruments" in db.metadata.tables.keys()
+    assert "PhotometryFilters" in db.metadata.tables.keys()
+    assert "Versions" in db.metadata.tables.keys()
+    assert "Parallaxes" in db.metadata.tables.keys()
+    assert "RadialVelocities" in db.metadata.tables.keys()
+    assert "Photometry" in db.metadata.tables.keys()
+    assert "Regimes" in db.metadata.tables.keys()
+    assert "AssociationList" in db.metadata.tables.keys()
+    assert "Associations" in db.metadata.tables.keys()
+    assert "CompanionRelationships" in db.metadata.tables.keys()
+    assert "ParameterList" in db.metadata.tables.keys()
+    assert "CompanionParameters" in db.metadata.tables.keys()
+    assert "CompanionList" in db.metadata.tables.keys()
+    assert "SourceTypeList" in db.metadata.tables.keys()
+    assert "SourceTypes" in db.metadata.tables.keys()
+    assert "ProperMotions" in db.metadata.tables.keys()
+    assert "ModeledParameters" in db.metadata.tables.keys()
+
+
 def test_orm_use(db):
     # Tests validation using the SQLAlchemy ORM
 
+    Base = automap_base(metadata=db.metadata)
+    Base.prepare()
+
+    # Creating the actual Table objects
+    Sources = Base.classes.Sources
+    Names = Base.classes.Names
+
     # Adding and removing a basic source
     s = Sources(source="V4046 Sgr", ra_deg=273.54, dec_deg=-32.79, reference="Ref 1")
+    n = Names(source="V4046 Sgr", other_name="Hen 3-1636")
     with db.session as session:
         session.add(s)
+        session.add(n)
         session.commit()
 
     assert db.query(db.Sources).filter(db.Sources.c.source == "V4046 Sgr").count() == 1
+    assert db.query(db.Names).filter(db.Names.c.other_name == "Hen 3-1636").count() == 1
 
     # Remove added source so other tests don't include it
     with db.session as session:
+        session.delete(n)  # delete Names before Sources
         session.delete(s)
         session.commit()
 
@@ -59,9 +102,23 @@ def test_orm_use(db):
 
 
 def test_photometry(db):
-    
+
     # Confirm the source isn't already present
-    assert db.query(db.Sources).filter(db.Sources.c.source == "Fake V4046 Sgr").count() == 0
+    assert (
+        db.query(db.Sources).filter(db.Sources.c.source == "Fake V4046 Sgr").count()
+        == 0
+    )
+
+    Base = automap_base(metadata=db.metadata)
+    Base.prepare()
+
+    # Creating the actual Table objects
+    Sources = Base.classes.Sources
+    Publications = Base.classes.Publications
+    Telescopes = Base.classes.Telescopes
+    Photometry = Base.classes.Photometry
+    PhotometryFilters = Base.classes.PhotometryFilters
+    Regimes = Base.classes.Regimes
 
     # Insert supporting data to (Sources, Publications, Telescopes, PhotometryFilters)
     s = Sources(source="V4046 Sgr", ra_deg=273.54, dec_deg=-32.79, reference="Ref 1")
@@ -77,7 +134,9 @@ def test_photometry(db):
     # Verify supporting information was stored
     assert db.query(db.Sources).filter(db.Sources.c.source == "V4046 Sgr").count() == 1
     assert (
-        db.query(db.Telescopes).filter(db.Telescopes.c.telescope == "Fake 2MASS").count()
+        db.query(db.Telescopes)
+        .filter(db.Telescopes.c.telescope == "Fake 2MASS")
+        .count()
         == 1
     )
     assert (
@@ -108,6 +167,7 @@ def test_photometry(db):
         == 1
     )
 
+
 def test_magnitudes(db):
     # Check that magnitudes make sense.
     t = (
@@ -117,38 +177,37 @@ def test_magnitudes(db):
                 db.Photometry.c.magnitude.is_(None),
                 db.Photometry.c.magnitude > 100,
                 db.Photometry.c.magnitude < -1,
-              )
+            )
         )
         .astropy()
     )
-    
+
     if len(t) > 0:
-      print(f"\n{len(t)} Photometry failed magnitude checks")
-      print(t)
+        print(f"\n{len(t)} Photometry failed magnitude checks")
+        print(t)
 
     assert len(t) == 0, f"{len(t)} Photometry failed magnitude checks"
-          
-    
+
 
 def test_parallax_error(db):
     # Verify that all sources have valid parallax errors
     t = (
-        db.query(db.Parallax.c.parallax_error)
+        db.query(db.Parallaxes.c.parallax_error)
         .filter(
             or_(
-                db.Parallax.c.parallax_error < 0,
-              
-              )
+                db.Parallaxes.c.parallax_error < 0,
+            )
         )
         .astropy()
     )
 
     if len(t) > 0:
-      print(f"\n{len(t)} Parallax failed parallax error checks")
-      print(t)
+        print(f"\n{len(t)} Parallax failed parallax error checks")
+        print(t)
 
     assert len(t) == 0, f"{len(t)} Parallax failed parallax error checks"
-              
+
+
 def test_coordinates(db):
     # Verify that all sources have valid coordinates
     t = (
@@ -172,3 +231,63 @@ def test_coordinates(db):
         print(t)
 
     assert len(t) == 0, f"{len(t)} Sources failed coordinate checks"
+
+
+def test_companion_relationships(db):
+    # Test that Companion Relationships has expected number of entries
+    t = db.query(db.CompanionRelationships.c.relationship).astropy()
+
+    n_companion_relationships = 1
+    assert (
+        len(t) == n_companion_relationships
+    ), f"Found {len(t)} entries in the Companion Relationships table, expected {n_companion_relationships}"
+
+
+def test_radial_velocities(db):
+    # Test that Radial Velocities has expected number of entries
+    t = db.query(db.RadialVelocities.c.rv_kms).astropy()
+
+    n_radial_velocities = 1
+    assert (
+        len(t) == n_radial_velocities
+    ), f"Found {len(t)} entries in the Radial Velocities table, expected {n_radial_velocities}"
+
+    # Test that there is one adopted radial velocity measurement per source
+    t = (
+        db.query(
+            db.RadialVelocities.c.source,
+            func.sum(db.RadialVelocities.c.adopted).label("adopted_counts"),
+        )
+        .group_by(db.RadialVelocities.c.source)
+        .having(func.sum(db.RadialVelocities.c.adopted) != 1)
+        .astropy()
+    )
+
+    assert (
+        len(t) == 0
+    ), f"Found {len(t)} radial velocity measurements with incorrect 'adopted' labels"
+
+
+def test_proper_motions(db):
+    # Test that Radial Velocities has expected number of entries
+    t = db.query(db.ProperMotions.c.pm_ra).astropy()
+
+    n_proper_motions = 1
+    assert (
+        len(t) == n_proper_motions
+    ), f"Found {len(t)} entries in the Proper Motions table, expected {n_proper_motions}"
+
+    # Test that there is one adopted proper motion measurement per source
+    t = (
+        db.query(
+            db.ProperMotions.c.source,
+            func.sum(db.ProperMotions.c.adopted).label("adopted_counts"),
+        )
+        .group_by(db.ProperMotions.c.source)
+        .having(func.sum(db.ProperMotions.c.adopted) != 1)
+        .astropy()
+    )
+
+    assert (
+        len(t) == 0
+    ), f"Found {len(t)} proper motion measurements with incorrect 'adopted' labels"
