@@ -6,9 +6,6 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy import func, or_
 
 
-
-###### now, we test database functionality, self-consistency, etc. #####
-
 def test_setup_db(db):
     # Some setup tasks to ensure some data exists in the database first
     ref_data = [
