@@ -1,15 +1,15 @@
 {
     "Sources": [
         {
-            "source": "Dark matter source 1",
-            "ra_deg": 57.6326,
+            "source": "Crab Nebula",
+            "ra_deg": 57.6328,
             "dec_deg": 14.28,
             "epoch_year": 2000.0,
             "equinox": "J2000",
             "shortname": "DE1",
             "reference": "Perlmutter99",
             "other_references": "Rubin80",
-            "comments": "Nice, dark energy."
+            "comments": null
         }
     ]
 }

@@ -1,0 +1,1267 @@
+---
+name: astrodb_template
+"@id": "#astrodb_template"
+description: "Template database for use by the AstroDB Toolkit"
+
+######################################################
+# CONVENTIONS
+# - Source length is 50 characters
+# - Comments length is 100 characters. ivoa:ucd: meta.note
+# - Reference is 30 characters
+# - Description is 100 characters. ivoa:ucd: meta.note
+# - Values are datatype: double
+# - Adopted: ivoa:ucd: meta.code
+######################################################
+
+tables:
+####################################################
+# LOOKUP TABLES 
+# These tables are expected and used by other tables
+# ###################################################
+
+  - name: Publications
+    "@id": "#Publications"
+    description: Reference information (DOI, bibcodes, etc)
+    primaryKey: 
+    - "#Publications.reference"
+
+    columns:
+    - name: reference
+      "@id": "#Publications.reference"
+      datatype: string
+      length: 30
+      description: Publication reference identifier
+      ivoa:ucd: meta.ref;meta.main
+      nullable: false
+    - name: bibcode
+      "@id": "#Publications.bibcode"
+      datatype: string
+      length: 100
+      description: Publication bibcode
+      ivoa:ucd: meta.bib.bibcode
+    - name: doi
+      "@id": "#Publications.doi"
+      datatype: string
+      length: 100
+      description: Publication DOI
+      ivoa:ucd: meta.ref.doi
+    - name: description
+      "@id": "#Publications.description"
+      datatype: string
+      length: 1000
+      description: Publication description
+
+
+  - name: Telescopes
+    "@id": "#Telescopes"
+    description: Telescope, mission, and survey information
+    primaryKey: 
+    - "#Telescopes.telescope"
+
+    columns:
+    - name: telescope
+      "@id": "#Telescopes.telescope"
+      datatype: string
+      length: 30
+      description: Telescope, mission, or survey name
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: description
+      "@id": "#Telescopes.description"
+      datatype: string
+      length: 100
+      description: Telescope description
+      ivoa:ucd: meta.note
+    - name: reference
+      "@id": "#Telescopes.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+
+    constraints:
+      - name: Telescopes_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_Telescopes_reference_Publications_reference"
+        description: Link Telescopes reference to Publications table
+        columns:
+        - "#Telescopes.reference"
+        referencedColumns:
+        - "#Publications.reference"
+
+
+  - name: Instruments
+    "@id": "#Instruments"
+    description: Instrument information
+    primaryKey: 
+    - "#Instruments.instrument"
+    - "#Instruments.mode"
+    - "#Instruments.telescope"
+
+    columns:
+    - name: instrument
+      "@id": "#Instruments.instrument"
+      datatype: string
+      length: 30
+      description: Instrument name
+      ivoa:ucd: instr;meta.main
+      nullable: false
+    - name: mode
+      "@id": "#Instruments.mode"
+      datatype: string
+      length: 30
+      description: Instrument mode
+      nullable: false
+    - name: telescope
+      "@id": "#Instruments.telescope"
+      datatype: string
+      length: 30
+      description: Telescope, mission, or survey name; links to Telescopes table
+      nullable: false
+    - name: description
+      "@id": "#Instruments.description"
+      datatype: string
+      length: 100
+      description: Instrument description
+      ivoa:ucd: meta.note
+    - name: reference
+      "@id": "#Instruments.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+      ivoa:ucd: meta.ref
+
+    constraints:
+      - name: Instruments_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_Instruments_reference_Publications_reference"
+        description: Link Instruments reference to Publications table
+        columns:
+        - "#Instruments.reference"
+        referencedColumns:
+        - "#Publications.reference"
+
+
+  - name: PhotometryFilters
+    "@id": "#PhotometryFilters"
+    description: Photometry filter information
+    primaryKey: 
+    - "#PhotometryFilters.band"
+
+    columns:
+    - name: band
+      "@id": "#PhotometryFilters.band"
+      datatype: string
+      length: 30
+      description: Band name.
+      ivoa:ucd: instr.bandpass;meta.main
+      nullable: false
+    - name: ucd
+      "@id": "#PhotometryFilters.ucd"
+      datatype: string
+      length: 100
+      description: Unified Content Descriptor of the photometry filter
+    - name: effective_wavelength_angstroms
+      "@id": "#PhotometryFilters.effective_wavelength_angstroms"
+      datatype: double
+      description: Effective wavelength of the photometry filter in Angstroms
+      fits:tunit: Angstrom
+      nullable: false
+    - name: width_angstroms
+      "@id": "#PhotometryFilters.width_angstroms"
+      datatype: double
+      fits:tunit: Angstrom
+      description: Width of the ephotometry filter in Angstroms
+      ivoa:ucd: instr.bandwidth
+
+
+  - name: Versions
+    "@id": "#Versions"
+    description: Database version information
+    primaryKey: 
+    - "#Versions.version"
+
+    columns:
+    - name: version
+      "@id": "#Versions.version"
+      datatype: string
+      length: 30
+      description: Version identifier
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: start_date
+      "@id": "#Versions.start_date"
+      datatype: string
+      length: 30
+      description: Date when this version started being used
+    - name: end_date
+      "@id": "#Versions.end_date"
+      datatype: string
+      length: 30
+      description: Release date of this version
+    - name: description
+      "@id": "#Versions.description"
+      datatype: string
+      length: 1000
+      description: Description of changes associated with this version
+
+
+  - name: Regimes
+    "@id": "#Regimes"
+    description: Regime lookup table
+    primaryKey: 
+    - "#Regimes.regime"
+
+    columns:
+    - name: regime
+      "@id": "#Regimes.regime"
+      datatype: string
+      length: 30
+      description: Regime identifier string
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+
+
+  - name: AssociationList
+    "@id": "#AssociationList"
+    description: Associations lookup table
+    primaryKey: 
+    - "#AssociationList.association"
+
+    columns:
+    - name: association
+      "@id": "#AssociationList.association"
+      datatype: string
+      length: 100
+      description: Main identifier for an association
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: association_type
+      "@id": "#AssociationList.association_type"
+      datatype: string
+      length: 30
+      description: Type of association
+    - name: comments
+      "@id": "#AssociationList.comments"
+      datatype: string
+      length: 100
+      description: Free-form comments for this entry
+      ivoa:ucd: meta.note
+    - name: reference
+      "@id": "#AssociationList.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+      ivoa:ucd: meta.ref
+
+    indexes:
+      - name: PK_AssociationList
+        "@id": "#PK_AssociationList"
+        description: Primary key for AssociationList table
+        columns: 
+        - "#AssociationList.association"
+
+    constraints:
+      - name: AssociationList_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_AssociationList_reference_Publications_reference"
+        description: Link AssociationList reference to Publications table
+        columns:
+        - "#AssociationList.reference"
+        referencedColumns:
+        - "#Publications.reference"
+
+
+  - name: ParameterList
+    "@id": "#ParameterList"
+    description: Parameters lookup table
+    primaryKey: 
+    - "#ParameterList.parameter"
+
+    columns:
+    - name: parameter
+      "@id": "#ParameterList.parameter"
+      datatype: string
+      length: 30
+      description: Main identifier for a parameter
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: description
+      "@id": "#ParameterList.description"
+      datatype: string
+      length: 100
+      description: Description of the parameter
+      ivoa:ucd: meta.note
+
+    indexes:
+      - name: PK_ParameterList
+        "@id": "#PK_ParameterList"
+        description: Primary key for ParameterList table
+        columns: 
+        - "#ParameterList.parameter"
+
+
+  - name: CompanionList
+    "@id": "#CompanionList"
+    description: Companions lookup table
+    primaryKey:
+    - "#CompanionList.companion"
+
+    columns:
+    - name: companion
+      "@id": "#CompanionList.companion"
+      datatype: string
+      length: 50
+      description: Main identifier for a companion object
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: description
+      "@id": "#CompanionList.description"
+      datatype: string
+      length: 100
+      description: Description of the companion object
+      ivoa:ucd: meta.note
+
+
+  - name: SourceTypeList
+    "@id": "#SourceTypeList"
+    description: Source types lookup table
+    primaryKey: 
+    - "#SourceTypeList.source_type"
+
+    columns:
+    - name: source_type
+      "@id": "#SourceTypeList.source_type"
+      datatype: string
+      length: 30
+      description: Source type identifier string
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: comments
+      "@id": "#SourceTypeList.comments"
+      datatype: string
+      length: 100
+      description: Free-form comments for this entry
+      ivoa:ucd: meta.note
+
+
+######################################################
+# MAIN TABLES
+# Sources - primary table for the database 
+# Names - used to store additional identifiers for sources
+######################################################
+
+
+  - name: Sources
+    "@id": "#Sources"
+    description: "Main identifiers for objects along with coordinates."
+    primaryKey:
+    - "#Sources.source"
+
+    columns:
+    - name: source
+      "@id": "#Sources.source"
+      datatype: string
+      length: 50
+      description: Unique identifier for an object
+      ivoa:ucd: meta.id;src;meta.main
+      nullable: false
+    - name: ra_deg
+      "@id": "#Sources.ra_deg"
+      datatype: double
+      description: ICRS Right Ascension of object
+      fits:tunit: deg
+      ivoa:ucd: pos.eq.ra;meta.main
+    - name: dec_deg
+      "@id": "#Sources.dec_deg"
+      datatype: double
+      description: ICRS Declination of object
+      fits:tunit: deg
+      ivoa:ucd: pos.eq.dec;meta.main
+    - name: epoch_year
+      "@id": "#Sources.epoch_year"
+      datatype: double
+      description: Decimal year for coordinates (eg, 2015.5)
+      fits:tunit: yr
+    - name: equinox
+      "@id": "#Sources.equinox"
+      datatype: string
+      length: 10
+      description: Equinox reference frame year (eg, J2000)
+    - name: shortname
+      "@id": "#Sources.shortname"
+      datatype: string
+      length: 30
+      description: Short identifier for an object
+      ivoa:ucd: meta.id
+    - name: reference
+      "@id": "#Sources.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+      ivoa:ucd: meta.ref;meta.main
+      nullable: false
+    - name: other_references
+      "@id": "#Sources.other_references"
+      datatype: string
+      length: 50
+      description: Additional references
+      ivoa:ucd: meta.ref
+    - name: comments
+      "@id": "#Sources.comments"
+      datatype: string
+      length: 100
+      description: Free-form comments on this Source
+      ivoa:ucd: meta.note
+
+
+    indexes:
+      - name: PK_Sources_source
+        "@id": "#PK_Sources_source"
+        description: Primary key for Sources table
+        columns: 
+        - "#Sources.source"
+    constraints:
+      - name: check_ra
+        "@type": Check
+        "@id": "#Sources_check_ra_bounds"
+        description: Validate RA range
+        expression: ra_deg >= 0 AND ra_deg <= 360
+      - name: check_dec
+        "@type": Check
+        "@id": "#Sources_check_dec_bounds"
+        description: Validate Dec range
+        expression: dec_deg >= -90 AND dec_deg <= 90
+      - name: Source_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_Sources_reference_Publications_reference"
+        description: Link Source reference to Publications table
+        columns:
+        - "#Sources.reference"
+        referencedColumns:
+        - "#Publications.reference"
+
+
+  - name: Names
+    "@id": "#Names"
+    description: "Additional identifiers for objects in Sources table"
+    primaryKey:
+    - "#Names.source"
+    - "#Names.other_name"
+
+    columns:
+    - name: source
+      "@id": "#Names.source"
+      datatype: string
+      length: 100
+      description: Main identifier for an object; links to Sources table
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: other_name
+      "@id": "#Names.other_name"
+      datatype: string
+      length: 100
+      description: Alternate identifier for an object
+      ivoa:ucd: meta.id
+      nullable: false
+
+    indexes:
+      - name: PK_Names_source
+        "@id": "#PK_Names_source"
+        description: Primary key for Names table
+        columns: 
+        - "#Names.source"
+        - "#Names.other_name"
+    constraints:
+      - name: Names_source_Source_source
+        "@type": "ForeignKey"
+        "@id": "#FK_Names_source_Source_source"
+        description: Link Names primary identifer to Sources table
+        columns:
+        - "#Names.source"
+        referencedColumns:
+        - "#Sources.source"
+
+
+#########################################################
+# DATA TABLES
+# These are examples and can be removed as needed.
+# Helper functions in the `astrodb_utils` package are 
+# designed to help with adding data to these tables.
+# Additional tables can be added using these as templates.
+##########################################################
+
+
+  - name: Photometry
+    "@id": "#Photometry"
+    description: Photometry for Sources
+    primaryKey: 
+    - "#Photometry.source"
+    - "#Photometry.band"
+    - "#Photometry.reference"
+
+    columns:
+    - name: source
+      "@id": "#Photometry.source"
+      datatype: string
+      length: 100
+      description: Main identifier for an object; links to Sources table
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: band
+      "@id": "#Photometry.band"
+      datatype: string
+      length: 30
+      description: Photometry band for this measurement; links to PhotometryFilters table
+    - name: magnitude
+      "@id": "#Photometry.magnitude"
+      datatype: double
+      description: Magnitude value for this entry
+      fits:tunit: mag
+    - name: magnitude_error
+      "@id": "#Photometry.magnitude_error"
+      datatype: double
+      description: Uncertainty of this magnitude value
+      fits:tunit: mag
+    - name: telescope
+      "@id": "#Photometry.telescope"
+      datatype: string
+      length: 30
+      description: Telescope, mission, or survey name; links to Telescopes table
+    - name: epoch
+      "@id": "#Photometry.epoch"
+      datatype: double
+      description: Decimal year
+      fits:tunit: yr
+    - name: comments
+      "@id": "#Photometry.comments"
+      datatype: string
+      length: 100
+      description: Free-form comments for this entry
+      ivoa:ucd: meta.note
+    - name: reference
+      "@id": "#Photometry.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+      nullable: false
+    - name: regime
+      "@id": "#Photometry.regime"
+      datatype: string
+      length: 30
+      description: Regime for this entry; links to Regimes table
+
+    indexes:
+      - name: PK_Photometry
+        "@id": "#PK_Photometry"
+        description: Primary key for Photometry table
+        columns: 
+        - "#Photometry.source"
+        - "#Photometry.band"
+        - "#Photometry.reference"
+    constraints:
+      - name: Photometry_source_Sources_source
+        "@type": "ForeignKey"
+        "@id": "#FK_Photometry_source_Sources_source"
+        description: Link Photometry source to Sources table
+        columns:
+        - "#Photometry.source"
+        referencedColumns:
+        - "#Sources.source"
+      - name: Photometry_band_PhotometryFilters_band
+        "@type": "ForeignKey"
+        "@id": "#FK_Photometry_band_PhotometryFilters_band"
+        description: Link Photometry band to PhotometryFilters table
+        columns:
+        - "#Photometry.band"
+        referencedColumns:
+        - "#PhotometryFilters.band"
+      - name: Photometry_telescope_Telescopes_telescope
+        "@type": "ForeignKey"
+        "@id": "#FK_Photometry_telescope_Telescopes_telescope"
+        description: Link Photometry telescope to Telescopes table
+        columns:
+        - "#Photometry.telescope"
+        referencedColumns:
+        - "#Telescopes.telescope"
+      - name: Photometry_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_Photometry_reference_Publications_reference"
+        description: Link Photometry reference to Publications table
+        columns:
+        - "#Photometry.reference"
+        referencedColumns:
+        - "#Publications.reference"
+      - name: Photometry_regime_Regimes_regime
+        "@type": "ForeignKey"
+        "@id": "#FK_Photometry_regime_Regimes_regime"
+        description: Link Photometry regime to Regimes table
+        columns:
+        - "#Photometry.regime"
+        referencedColumns:
+        - "#Regimes.regime"
+
+
+  - name: Parallaxes
+    "@id": "#Parallaxes"
+    description: Parallaxes for Sources
+    primaryKey: 
+    - "#Parallaxes.source"
+    - "#Parallaxes.reference"
+
+    columns:
+    - name: source
+      "@id": "#Parallaxes.source"
+      datatype: string
+      length: 100
+      description: Main identifier for an object; links to Sources table
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: parallax_mas
+      "@id": "#Parallaxes.parallax_mas"
+      datatype: double
+      description: Parallax value for this entry
+      fits:tunit: mas
+      ivoa:ucd: pos.parallax
+    - name: parallax_error
+      "@id": "#Parallaxes.magnitude_error"
+      datatype: double
+      description: Uncertainty of this parallax value
+      fits:tunit: mas
+      ivoa:ucd: stat.error;pos.parallax
+    - name: adopted
+      "@id": "#Parallaxes.adopted"
+      datatype: boolean
+      description: Flag to indicate if this is the adopted entry
+    - name: comments
+      "@id": "#Parallaxes.comments"
+      datatype: string
+      length: 100
+      description: Free-form comments for this entry
+      ivoa:ucd: meta.note
+    - name: reference
+      "@id": "#Parallaxes.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+      ivoa:ucd: meta.ref
+      nullable: false
+
+    indexes:
+      - name: PK_Parallaxes
+        "@id": "#PK_Parallaxes"
+        description: Primary key for Parallaxes table
+        columns: 
+        - "#Parallaxes.source"
+        - "#Parallaxes.reference"
+    constraints:
+      - name: Parallaxes_source_Sources_source
+        "@type": "ForeignKey"
+        "@id": "#FK_Parallaxes_source_Sources_source"
+        description: Link Parallaxes source to Sources table
+        columns:
+        - "#Parallaxes.source"
+        referencedColumns:
+        - "#Sources.source"
+      - name: Parallaxes_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_Parallaxes_reference_Publications_reference"
+        description: Link Parallaxes reference to Publications table
+        columns:
+        - "#Parallaxes.reference"
+        referencedColumns:
+        - "#Publications.reference"
+
+
+  - name: RadialVelocities
+    "@id": "#RadialVelocities"
+    description: Radial Velocities of Sources
+    primaryKey: 
+    - "#RadialVelocities.source"
+    - "#RadialVelocities.reference"
+
+    columns:
+    - name: source
+      "@id": "#RadialVelocities.source"
+      datatype: string
+      length: 50
+      description: Main identifier for an object; links to Sources table
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: rv_kms
+      "@id": "#RadialVelocities.rv_kms"
+      datatype: double
+      description: Radial velocity value for this entry
+      fits:tunit: km/s
+      ivoa:ucd: spect.dopplerVeloc
+    - name: rv_error
+      "@id": "#RadialVelocities.rv_error"
+      datatype: double
+      description: Uncertainty of the radial velocity value
+      fits:tunit: km/s
+      ivoa:ucd: stat.error;spect.dopplerVeloc
+    - name: adopted
+      "@id": "#RadialVelocities.adopted"
+      datatype: boolean
+      description: Flag to indicate if this is the adopted entry
+      ivoa:ucd: meta.code
+    - name: comments
+      "@id": "#RadialVelocities.comments"
+      datatype: string
+      length: 100
+      description: Free-form comments for this entry
+      ivoa:ucd: meta.note
+    - name: reference
+      "@id": "#RadialVelocities.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+      ivoa:ucd: meta.ref
+      nullable: false
+
+    indexes:
+      - name: PK_RadialVelocities
+        "@id": "#PK_RadialVelocities"
+        description: Primary key for Radial Velocities table
+        columns: 
+        - "#RadialVelocities.source"
+        - "#RadialVelocities.reference"
+    constraints:
+      - name: RadialVelocities_source_Sources_source
+        "@type": "ForeignKey"
+        "@id": "#FK_RadialVelocities_source_Sources_source"
+        description: Link RadialVelocities source to Sources table
+        columns:
+        - "#RadialVelocities.source"
+        referencedColumns:
+        - "#Sources.source"
+      - name: RadialVelocities_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_RadialVelocities_reference_Publications_reference"
+        description: Link RadialVelocities reference to Publications table
+        columns:
+        - "#RadialVelocities.reference"
+        referencedColumns:
+        - "#Publications.reference"
+      - name: check_radial_velocity_error
+        "@type": Check
+        "@id": "#check_radial_velocity_error"
+        description: Validate radial velocity error
+        expression: rv_error >= 0
+
+
+  - name: CompanionRelationships
+    "@id": "#CompanionRelationships"
+    description: Relationships between sources
+    primaryKey: 
+    - "#CompanionRelationships.source"
+    - "#CompanionRelationships.companion" # or companion_name
+
+    columns:
+    - name: source
+      "@id": "#CompanionRelationships.source"
+      datatype: string
+      length: 50
+      description: Main identifier for an object; links to Sources table
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: companion
+      "@id": "#CompanionRelationships.companion"
+      datatype: string
+      length: 50
+      description: External identifier for a companion object. Does not link to Sources table.
+      ivoa:ucd: meta.id
+      nullable: false
+    - name: relationship
+      "@id": "#CompanionRelationships.relationship"
+      datatype: string
+      length: 30
+      description: Relationship of the source to the companion, e.g., "parent", "child", "sibling"
+      nullable: false
+    - name: projected_separation_arcsec
+      "@id": "#CompanionRelationships.projected_separation_arcsec"
+      datatype: double
+      description: Projected separation between the source and companion in arcseconds
+      fits:tunit: arcsec
+      ivoa:ucd: pos.angDistance
+    - name: projected_separation_error
+      "@id": "#CompanionRelationships.projected_separation_error"
+      datatype: double
+      description: Uncertainty of the projected separation in arcseconds
+      fits:tunit: arcsec
+      ivoa:ucd: stat.error;pos.angDistance
+    - name: comments
+      "@id": "#CompanionRelationships.comments"
+      datatype: string
+      length: 100
+      description: Free-form comments for this entry
+      ivoa:ucd: meta.note
+    - name: reference
+      "@id": "#CompanionRelationships.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+      ivoa:ucd: meta.ref
+      nullable: false
+    - name: other_companion_names
+      "@id": "#CompanionRelationships.other_companion_names"
+      datatype: string
+      length: 100
+      description: Additional names for the companion object, comma delimited.
+      ivoa:ucd: meta.id
+
+    indexes:
+      - name: PK_CompanionRelationships
+        "@id": "#PK_CompanionRelationships"
+        description: Primary key for CompanionRelationships table
+        columns: 
+        - "#CompanionRelationships.source"
+        - "#CompanionRelationships.companion"
+    constraints:
+      - name: CompanionRelationships_source_Sources_source
+        "@type": "ForeignKey"
+        "@id": "#FK_CompanionRelationships_source_Sources_source"
+        description: Link CompanionRelationships source to Sources table
+        columns:
+        - "#CompanionRelationships.source"
+        referencedColumns:
+        - "#Sources.source"
+      - name: CompanionRelationships_companion_CompanionList_companion
+        "@type": "ForeignKey"
+        "@id": "#FK_CompanionRelationships_companion_CompanionList_companion"
+        description: Link CompanionRelationships companion to CompanionList table
+        columns:
+        - "#CompanionRelationships.companion"
+        referencedColumns:
+        - "#CompanionList.companion"
+      - name: CompanionRelationships_reference_Publications_reference"
+        "@type": "ForeignKey"
+        "@id": "#FK_CompanionRelationships_reference_Publications_reference"
+        description: Link CompanionRelationships reference to Publications table
+        columns:
+        - "#CompanionRelationships.reference"
+        referencedColumns:
+        - "#Publications.reference"
+
+
+  - name: CompanionParameters
+    "@id": "#CompanionParameters"
+    description: Parameters for companion objects relevant to sources
+    primaryKey: 
+    - "#CompanionParameters.source"
+    - "#CompanionParameters.companion"
+    - "#CompanionParameters.parameter"
+
+    columns:
+    - name: source
+      "@id": "#CompanionParameters.source"
+      datatype: string
+      length: 50
+      description: Main identifier for an object; links to Sources table
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: companion
+      "@id": "#CompanionParameters.companion"
+      datatype: string
+      length: 50
+      description: Main identifier for a companion object
+      ivoa:ucd: meta.id
+      nullable: false
+    - name: parameter
+      "@id": "#CompanionParameters.parameter"
+      datatype: string
+      length: 30
+      description: Parameter name
+      ivoa:ucd: meta.id
+      nullable: false
+    - name: value
+      "@id": "#CompanionParameters.value"
+      datatype: double
+      description: Value of the parameter
+    - name: error
+      "@id": "#CompanionParameters.error"
+      datatype: double
+      description: Uncertainty of the parameter value
+    - name: unit
+      "@id": "#CompanionParameters.unit"
+      datatype: string
+      length: 30
+      description: Unit of the parameter value. Should be astropy units compatible.
+    - name: comments
+      "@id": "#CompanionParameters.comments"
+      datatype: string
+      length: 100
+      description: Free-form comments for this entry
+      ivoa:ucd: meta.note
+    - name: reference
+      "@id": "#CompanionParameters.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+      ivoa:ucd: meta.ref
+      nullable: false
+
+    indexes:
+      - name: PK_CompanionParameters
+        "@id": "#PK_CompanionParameters"
+        description: Primary key for CompanionParameters table
+        columns: 
+        - "#CompanionParameters.source"
+        - "#CompanionParameters.companion"
+        - "#CompanionParameters.parameter"
+        - "#CompanionParameters.reference"
+    constraints:
+      - name: CompanionParameters_source_Sources_source
+        "@type": "ForeignKey"
+        "@id": "#FK_CompanionParameters_source_Sources_source"
+        description: Link CompanionParameters source to Sources table
+        columns:
+        - "#CompanionParameters.source"
+        referencedColumns:
+        - "#Sources.source"
+      - name: CompanionParameters_companion_CompanionList_companion
+        "@type": "ForeignKey"
+        "@id": "#FK_CompanionParameters_companion_CompanionList_companion"
+        description: Link CompanionParameters companion to CompanionList table
+        columns:
+        - "#CompanionParameters.companion"
+        referencedColumns:
+        - "#CompanionList.companion"
+      - name: CompanionParameters_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_CompanionParameters_reference_Publications_reference"
+        description: Link CompanionParameters reference to Publications table
+        columns:
+        - "#CompanionParameters.reference"
+        referencedColumns:
+        - "#Publications.reference"
+  
+
+  - name: Associations
+    "@id": "#Associations"
+    description: Association Membership for Sources
+    primaryKey: 
+    - "#Associations.source"
+    - "#Associations.association"
+
+    columns:
+    - name: source
+      "@id": "#Associations.source"
+      datatype: string
+      length: 50
+      description: Main identifier for an object; links to Sources table
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: association
+      "@id": "#Associations.association"
+      datatype: string
+      length: 100
+      description: Association name; links to Associations table
+      ivoa:ucd: meta.id
+      nullable: false
+    - name: membership_probability
+      "@id": "#Associations.membership_probability"
+      datatype: double
+      description: Probability of membership in this association
+      ivoa:ucd: stat.probability
+    - name: comments
+      "@id": "#Associations.comments"
+      datatype: string
+      length: 100
+      description: Free-form comments for this entry
+      ivoa:ucd: meta.note
+    - name: adopted
+      "@id": "#Associations.adopted"
+      datatype: boolean
+      description: Flag to indicate if this is the adopted entry
+    - name: reference
+      "@id": "#Associations.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+      ivoa:ucd: meta.ref
+      nullable: false
+
+    indexes:
+      - name: PK_Associations
+        "@id": "#PK_Associations"
+        description: Primary key for Associations table
+        columns: 
+        - "#Associations.source"
+        - "#Associations.association"
+
+    constraints:
+      - name: Associations_source_Sources_source
+        "@type": "ForeignKey"
+        "@id": "#FK_Associations_source_Sources_source"
+        description: Link Associations source to Sources table
+        columns:
+        - "#Associations.source"
+        referencedColumns:
+        - "#Sources.source"
+      - name: Associations_association_AssociationList_association
+        "@type": "ForeignKey"
+        "@id": "#FK_Associations_association_AssociationList_association"
+        description: Link Associations association to AssociationList table
+        columns:
+        - "#Associations.association"
+        referencedColumns:
+        - "#AssociationList.association"
+      - name: Associations_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_Associations_reference_Publications_reference"
+        description: Link Associations reference to Publications table
+        columns:
+        - "#Associations.reference"
+        referencedColumns:
+        - "#Publications.reference"
+      - name: check_membership_probability
+        "@type": Check
+        "@id": "#check_membership_probability"
+        description: Validate membership probability
+        expression: membership_probability >= 0 AND membership_probability <= 1
+
+
+  - name: SourceTypes
+    "@id": "#SourceTypes"
+    description: Source Types for Sources
+    primaryKey: 
+    - "#SourceTypes.source"
+    - "#SourceTypes.source_type"
+
+    columns:
+    - name: source
+      "@id": "#SourceTypes.source"
+      datatype: string
+      length: 50
+      description: Main identifier for an object; links to Sources table
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: source_type
+      "@id": "#SourceTypes.source_type"
+      datatype: string
+      length: 30
+      description: Source type; links to SourceTypeList table
+      ivoa:ucd: meta.id
+      nullable: false
+    - name: comments
+      "@id": "#SourceTypes.comments"
+      datatype: string
+      length: 100
+      description: Free-form comments for this entry
+      ivoa:ucd: meta.note
+    - name: adopted
+      "@id": "#SourceTypes.adopted"
+      datatype: boolean
+      description: Flag to indicate if this is the adopted entry
+      ivoa:ucd: meta.code
+    - name: reference
+      "@id": "#SourceTypes.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+      ivoa:ucd: meta.ref
+      nullable: false
+
+    indexes:
+      - name: PK_SourceTypes
+        "@id": "#PK_SourceTypes"
+        description: Primary key for SourceTypes table
+        columns: 
+        - "#SourceTypes.source"
+        - "#SourceTypes.source_type"
+
+    constraints:
+      - name: SourceTypes_source_Sources_source
+        "@type": "ForeignKey"
+        "@id": "#FK_SourceTypes_source_Sources_source"
+        description: Link SourceTypes source to Sources table
+        columns:
+        - "#SourceTypes.source"
+        referencedColumns:
+        - "#Sources.source"
+      - name: SourceTypes_source_type_SourceTypeList_source_type
+        "@type": "ForeignKey"
+        "@id": "#FK_SourceTypes_source_type_SourceTypeList_source_type"
+        description: Link SourceTypes source type to SourceTypeList table
+        columns:
+        - "#SourceTypes.source_type"
+        referencedColumns:
+        - "#SourceTypeList.source_type"
+      - name: SourceTypes_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_SourceTypes_reference_Publications_reference"
+        description: Link SourceTypes reference to Publications table
+        columns:
+        - "#SourceTypes.reference"
+        referencedColumns:
+        - "#Publications.reference"
+
+
+  - name: ProperMotions
+    "@id": "#ProperMotions"
+    description: Proper Motions for Sources
+    primaryKey: 
+    - "#ProperMotions.source"
+    - "#ProperMotions.reference"
+
+    columns:
+    - name: source
+      "@id": "#ProperMotions.source"
+      datatype: string
+      length: 50
+      description: Main identifier for an object; links to Sources table
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: pm_ra
+      "@id": "#ProperMotions.pm_ra"
+      datatype: double
+      description: Proper motion in RA*cos(Dec) in mas/yr
+      fits:tunit: mas/yr
+      ivoa:ucd: pos.pm;pos.eq.ra
+    - name: pm_dec
+      "@id": "#ProperMotions.pm_dec"
+      datatype: double
+      description: Proper motion in Dec in mas/yr
+      fits:tunit: mas/yr
+      ivoa:ucd: pos.pm;pos.eq.dec
+    - name: pm_ra_error
+      "@id": "#ProperMotions.pm_ra_error"
+      datatype: double
+      description: Uncertainty of the proper motion in RA
+      fits:tunit: mas/yr
+      ivoa:ucd: stat.error;pos.pm;pos.eq.ra
+    - name: pm_dec_error
+      "@id": "#ProperMotions.pm_dec_error"
+      datatype: double
+      description: Uncertainty of the proper motion in Dec
+      fits:tunit: mas/yr
+      ivoa:ucd: stat.error;pos.pm;pos.eq.dec
+    - name: adopted
+      "@id": "#ProperMotions.adopted"
+      datatype: boolean
+      description: Flag to indicate if this is the adopted entry
+    - name: comments
+      "@id": "#ProperMotions.comments"
+      datatype: string
+      length: 100
+      description: Free-form comments for this entry
+      ivoa:ucd: meta.note
+    - name: reference
+      "@id": "#ProperMotions.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+      ivoa:ucd: meta.ref
+      nullable: false
+
+    indexes:
+      - name: PK_ProperMotions
+        "@id": "#PK_ProperMotions"
+        description: Primary key for ProperMotions table
+        columns: 
+        - "#ProperMotions.source"
+        - "#ProperMotions.reference"
+
+    constraints:
+      - name: ProperMotions_source_Sources_source
+        "@type": "ForeignKey"
+        "@id": "#FK_ProperMotions_source_Sources_source"
+        description: Link ProperMotions source to Sources table
+        columns:
+        - "#ProperMotions.source"
+        referencedColumns:
+        - "#Sources.source"
+      - name: ProperMotions_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_ProperMotions_reference_Publications_reference"
+        description: Link ProperMotions reference to Publications table
+        columns:
+        - "#ProperMotions.reference"
+        referencedColumns:
+        - "#Publications.reference"
+
+
+  - name: ModeledParameters
+    "@id": "#ModeledParameters"
+    description: Derived/modeled parameters for sources
+    primaryKey: 
+    - "#ModeledParameters.source"
+    - "#ModeledParameters.parameter"
+    - "#ModeledParameters.reference"
+
+    columns:
+    - name: source
+      "@id": "#ModeledParameters.source"
+      datatype: string
+      length: 50
+      description: Main identifier for an object; links to Sources table
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: parameter
+      "@id": "#ModeledParameters.parameter"
+      datatype: string
+      length: 30
+      description: Parameter name
+      ivoa:ucd: meta.id
+      nullable: false
+    - name: value
+      "@id": "#ModeledParameters.value"
+      datatype: double
+      description: Value of the parameter
+    - name: error
+      "@id": "#ModeledParameters.error"
+      datatype: double
+      description: Uncertainty of the parameter value
+    - name: unit
+      "@id": "#ModeledParameters.unit"
+      datatype: string
+      length: 30
+      description: Unit of the parameter value. Should be astropy units compatible.
+    - name: comments
+      "@id": "#ModeledParameters.comments"
+      datatype: string
+      length: 100
+      description: Free-form comments for this entry
+      ivoa:ucd: meta.note
+    - name: reference
+      "@id": "#ModeledParameters.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+      ivoa:ucd: meta.ref
+      nullable: false
+
+    indexes:
+      - name: PK_ModeledParameters
+        "@id": "#PK_ModeledParameters"
+        description: Primary key for ModeledParameters table
+        columns: 
+        - "#ModeledParameters.source"
+        - "#ModeledParameters.parameter"
+        - "#ModeledParameters.reference"
+
+    constraints:
+      - name: ModeledParameters_source_Sources_source
+        "@type": "ForeignKey"
+        "@id": "#FK_ModeledParameters_source_Sources_source"
+        description: Link ModeledParameters source to Sources table
+        columns:
+        - "#ModeledParameters.source"
+        referencedColumns:
+        - "#Sources.source"
+      - name: ModeledParameters_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_ModeledParameters_reference_Publications_reference"
+        description: Link ModeledParameters reference to Publications table
+        columns:
+        - "#ModeledParameters.reference"
+        referencedColumns:
+        - "#Publications.reference"
+      - name: ModeledParameters_parameter_ParameterList_parameter
+        "@type": "ForeignKey"
+        "@id": "#FK_ModeledParameters_parameter_ParameterList_parameter"
+        description: Link ModeledParameters parameter to ParameterList table
+        columns:
+        - "#ModeledParameters.parameter"
+        referencedColumns:
+        - "#ParameterList.parameter"

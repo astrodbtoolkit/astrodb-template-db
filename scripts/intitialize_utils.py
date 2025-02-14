@@ -4,7 +4,7 @@ Utility functions for initializing a database, including initial table creation.
 test: check that the foreign key constraints match the tables to exist
 test: make sure the spectrum columns from the schema match what I read in from the CSV.
 """
-from astrodbkit2.astrodb import create_database, Database
+from astrodbkit.astrodb import create_database, Database
 from astrotemplate.schema import *
 import os
 import logging

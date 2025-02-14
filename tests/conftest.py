@@ -1,43 +1,45 @@
-import pytest
 import os
-import logging
-from astrodbkit2.astrodb import create_database, Database
-import sys
+import pytest
 
-sys.path.append("./")  # needed for github actions to find the template module
-from schema.schema_template import REFERENCE_TABLES
-from schema.schema_template import *
+from astrodbkit.astrodb import Database, create_database
 
+
+REFERENCE_TABLES = [
+    "Publications",
+    "Telescopes",
+    "Instruments",
+    "PhotometryFilters",
+    "Versions",
+    "Regimes",
+    "AssociationList",
+    "SourceTypeList",
+    "ParameterList",
+    "CompanionList",
+]
+DB_PATH = "data"
+DB_NAME = "tests/astrodb_template_tests.sqlite"
+SCHEMA_PATH = "schema/schema.yaml"
+CONNECTION_STRING = "sqlite:///" + DB_NAME
 
 
 # Create a fresh template database for the data and integrity tests
 @pytest.fixture(scope="session", autouse=True)
 def db():
-    DB_NAME = "tests/astrodb_template_tests.sqlite"
-    DB_PATH = "data"
+
+    # Confirm the schema yaml file is present
+    assert os.path.exists(SCHEMA_PATH)
 
     # Remove any existing copy of the test database
     if os.path.exists(DB_NAME):
         os.remove(DB_NAME)
+        assert not os.path.exists(DB_NAME)
 
-    connection_string = "sqlite:///" + DB_NAME
-    create_database(connection_string)
+    # Create the database using the Felis schema
+    create_database(CONNECTION_STRING, felis_schema=SCHEMA_PATH)
     assert os.path.exists(DB_NAME)
 
-    # Connect to the new database
-    db = Database(connection_string, reference_tables=REFERENCE_TABLES)
-
-    # The input data is NOT correct; that needs to be fixed or this commented out
-    # Load data into an in-memory sqlite database first, for performance
-    db = Database(
-        "sqlite://", reference_tables=REFERENCE_TABLES
-    )  # creates and connects to a temporary in-memory database
-    db.load_database(
-        DB_PATH, verbose=False
-    )  # loads the data from the data files into the database
-    db.dump_sqlite(DB_NAME)  # dump in-memory database to file
-    db = Database(
-        "sqlite:///" + DB_NAME, reference_tables=REFERENCE_TABLES
-    )  # replace database object with new file version
+    # Connect and load to the database
+    db = Database(CONNECTION_STRING, reference_tables=REFERENCE_TABLES)
+    db.load_database(DB_PATH, verbose=False)
 
     return db

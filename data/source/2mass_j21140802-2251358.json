@@ -1,0 +1,32 @@
+{
+    "Sources": [
+        {
+            "source": "2MASS J21140802-2251358",
+            "ra_deg": 318.533,
+            "dec_deg": -22.86,
+            "epoch_year": 2000.0,
+            "equinox": "J2000",
+            "shortname": null,
+            "reference": "Liu_13",
+            "other_references": null,
+            "comments": null
+        }
+    ],
+    "Names": [
+        {
+            "other_name": "2MASS J21140802-2251358"
+        },
+        {
+            "other_name": "PSO J318.5-22"
+        }
+    ],
+    "RadialVelocities": [
+        {
+            "rv_kms": -6.0,
+            "rv_error": 1.1,
+            "adopted": true,
+            "comments": "uncertainty reported as +0.8 and -1.1 km/s",
+            "reference": "Alle16"
+        }
+    ]
+}
