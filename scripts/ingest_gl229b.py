@@ -5,7 +5,7 @@
 # Gl 229b in SIMPLE: https://simple-bd-archive.org/load_solo/Gl%20229B
 
 from astrodb_utils import load_astrodb
-from astrodb_utils.sources import ingest_source
+from astrodb_utils.sources import ingest_source, ingest_names
 from astrodb_utils.publications import ingest_publication
 
 # Load the database
@@ -173,7 +173,10 @@ DB_SAVE = True
 # ingest_companion_data(db)  # add to CompanionRelationships table
 # ingest_sourcetype(db)  # add to SourceTypes table
 # ingest_proper_motions(db)  # add to ProperMotions table
-ingest_modeled_parameters(db)  # add to ModeledParameters table
+# ingest_modeled_parameters(db)  # add to ModeledParameters table
+
+ingest_names(db, "Gl 229b", "HD 42581b")
+
 
 if DB_SAVE:
     db.save_database("data/")

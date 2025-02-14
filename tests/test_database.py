@@ -43,6 +43,7 @@ def test_setup_db(db):
         conn.execute(db.Sources.insert().values(source_data))
         conn.commit()
 
+
 def test_table_presence(db):
     # Confirm the tables that should be present
 
