@@ -9,9 +9,10 @@ OUT_DIR = "docs/schema/"
 with open(SCHEMA_PATH, "r") as schema_file:
     schema = yaml.safe_load(schema_file)
 
-    # Go line-by-line and build the markdown
     for table in schema["tables"]:
         table_name = table["name"]
+
+        # Prepare a markdown file per table
         with open(f"{OUT_DIR}{table_name}.md", "w") as out_file:
             out_file.write(f"## {table_name}\n")
             out_file.write("### Description\n")
@@ -21,12 +22,21 @@ with open(SCHEMA_PATH, "r") as schema_file:
                 "| Column | Datatype | Length | Units | Description | UCD | Nullable |\n"
             )
             out_file.write("| --- | --- | --- | --- | --- | --- | --- |\n")
+
+            # Loop over column names to get the column information
             for column in table["columns"]:
+                # Get the unit from the fits or ivoa tags
+                units = column.get("fits:tunit", "")
+                if units == "":
+                    units = column.get("ivoa:unit", "")
+
+                # Write out the column
                 out_file.write(
-                    f"| {column['name']} | {column['datatype']} | {column.get('length', '')} | {column.get('fits:tunit', '')} | {column['description']} | {column.get('ivoa:ucd', '')} | {column.get('nullable', 'True')} |\n"
+                    f"| {column['name']} | {column['datatype']} | {column.get('length', '')} | {units} | {column['description']} | {column.get('ivoa:ucd', '')} | {column.get('nullable', 'True')} |\n"
                 )
             out_file.write("\n")
-            # Indexes
+
+            # Handle any indexes
             if "indexes" in table:
                 out_file.write("### Indexes\n")
                 out_file.write("| Name | Columns | Description |\n")
@@ -36,7 +46,8 @@ with open(SCHEMA_PATH, "r") as schema_file:
                         f"| {index['name']} | {index['columns']} | {index.get('description', '')} |\n"
                     )
                 out_file.write("\n")
-            # Constraints
+
+            # Handle any constraints
             if "constraints" in table:
                 out_file.write("### Constraints\n")
                 out_file.write(
