@@ -2,10 +2,10 @@
 ### Description
 Additional identifiers for objects in Sources table
 ### Columns
-| Column | Datatype | Length | Description | UCD | Nullable |
-| --- | --- | --- | --- | --- | --- |
-| source | string | 100 | Main identifier for an object; links to Sources table | meta.id;meta.main | False |
-| other_name | string | 100 | Alternate identifier for an object | meta.id | False |
+| Column | Datatype | Length | Units | Description | UCD | Nullable |
+| --- | --- | --- | --- | --- | --- | --- |
+| source | string | 100 |  | Main identifier for an object; links to Sources table | meta.id;meta.main | False |
+| other_name | string | 100 |  | Alternate identifier for an object | meta.id | False |
 
 ### Indexes
 | Name | Columns | Description |

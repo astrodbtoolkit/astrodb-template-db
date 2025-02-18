@@ -2,13 +2,13 @@
 ### Description
 Source Types for Sources
 ### Columns
-| Column | Datatype | Length | Description | UCD | Nullable |
-| --- | --- | --- | --- | --- | --- |
-| source | string | 50 | Main identifier for an object; links to Sources table | meta.id;meta.main | False |
-| source_type | string | 30 | Source type; links to SourceTypeList table | meta.id | False |
-| comments | string | 100 | Free-form comments for this entry | meta.note | True |
-| adopted | boolean |  | Flag to indicate if this is the adopted entry | meta.code | True |
-| reference | string | 30 | Publication reference; links to Publications table | meta.ref | False |
+| Column | Datatype | Length | Units | Description | UCD | Nullable |
+| --- | --- | --- | --- | --- | --- | --- |
+| source | string | 50 |  | Main identifier for an object; links to Sources table | meta.id;meta.main | False |
+| source_type | string | 30 |  | Source type; links to SourceTypeList table | meta.id | False |
+| comments | string | 100 |  | Free-form comments for this entry | meta.note | True |
+| adopted | boolean |  |  | Flag to indicate if this is the adopted entry | meta.code | True |
+| reference | string | 30 |  | Publication reference; links to Publications table | meta.ref | False |
 
 ### Indexes
 | Name | Columns | Description |

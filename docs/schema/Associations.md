@@ -2,14 +2,14 @@
 ### Description
 Association Membership for Sources
 ### Columns
-| Column | Datatype | Length | Description | UCD | Nullable |
-| --- | --- | --- | --- | --- | --- |
-| source | string | 50 | Main identifier for an object; links to Sources table | meta.id;meta.main | False |
-| association | string | 100 | Association name; links to Associations table | meta.id | False |
-| membership_probability | double |  | Probability of membership in this association | stat.probability | True |
-| comments | string | 100 | Free-form comments for this entry | meta.note | True |
-| adopted | boolean |  | Flag to indicate if this is the adopted entry |  | True |
-| reference | string | 30 | Publication reference; links to Publications table | meta.ref | False |
+| Column | Datatype | Length | Units | Description | UCD | Nullable |
+| --- | --- | --- | --- | --- | --- | --- |
+| source | string | 50 |  | Main identifier for an object; links to Sources table | meta.id;meta.main | False |
+| association | string | 100 |  | Association name; links to Associations table | meta.id | False |
+| membership_probability | double |  |  | Probability of membership in this association | stat.probability | True |
+| comments | string | 100 |  | Free-form comments for this entry | meta.note | True |
+| adopted | boolean |  |  | Flag to indicate if this is the adopted entry |  | True |
+| reference | string | 30 |  | Publication reference; links to Publications table | meta.ref | False |
 
 ### Indexes
 | Name | Columns | Description |

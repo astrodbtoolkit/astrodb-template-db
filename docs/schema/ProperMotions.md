@@ -2,16 +2,16 @@
 ### Description
 Proper Motions for Sources
 ### Columns
-| Column | Datatype | Length | Description | UCD | Nullable |
-| --- | --- | --- | --- | --- | --- |
-| source | string | 50 | Main identifier for an object; links to Sources table | meta.id;meta.main | False |
-| pm_ra | double |  | Proper motion in RA*cos(Dec) in mas/yr | pos.pm;pos.eq.ra | True |
-| pm_dec | double |  | Proper motion in Dec in mas/yr | pos.pm;pos.eq.dec | True |
-| pm_ra_error | double |  | Uncertainty of the proper motion in RA | stat.error;pos.pm;pos.eq.ra | True |
-| pm_dec_error | double |  | Uncertainty of the proper motion in Dec | stat.error;pos.pm;pos.eq.dec | True |
-| adopted | boolean |  | Flag to indicate if this is the adopted entry |  | True |
-| comments | string | 100 | Free-form comments for this entry | meta.note | True |
-| reference | string | 30 | Publication reference; links to Publications table | meta.ref | False |
+| Column | Datatype | Length | Units | Description | UCD | Nullable |
+| --- | --- | --- | --- | --- | --- | --- |
+| source | string | 50 |  | Main identifier for an object; links to Sources table | meta.id;meta.main | False |
+| pm_ra | double |  | mas/yr | Proper motion in RA*cos(Dec) in mas/yr | pos.pm;pos.eq.ra | True |
+| pm_dec | double |  | mas/yr | Proper motion in Dec in mas/yr | pos.pm;pos.eq.dec | True |
+| pm_ra_error | double |  | mas/yr | Uncertainty of the proper motion in RA | stat.error;pos.pm;pos.eq.ra | True |
+| pm_dec_error | double |  | mas/yr | Uncertainty of the proper motion in Dec | stat.error;pos.pm;pos.eq.dec | True |
+| adopted | boolean |  |  | Flag to indicate if this is the adopted entry |  | True |
+| comments | string | 100 |  | Free-form comments for this entry | meta.note | True |
+| reference | string | 30 |  | Publication reference; links to Publications table | meta.ref | False |
 
 ### Indexes
 | Name | Columns | Description |

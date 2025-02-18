@@ -2,17 +2,17 @@
 ### Description
 Photometry for Sources
 ### Columns
-| Column | Datatype | Length | Description | UCD | Nullable |
-| --- | --- | --- | --- | --- | --- |
-| source | string | 100 | Main identifier for an object; links to Sources table | meta.id;meta.main | False |
-| band | string | 30 | Photometry band for this measurement; links to PhotometryFilters table |  | True |
-| magnitude | double |  | Magnitude value for this entry |  | True |
-| magnitude_error | double |  | Uncertainty of this magnitude value |  | True |
-| telescope | string | 30 | Telescope, mission, or survey name; links to Telescopes table |  | True |
-| epoch | double |  | Decimal year |  | True |
-| comments | string | 100 | Free-form comments for this entry | meta.note | True |
-| reference | string | 30 | Publication reference; links to Publications table |  | False |
-| regime | string | 30 | Regime for this entry; links to Regimes table |  | True |
+| Column | Datatype | Length | Units | Description | UCD | Nullable |
+| --- | --- | --- | --- | --- | --- | --- |
+| source | string | 100 |  | Main identifier for an object; links to Sources table | meta.id;meta.main | False |
+| band | string | 30 |  | Photometry band for this measurement; links to PhotometryFilters table |  | True |
+| magnitude | double |  | mag | Magnitude value for this entry |  | True |
+| magnitude_error | double |  | mag | Uncertainty of this magnitude value |  | True |
+| telescope | string | 30 |  | Telescope, mission, or survey name; links to Telescopes table |  | True |
+| epoch | double |  | yr | Decimal year |  | True |
+| comments | string | 100 |  | Free-form comments for this entry | meta.note | True |
+| reference | string | 30 |  | Publication reference; links to Publications table |  | False |
+| regime | string | 30 |  | Regime for this entry; links to Regimes table |  | True |
 
 ### Indexes
 | Name | Columns | Description |

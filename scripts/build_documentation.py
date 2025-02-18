@@ -18,12 +18,12 @@ with open(SCHEMA_PATH, "r") as schema_file:
             out_file.write(f"{table['description']}\n")
             out_file.write("### Columns\n")
             out_file.write(
-                "| Column | Datatype | Length | Description | UCD | Nullable |\n"
+                "| Column | Datatype | Length | Units | Description | UCD | Nullable |\n"
             )
-            out_file.write("| --- | --- | --- | --- | --- | --- |\n")
+            out_file.write("| --- | --- | --- | --- | --- | --- | --- |\n")
             for column in table["columns"]:
                 out_file.write(
-                    f"| {column['name']} | {column['datatype']} | {column.get('length', '')} | {column['description']} | {column.get('ivoa:ucd', '')} | {column.get('nullable', 'True')} |\n"
+                    f"| {column['name']} | {column['datatype']} | {column.get('length', '')} | {column.get('fits:tunit', '')} | {column['description']} | {column.get('ivoa:ucd', '')} | {column.get('nullable', 'True')} |\n"
                 )
             out_file.write("\n")
             # Indexes

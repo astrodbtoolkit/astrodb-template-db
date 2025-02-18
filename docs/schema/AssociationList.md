@@ -2,12 +2,12 @@
 ### Description
 Associations lookup table
 ### Columns
-| Column | Datatype | Length | Description | UCD | Nullable |
-| --- | --- | --- | --- | --- | --- |
-| association | string | 100 | Main identifier for an association | meta.id;meta.main | False |
-| association_type | string | 30 | Type of association |  | True |
-| comments | string | 100 | Free-form comments for this entry | meta.note | True |
-| reference | string | 30 | Publication reference; links to Publications table | meta.ref | True |
+| Column | Datatype | Length | Units | Description | UCD | Nullable |
+| --- | --- | --- | --- | --- | --- | --- |
+| association | string | 100 |  | Main identifier for an association | meta.id;meta.main | False |
+| association_type | string | 30 |  | Type of association |  | True |
+| comments | string | 100 |  | Free-form comments for this entry | meta.note | True |
+| reference | string | 30 |  | Publication reference; links to Publications table | meta.ref | True |
 
 ### Indexes
 | Name | Columns | Description |
