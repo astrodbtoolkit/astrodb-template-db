@@ -1329,3 +1329,29 @@ tables:
       description: Publication reference; links to Publications table
       ivoa:ucd: meta.ref
       nullable: false
+    
+    indexes:
+      - name: PK_RotationalParameters
+        "@id": "#PK_RotationalParameters"
+        description: Primary key for RotationalParameters table
+        columns: 
+        - "#RotationalParameters.source"
+        - "#RotationalParameters.reference"
+    
+    constraints:
+      - name: RotationalParameters_source_Sources_source
+        "@type": "ForeignKey"
+        "@id": "#FK_RotationalParameters_source_Sources_source"
+        description: Link RotationalParameters source to Sources table
+        columns:
+        - "#RotationalParameters.source"
+        referencedColumns:
+        - "#Sources.source"
+      - name: RotationalParameters_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_RotationalParameters_reference_Publications_reference"
+        description: Link RotationalParameters reference to Publications table
+        columns:
+        - "#RotationalParameters.reference"
+        referencedColumns:
+        - "#Publications.reference"
