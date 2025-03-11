@@ -6,8 +6,8 @@ description: "Template database for use by the AstroDB Toolkit"
 ######################################################
 # CONVENTIONS
 # - Source length is 50 characters
-# - Comments length is 100 characters. ivoa:ucd: meta.note
-# - Reference is 30 characters
+# - Reference is 30 characters. ivoa:ucd: meta.ref
+# - Comments are 100 characters. ivoa:ucd: meta.note
 # - Description is 100 characters. ivoa:ucd: meta.note
 # - Values are datatype: double
 # - Adopted: ivoa:ucd: meta.code
@@ -1259,3 +1259,73 @@ tables:
         - "#ModeledParameters.parameter"
         referencedColumns:
         - "#ParameterList.parameter"
+
+  - name: RotationalParameters
+    "@id": "#RotationalParameters"
+    description: Rotational parameters for sources
+    primaryKey:
+    - "#RotationalParameters.source"
+    - "#RotationalParameters.reference"
+
+    columns:
+    - name: source
+      "@id": "#RotationalParameters.source"
+      datatype: string
+      length: 50
+      description: Main identifier for an object; links to Sources table
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: period_hr
+      "@id": "#RotationalParameters.period_hr"
+      datatype: double
+      description: Rotational period in hours
+      fits:tunit: hr
+      ivoa:ucd: time.period
+    - name: period_error
+      "@id": "#RotationalParameters.period_error"
+      datatype: double
+      description: Uncertainty of the rotational period
+      fits:tunit: hr
+      ivoa:ucd: stat.error;time.period
+    - name: v_sin_i_kms
+      "@id": "#RotationalParameters.v_sin_i_kms"
+      datatype: double
+      description: Projected rotational velocity in km/s
+      fits:tunit: km/s
+      ivoa:ucd: phys.veloc.rotat
+    - name: v_sin_i_error
+      "@id": "#RotationalParameters.v_sin_i_error"
+      datatype: double
+      description: Uncertainty of the projected rotational velocity
+      fits:tunit: km/s
+      ivoa:ucd: stat.error;phys.veloc.rotat
+    - name: inclination
+      "@id": "#RotationalParameters.inclination"
+      datatype: double
+      description: Inclination of the rotation axis in degrees
+      fits:tunit: deg
+      ivoa:ucd: pos.posAng
+    - name: inclination_error
+      "@id": "#RotationalParameters.inclination_error"
+      datatype: double
+      description: Uncertainty of the inclination
+      fits:tunit: deg
+      ivoa:ucd: stat.error;pos.posAng
+    - name: adopted
+      "@id": "#RotationalParameters.adopted"
+      datatype: boolean
+      description: Flag to indicate if this is the adopted entry
+      ivoa:ucd: meta.code
+    - name: comments
+      "@id": "#RotationalParameters.comments"
+      datatype: string
+      length: 100
+      description: Free-form comments for this entry
+      ivoa:ucd: meta.note
+    - name: reference
+      "@id": "#RotationalParameters.reference"
+      datatype: string
+      length: 30
+      description: Publication reference; links to Publications table
+      ivoa:ucd: meta.ref
+      nullable: false
