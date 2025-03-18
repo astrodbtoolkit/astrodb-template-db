@@ -41,6 +41,14 @@
             "unit": "Gyr",
             "comments": null,
             "reference": "Gaid23"
+        },
+        {
+            "parameter": "mass",
+            "value": 33.5,
+            "error": 0.3,
+            "unit": "M_jup",
+            "comments": "Data for WISE 1049A",
+            "reference": "Chen24"
         }
     ],
     "Names": [
@@ -60,6 +68,30 @@
             "adopted": true,
             "comments": null,
             "reference": "vanL07"
+        }
+    ],
+    "RotationalParameters": [
+        {
+            "period_hr": 6.94,
+            "period_error": null,
+            "v_sin_i_kms": null,
+            "v_sin_i_error": null,
+            "inclination": null,
+            "inclination_error": null,
+            "adopted": null,
+            "comments": "Data for WISE 1049A",
+            "reference": "Apai21"
+        },
+        {
+            "period_hr": 7.0,
+            "period_error": null,
+            "v_sin_i_kms": 27.2,
+            "v_sin_i_error": 4.1,
+            "inclination": 69.0,
+            "inclination_error": 28.0,
+            "adopted": null,
+            "comments": "Data for WISE 1049A",
+            "reference": "Chen24"
         }
     ],
     "SourceTypes": [
