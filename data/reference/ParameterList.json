@@ -2,5 +2,9 @@
     {
         "parameter": "age",
         "description": "Age of the object"
+    },
+    {
+        "parameter": "mass",
+        "description": "Mass of the object"
     }
 ]

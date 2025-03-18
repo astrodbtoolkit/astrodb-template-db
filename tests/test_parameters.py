@@ -37,7 +37,7 @@ def test_modeled_parameters(db):
     # Test that ModeledParameters has expected number of entries
     t = db.query(db.ModeledParameters.c.parameter).astropy()
 
-    n_parameters = 1
+    n_parameters = 2
     assert len(t) == n_parameters, f"Found {len(t)} entries in the ModeledParameters table, expected {n_parameters}"
 
     # Test units are astropy.unit resolvable
@@ -62,3 +62,12 @@ def test_modeled_parameters(db):
             unit_fail.append({unit: counts})  # count of how many of that unit there is
 
     assert len(unit_fail) == 0, f"Some parameter units did not resolve: {unit_fail}"
+
+
+def test_rotational_parameters(db):
+    # Test that the Rotational Parameters table has expected number of entries
+    t = db.query(db.RotationalParameters.c.source).astropy()
+    n_rotational_parameters = 2
+    assert (
+        len(t) == n_rotational_parameters
+    ), f"Found {len(t)} entries in the Rotational Parameters table, expected {n_rotational_parameters}"

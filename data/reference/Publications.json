@@ -106,5 +106,17 @@
         "bibcode": "2007A&A...474..653V",
         "doi": "10.1051/0004-6361:20078357",
         "description": "Validation of the new Hipparcos reduction"
+    },
+    {
+        "reference": "Chen24",
+        "bibcode": "2024MNRAS.533.3114C",
+        "doi": "10.1093/mnras/stae1995",
+        "description": "Global weather map reveals persistent top-of-atmosphere features on the nearest brown dwarfs"
+    },
+    {
+        "reference": "Apai21",
+        "bibcode": "2021ApJ...906...64A",
+        "doi": "10.3847/1538-4357/abcb97",
+        "description": "TESS Observations of the Luhman 16 AB Brown Dwarf System: Rotational Periods, Lightcurve Evolution, and Zonal Circulation"
     }
 ]
