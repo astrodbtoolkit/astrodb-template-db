@@ -1,7 +1,7 @@
 """
-This module tests the Sources table, mainly to ensure that we have as many sources as we expect.
+This module tests the contents of Sources table.
+As users add their own data, these tests should be modified to reflect the new data.
 
-This forces us to update tests on ingest!
 """
 
 import pytest
@@ -11,7 +11,7 @@ from sqlalchemy import or_
 def test_sources(db):
     # Test that Sources has expected number of entries
     n_sources = db.query(db.Sources).count()
-    assert n_sources == 7, f"found {n_sources} sources"
+    assert n_sources == 6, f"found {n_sources} sources"
 
 
 @pytest.mark.parametrize(

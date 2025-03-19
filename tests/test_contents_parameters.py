@@ -1,3 +1,7 @@
+"""
+Functions to test the contents of the various Parameters tables.
+As users add their own data, these tests should be modified to reflect the new data.
+"""
 from astropy import units as u
 
 
