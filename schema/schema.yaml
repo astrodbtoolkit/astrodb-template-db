@@ -1031,10 +1031,14 @@ tables:
 
   - name: SourceTypes
     "@id": "#SourceTypes"
-    description: Source Types for Sources
+    description: The SourceTypes table contains types (e.g., spectral type or galaxy type) 
+      for sources listed in the Sources table. 
+      Source types are defined in the SourceTypeList table.
+      The combination of *source*, *source_type*, and *reference* is expected to be unique.
     primaryKey: 
     - "#SourceTypes.source"
     - "#SourceTypes.source_type"
+    - "#SourceTypes.reference"
 
     columns:
     - name: source
@@ -1055,7 +1059,7 @@ tables:
       "@id": "#SourceTypes.comments"
       datatype: string
       length: 100
-      description: Free-form comments for this entry
+      description: Free form comments
       ivoa:ucd: meta.note
     - name: adopted
       "@id": "#SourceTypes.adopted"
@@ -1066,7 +1070,7 @@ tables:
       "@id": "#SourceTypes.reference"
       datatype: string
       length: 30
-      description: Publication reference; links to Publications table
+      description: Reference; links to Publications table
       ivoa:ucd: meta.ref
       nullable: false
 
@@ -1077,6 +1081,7 @@ tables:
         columns: 
         - "#SourceTypes.source"
         - "#SourceTypes.source_type"
+        - "#SourceTypes.reference"
 
     constraints:
       - name: SourceTypes_source_Sources_source

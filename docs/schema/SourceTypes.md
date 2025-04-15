@@ -1,5 +1,5 @@
 # SourceTypes
-Source Types for Sources
+The SourceTypes table contains types (e.g., spectral type or galaxy type) for sources listed in the Sources table. Source types are defined in the SourceTypeList table. The combination of *source*, *source_type*, and *reference* is expected to be unique.
 
 
 Columns marked with an exclamation mark ( :exclamation:) may not be empty.
@@ -7,14 +7,14 @@ Columns marked with an exclamation mark ( :exclamation:) may not be empty.
 | --- | --- | --- | --- | --- | --- |
 | :exclamation:**source** | Main identifier for an object; links to Sources table | string | 50 |  | meta.id;meta.main  |
 | :exclamation:**source_type** | Source type; links to SourceTypeList table | string | 30 |  | meta.id  |
-| comments | Free-form comments for this entry | string | 100 |  | meta.note  |
+| comments | Free form comments | string | 100 |  | meta.note  |
 | adopted | Flag to indicate if this is the adopted entry | boolean |  |  | meta.code  |
-| :exclamation:**reference** | Publication reference; links to Publications table | string | 30 |  | meta.ref  |
+| :exclamation:**reference** | Reference; links to Publications table | string | 30 |  | meta.ref  |
 
 ## Indexes
 | Name | Columns | Description |
 | --- | --- | --- |
-| PK_SourceTypes | ['#SourceTypes.source', '#SourceTypes.source_type'] | Primary key for SourceTypes table |
+| PK_SourceTypes | ['#SourceTypes.source', '#SourceTypes.source_type', '#SourceTypes.reference'] | Primary key for SourceTypes table |
 
 ## Foreign Keys
 | Description | Columns | Referenced Columns |
