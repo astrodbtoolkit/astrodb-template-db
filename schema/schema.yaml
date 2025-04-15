@@ -9,6 +9,7 @@ description: "Template database for use by the AstroDB Toolkit"
 # - Reference is 30 characters. ivoa:ucd: meta.ref
 # - Comments are 100 characters. ivoa:ucd: meta.note
 # - Description is 100 characters. ivoa:ucd: meta.note
+# - Description should not include units.
 # - Values are datatype: double
 # - Adopted: ivoa:ucd: meta.code
 ######################################################
@@ -770,7 +771,7 @@ tables:
       "@id": "#CompanionRelationships.relationship"
       datatype: string
       length: 30
-      description: Relationship of the source to the companion, e.g., "parent", "child", "sibling"
+      description: Relationship of the source to the companion, e.g., "parent", "sibling", "child"
       nullable: false
     - name: projected_separation_arcsec
       "@id": "#CompanionRelationships.projected_separation_arcsec"
@@ -787,7 +788,7 @@ tables:
     - name: comments
       "@id": "#CompanionRelationships.comments"
       datatype: string
-      length: 1000
+      length: 100
       description: Free form comments
       ivoa:ucd: meta.note
     - name: reference
@@ -800,7 +801,7 @@ tables:
     - name: other_companion_names
       "@id": "#CompanionRelationships.other_companion_names"
       datatype: string
-      length: 1000
+      length: 100
       description: Additional names for the companion object, comma delimited.
       ivoa:ucd: meta.id
 
