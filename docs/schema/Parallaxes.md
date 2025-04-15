@@ -1,16 +1,16 @@
 # Parallaxes
-Parallaxes for Sources
+The Parallaxes table contains parallax measurements for sources listed in the Sources table. The combination of *source* and *reference* is expected to be unique.
 
 
 Columns marked with an exclamation mark ( :exclamation:) may not be empty.
 | Column Name | Description | Datatype | Length | Units  | UCD |
 | --- | --- | --- | --- | --- | --- |
-| :exclamation:**source** | Main identifier for an object; links to Sources table | string | 100 |  | meta.id;meta.main  |
-| parallax_mas | Parallax value for this entry | double |  | mas | pos.parallax  |
-| parallax_error | Uncertainty of this parallax value | double |  | mas | stat.error;pos.parallax  |
-| adopted | Flag to indicate if this is the adopted entry | boolean |  |  |   |
-| comments | Free-form comments for this entry | string | 100 |  | meta.note  |
-| :exclamation:**reference** | Publication reference; links to Publications table | string | 30 |  | meta.ref  |
+| :exclamation:**source** | Unique identifier for a source; links to Sources table | string | 100 |  | meta.id;meta.main  |
+| :exclamation:**parallax_mas** | Parallax measurement for the source | double |  | mas | pos.parallax  |
+| parallax_error | Uncertainty of the parallax value | double |  | mas | stat.error;pos.parallax  |
+| adopted | Flag to indicate if this is the adopted measurement | boolean |  |  |   |
+| comments | Free form comments | string | 100 |  | meta.note  |
+| :exclamation:**reference** | Reference; links to Publications table | string | 30 |  | meta.ref  |
 
 ## Indexes
 | Name | Columns | Description |
