@@ -5,11 +5,12 @@ description: "Template database for use by the AstroDB Toolkit"
 
 ######################################################
 # CONVENTIONS
+# - Table description describes linked tables and primary keys.
 # - Source length is 50 characters
 # - Reference is 30 characters. ivoa:ucd: meta.ref
 # - Comments are 100 characters. ivoa:ucd: meta.note
 # - Description is 100 characters. ivoa:ucd: meta.note
-# - Description should not include units.
+# - Column description does not include units.
 # - Values are datatype: double
 # - Adopted: ivoa:ucd: meta.code
 ######################################################
@@ -354,7 +355,9 @@ tables:
 
   - name: Sources
     "@id": "#Sources"
-    description: "Main identifiers for objects along with coordinates."
+    description:  "The Sources table contains all objects in the database alongside their coordinates. 
+      This is considered the 'primary' table in the database, as each source 
+      is expected to be unique and is referred to by all other object tables."
     primaryKey:
     - "#Sources.source"
 
@@ -363,49 +366,49 @@ tables:
       "@id": "#Sources.source"
       datatype: string
       length: 50
-      description: Unique identifier for an object
+      description: Unique identifier for the source
       ivoa:ucd: meta.id;src;meta.main
       nullable: false
     - name: ra_deg
       "@id": "#Sources.ra_deg"
       datatype: double
-      description: ICRS Right Ascension of object
+      description: Right Ascension the source, ICRS recommended
       fits:tunit: deg
       ivoa:ucd: pos.eq.ra;meta.main
     - name: dec_deg
       "@id": "#Sources.dec_deg"
       datatype: double
-      description: ICRS Declination of object
+      description: Declination of the source, ICRS recommended
       fits:tunit: deg
       ivoa:ucd: pos.eq.dec;meta.main
     - name: epoch_year
       "@id": "#Sources.epoch_year"
       datatype: double
-      description: Decimal year for coordinates (eg, 2015.5)
+      description: Decimal year for coordinates (e.g., 2015.5)
       fits:tunit: yr
     - name: equinox
       "@id": "#Sources.equinox"
       datatype: string
       length: 10
-      description: Equinox reference frame year (eg, J2000)
+      description: Equinox reference frame year (e.g., J2000). Not needed if using IRCS coordinates.
     - name: reference
       "@id": "#Sources.reference"
       datatype: string
       length: 30
-      description: Publication reference; links to Publications table
+      description: Discovery reference for the source; links to Publications table
       ivoa:ucd: meta.ref;meta.main
       nullable: false
     - name: other_references
       "@id": "#Sources.other_references"
       datatype: string
       length: 50
-      description: Additional references
+      description: Additional references, comma-separated
       ivoa:ucd: meta.ref
     - name: comments
       "@id": "#Sources.comments"
       datatype: string
       length: 100
-      description: Free-form comments on this Source
+      description: Free form comments
       ivoa:ucd: meta.note
 
 
