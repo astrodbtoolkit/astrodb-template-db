@@ -1,28 +1,28 @@
-## RotationalParameters
-### Description
+# RotationalParameters
 Rotational parameters for sources
-### Columns
-| Column | Datatype | Length | Units | Description | UCD | Nullable |
-| --- | --- | --- | --- | --- | --- | --- |
-| source | string | 50 |  | Main identifier for an object; links to Sources table | meta.id;meta.main | False |
-| period_hr | double |  | hr | Rotational period in hours | time.period | True |
-| period_error | double |  | hr | Uncertainty of the rotational period | stat.error;time.period | True |
-| v_sin_i_kms | double |  | km/s | Projected rotational velocity in km/s | phys.veloc.rotat | True |
-| v_sin_i_error | double |  | km/s | Uncertainty of the projected rotational velocity | stat.error;phys.veloc.rotat | True |
-| inclination | double |  | deg | Inclination of the rotation axis in degrees | pos.posAng | True |
-| inclination_error | double |  | deg | Uncertainty of the inclination | stat.error;pos.posAng | True |
-| adopted | boolean |  |  | Flag to indicate if this is the adopted entry | meta.code | True |
-| comments | string | 100 |  | Free-form comments for this entry | meta.note | True |
-| reference | string | 30 |  | Publication reference; links to Publications table | meta.ref | False |
 
-### Indexes
+
+Columns marked with an exclamation mark ( :exclamation:) may not be empty.
+| Column Name | Description | Datatype | Length | Units  | UCD |
+| --- | --- | --- | --- | --- | --- |
+| :exclamation:**source** | Main identifier for an object; links to Sources table | string | 50 |  | meta.id;meta.main  |
+| period_hr | Rotational period in hours | double |  | hr | time.period  |
+| period_error | Uncertainty of the rotational period | double |  | hr | stat.error;time.period  |
+| v_sin_i_kms | Projected rotational velocity in km/s | double |  | km/s | phys.veloc.rotat  |
+| v_sin_i_error | Uncertainty of the projected rotational velocity | double |  | km/s | stat.error;phys.veloc.rotat  |
+| inclination | Inclination of the rotation axis in degrees | double |  | deg | pos.posAng  |
+| inclination_error | Uncertainty of the inclination | double |  | deg | stat.error;pos.posAng  |
+| adopted | Flag to indicate if this is the adopted entry | boolean |  |  | meta.code  |
+| comments | Free-form comments for this entry | string | 100 |  | meta.note  |
+| :exclamation:**reference** | Publication reference; links to Publications table | string | 30 |  | meta.ref  |
+
+## Indexes
 | Name | Columns | Description |
 | --- | --- | --- |
 | PK_RotationalParameters | ['#RotationalParameters.source', '#RotationalParameters.reference'] | Primary key for RotationalParameters table |
 
-### Constraints
-| Type | Description | Columns | Referenced Columns |
-| --- | --- | --- | --- |
-| ForeignKey | Link RotationalParameters source to Sources table | ['#RotationalParameters.source'] | ['#Sources.source'] |
-| ForeignKey | Link RotationalParameters reference to Publications table | ['#RotationalParameters.reference'] | ['#Publications.reference'] |
-
+## Foreign Keys
+| Description | Columns | Referenced Columns |
+| --- | --- | --- |
+| Link RotationalParameters source to Sources table | ['#RotationalParameters.source'] | ['#Sources.source'] |
+| Link RotationalParameters reference to Publications table | ['#RotationalParameters.reference'] | ['#Publications.reference'] |

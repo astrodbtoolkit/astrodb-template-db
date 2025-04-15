@@ -1,27 +1,27 @@
-## CompanionParameters
-### Description
+# CompanionParameters
 Parameters for companion objects relevant to sources
-### Columns
-| Column | Datatype | Length | Units | Description | UCD | Nullable |
-| --- | --- | --- | --- | --- | --- | --- |
-| source | string | 50 |  | Main identifier for an object; links to Sources table | meta.id;meta.main | False |
-| companion | string | 50 |  | Main identifier for a companion object | meta.id | False |
-| parameter | string | 30 |  | Parameter name | meta.id | False |
-| value | double |  |  | Value of the parameter |  | True |
-| error | double |  |  | Uncertainty of the parameter value |  | True |
-| unit | string | 30 |  | Unit of the parameter value. Should be astropy units compatible. |  | True |
-| comments | string | 100 |  | Free-form comments for this entry | meta.note | True |
-| reference | string | 30 |  | Publication reference; links to Publications table | meta.ref | False |
 
-### Indexes
+
+Columns marked with an exclamation mark ( :exclamation:) may not be empty.
+| Column Name | Description | Datatype | Length | Units  | UCD |
+| --- | --- | --- | --- | --- | --- |
+| :exclamation:**source** | Main identifier for an object; links to Sources table | string | 50 |  | meta.id;meta.main  |
+| :exclamation:**companion** | Main identifier for a companion object | string | 50 |  | meta.id  |
+| :exclamation:**parameter** | Parameter name | string | 30 |  | meta.id  |
+| value | Value of the parameter | double |  |  |   |
+| error | Uncertainty of the parameter value | double |  |  |   |
+| unit | Unit of the parameter value. Should be astropy units compatible. | string | 30 |  |   |
+| comments | Free-form comments for this entry | string | 100 |  | meta.note  |
+| :exclamation:**reference** | Publication reference; links to Publications table | string | 30 |  | meta.ref  |
+
+## Indexes
 | Name | Columns | Description |
 | --- | --- | --- |
 | PK_CompanionParameters | ['#CompanionParameters.source', '#CompanionParameters.companion', '#CompanionParameters.parameter', '#CompanionParameters.reference'] | Primary key for CompanionParameters table |
 
-### Constraints
-| Type | Description | Columns | Referenced Columns |
-| --- | --- | --- | --- |
-| ForeignKey | Link CompanionParameters source to Sources table | ['#CompanionParameters.source'] | ['#Sources.source'] |
-| ForeignKey | Link CompanionParameters companion to CompanionList table | ['#CompanionParameters.companion'] | ['#CompanionList.companion'] |
-| ForeignKey | Link CompanionParameters reference to Publications table | ['#CompanionParameters.reference'] | ['#Publications.reference'] |
-
+## Foreign Keys
+| Description | Columns | Referenced Columns |
+| --- | --- | --- |
+| Link CompanionParameters source to Sources table | ['#CompanionParameters.source'] | ['#Sources.source'] |
+| Link CompanionParameters companion to CompanionList table | ['#CompanionParameters.companion'] | ['#CompanionList.companion'] |
+| Link CompanionParameters reference to Publications table | ['#CompanionParameters.reference'] | ['#Publications.reference'] |

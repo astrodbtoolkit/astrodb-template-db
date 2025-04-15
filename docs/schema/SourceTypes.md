@@ -1,24 +1,24 @@
-## SourceTypes
-### Description
+# SourceTypes
 Source Types for Sources
-### Columns
-| Column | Datatype | Length | Units | Description | UCD | Nullable |
-| --- | --- | --- | --- | --- | --- | --- |
-| source | string | 50 |  | Main identifier for an object; links to Sources table | meta.id;meta.main | False |
-| source_type | string | 30 |  | Source type; links to SourceTypeList table | meta.id | False |
-| comments | string | 100 |  | Free-form comments for this entry | meta.note | True |
-| adopted | boolean |  |  | Flag to indicate if this is the adopted entry | meta.code | True |
-| reference | string | 30 |  | Publication reference; links to Publications table | meta.ref | False |
 
-### Indexes
+
+Columns marked with an exclamation mark ( :exclamation:) may not be empty.
+| Column Name | Description | Datatype | Length | Units  | UCD |
+| --- | --- | --- | --- | --- | --- |
+| :exclamation:**source** | Main identifier for an object; links to Sources table | string | 50 |  | meta.id;meta.main  |
+| :exclamation:**source_type** | Source type; links to SourceTypeList table | string | 30 |  | meta.id  |
+| comments | Free-form comments for this entry | string | 100 |  | meta.note  |
+| adopted | Flag to indicate if this is the adopted entry | boolean |  |  | meta.code  |
+| :exclamation:**reference** | Publication reference; links to Publications table | string | 30 |  | meta.ref  |
+
+## Indexes
 | Name | Columns | Description |
 | --- | --- | --- |
 | PK_SourceTypes | ['#SourceTypes.source', '#SourceTypes.source_type'] | Primary key for SourceTypes table |
 
-### Constraints
-| Type | Description | Columns | Referenced Columns |
-| --- | --- | --- | --- |
-| ForeignKey | Link SourceTypes source to Sources table | ['#SourceTypes.source'] | ['#Sources.source'] |
-| ForeignKey | Link SourceTypes source type to SourceTypeList table | ['#SourceTypes.source_type'] | ['#SourceTypeList.source_type'] |
-| ForeignKey | Link SourceTypes reference to Publications table | ['#SourceTypes.reference'] | ['#Publications.reference'] |
-
+## Foreign Keys
+| Description | Columns | Referenced Columns |
+| --- | --- | --- |
+| Link SourceTypes source to Sources table | ['#SourceTypes.source'] | ['#Sources.source'] |
+| Link SourceTypes source type to SourceTypeList table | ['#SourceTypes.source_type'] | ['#SourceTypeList.source_type'] |
+| Link SourceTypes reference to Publications table | ['#SourceTypes.reference'] | ['#Publications.reference'] |

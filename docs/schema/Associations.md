@@ -1,26 +1,29 @@
-## Associations
-### Description
+# Associations
 Association Membership for Sources
-### Columns
-| Column | Datatype | Length | Units | Description | UCD | Nullable |
-| --- | --- | --- | --- | --- | --- | --- |
-| source | string | 50 |  | Main identifier for an object; links to Sources table | meta.id;meta.main | False |
-| association | string | 100 |  | Association name; links to Associations table | meta.id | False |
-| membership_probability | double |  |  | Probability of membership in this association | stat.probability | True |
-| comments | string | 100 |  | Free-form comments for this entry | meta.note | True |
-| adopted | boolean |  |  | Flag to indicate if this is the adopted entry |  | True |
-| reference | string | 30 |  | Publication reference; links to Publications table | meta.ref | False |
 
-### Indexes
+
+Columns marked with an exclamation mark ( :exclamation:) may not be empty.
+| Column Name | Description | Datatype | Length | Units  | UCD |
+| --- | --- | --- | --- | --- | --- |
+| :exclamation:**source** | Main identifier for an object; links to Sources table | string | 50 |  | meta.id;meta.main  |
+| :exclamation:**association** | Association name; links to Associations table | string | 100 |  | meta.id  |
+| membership_probability | Probability of membership in this association | double |  |  | stat.probability  |
+| comments | Free-form comments for this entry | string | 100 |  | meta.note  |
+| adopted | Flag to indicate if this is the adopted entry | boolean |  |  |   |
+| :exclamation:**reference** | Publication reference; links to Publications table | string | 30 |  | meta.ref  |
+
+## Indexes
 | Name | Columns | Description |
 | --- | --- | --- |
 | PK_Associations | ['#Associations.source', '#Associations.association'] | Primary key for Associations table |
 
-### Constraints
-| Type | Description | Columns | Referenced Columns |
-| --- | --- | --- | --- |
-| ForeignKey | Link Associations source to Sources table | ['#Associations.source'] | ['#Sources.source'] |
-| ForeignKey | Link Associations association to AssociationList table | ['#Associations.association'] | ['#AssociationList.association'] |
-| ForeignKey | Link Associations reference to Publications table | ['#Associations.reference'] | ['#Publications.reference'] |
-| Check | Validate membership probability |  |  |
-
+## Foreign Keys
+| Description | Columns | Referenced Columns |
+| --- | --- | --- |
+| Link Associations source to Sources table | ['#Associations.source'] | ['#Sources.source'] |
+| Link Associations association to AssociationList table | ['#Associations.association'] | ['#AssociationList.association'] |
+| Link Associations reference to Publications table | ['#Associations.reference'] | ['#Publications.reference'] |
+## Checks
+| Description | Expression |
+| --- | --- |
+| Validate membership probability | membership_probability >= 0 AND membership_probability <= 1 |

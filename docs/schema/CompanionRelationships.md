@@ -1,27 +1,27 @@
-## CompanionRelationships
-### Description
+# CompanionRelationships
 The CompanionRelationships table contains companions to sources listed in the Sources table. The combination of *source* and *companion_name* is expected to be unique.
-### Columns
-| Column | Datatype | Length | Units | Description | UCD | Nullable |
-| --- | --- | --- | --- | --- | --- | --- |
-| source | string | 50 |  | Unique identifier for the source; links to Sources table | meta.id;meta.main | False |
-| companion | string | 50 |  | External identifier for a companion object. Does not link to Sources table. | meta.id | False |
-| relationship | string | 30 |  | Relationship of the source to the companion, e.g., "parent", "child", "sibling" |  | False |
-| projected_separation_arcsec | double |  | arcsec | Projected separation between the source and companion | pos.angDistance | True |
-| projected_separation_error | double |  | arcsec | Uncertainty of the projected separation | stat.error;pos.angDistance | True |
-| comments | string | 1000 |  | Free form comments | meta.note | True |
-| reference | string | 30 |  | Reference; links to Publications table | meta.ref | False |
-| other_companion_names | string | 1000 |  | Additional names for the companion object, comma delimited. | meta.id | True |
 
-### Indexes
+
+Columns marked with an exclamation mark ( :exclamation:) may not be empty.
+| Column Name | Description | Datatype | Length | Units  | UCD |
+| --- | --- | --- | --- | --- | --- |
+| :exclamation:**source** | Unique identifier for the source; links to Sources table | string | 50 |  | meta.id;meta.main  |
+| :exclamation:**companion** | External identifier for a companion object. Does not link to Sources table. | string | 50 |  | meta.id  |
+| :exclamation:**relationship** | Relationship of the source to the companion, e.g., "parent", "sibling", "child" | string | 30 |  |   |
+| projected_separation_arcsec | Projected separation between the source and companion | double |  | arcsec | pos.angDistance  |
+| projected_separation_error | Uncertainty of the projected separation | double |  | arcsec | stat.error;pos.angDistance  |
+| comments | Free form comments | string | 100 |  | meta.note  |
+| :exclamation:**reference** | Reference; links to Publications table | string | 30 |  | meta.ref  |
+| other_companion_names | Additional names for the companion object, comma delimited. | string | 100 |  | meta.id  |
+
+## Indexes
 | Name | Columns | Description |
 | --- | --- | --- |
 | PK_CompanionRelationships | ['#CompanionRelationships.source', '#CompanionRelationships.companion'] | Primary key for CompanionRelationships table |
 
-### Constraints
-| Type | Description | Columns | Referenced Columns |
-| --- | --- | --- | --- |
-| ForeignKey | Link CompanionRelationships source to Sources table | ['#CompanionRelationships.source'] | ['#Sources.source'] |
-| ForeignKey | Link CompanionRelationships companion to CompanionList table | ['#CompanionRelationships.companion'] | ['#CompanionList.companion'] |
-| ForeignKey | Link CompanionRelationships reference to Publications table | ['#CompanionRelationships.reference'] | ['#Publications.reference'] |
-
+## Foreign Keys
+| Description | Columns | Referenced Columns |
+| --- | --- | --- |
+| Link CompanionRelationships source to Sources table | ['#CompanionRelationships.source'] | ['#Sources.source'] |
+| Link CompanionRelationships companion to CompanionList table | ['#CompanionRelationships.companion'] | ['#CompanionList.companion'] |
+| Link CompanionRelationships reference to Publications table | ['#CompanionRelationships.reference'] | ['#Publications.reference'] |

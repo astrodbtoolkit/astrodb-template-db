@@ -1,17 +1,17 @@
-## Instruments
-### Description
+# Instruments
 Instrument information
-### Columns
-| Column | Datatype | Length | Units | Description | UCD | Nullable |
-| --- | --- | --- | --- | --- | --- | --- |
-| instrument | string | 30 |  | Instrument name | instr;meta.main | False |
-| mode | string | 30 |  | Instrument mode |  | False |
-| telescope | string | 30 |  | Telescope, mission, or survey name; links to Telescopes table |  | False |
-| description | string | 100 |  | Instrument description | meta.note | True |
-| reference | string | 30 |  | Publication reference; links to Publications table | meta.ref | True |
 
-### Constraints
-| Type | Description | Columns | Referenced Columns |
-| --- | --- | --- | --- |
-| ForeignKey | Link Instruments reference to Publications table | ['#Instruments.reference'] | ['#Publications.reference'] |
 
+Columns marked with an exclamation mark ( :exclamation:) may not be empty.
+| Column Name | Description | Datatype | Length | Units  | UCD |
+| --- | --- | --- | --- | --- | --- |
+| :exclamation:**instrument** | Instrument name | string | 30 |  | instr;meta.main  |
+| :exclamation:**mode** | Instrument mode | string | 30 |  |   |
+| :exclamation:**telescope** | Telescope, mission, or survey name; links to Telescopes table | string | 30 |  |   |
+| description | Instrument description | string | 100 |  | meta.note  |
+| reference | Publication reference; links to Publications table | string | 30 |  | meta.ref  |
+
+## Foreign Keys
+| Description | Columns | Referenced Columns |
+| --- | --- | --- |
+| Link Instruments reference to Publications table | ['#Instruments.reference'] | ['#Publications.reference'] |

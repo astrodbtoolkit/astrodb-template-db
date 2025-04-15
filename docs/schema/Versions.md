@@ -1,11 +1,12 @@
-## Versions
-### Description
+# Versions
 Database version information
-### Columns
-| Column | Datatype | Length | Units | Description | UCD | Nullable |
-| --- | --- | --- | --- | --- | --- | --- |
-| version | string | 30 |  | Version identifier | meta.id;meta.main | False |
-| start_date | string | 30 |  | Date when this version started being used |  | True |
-| end_date | string | 30 |  | Release date of this version |  | True |
-| description | string | 1000 |  | Description of changes associated with this version |  | True |
+
+
+Columns marked with an exclamation mark ( :exclamation:) may not be empty.
+| Column Name | Description | Datatype | Length | Units  | UCD |
+| --- | --- | --- | --- | --- | --- |
+| :exclamation:**version** | Version identifier | string | 30 |  | meta.id;meta.main  |
+| start_date | Date when this version started being used | string | 30 |  |   |
+| end_date | Release date of this version | string | 30 |  |   |
+| description | Description of changes associated with this version | string | 1000 |  |   |
 

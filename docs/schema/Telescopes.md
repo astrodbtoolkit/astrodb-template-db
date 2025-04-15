@@ -1,15 +1,15 @@
-## Telescopes
-### Description
+# Telescopes
 Telescope, mission, and survey information
-### Columns
-| Column | Datatype | Length | Units | Description | UCD | Nullable |
-| --- | --- | --- | --- | --- | --- | --- |
-| telescope | string | 30 |  | Telescope, mission, or survey name | meta.id;meta.main | False |
-| description | string | 100 |  | Telescope description | meta.note | True |
-| reference | string | 30 |  | Publication reference; links to Publications table |  | True |
 
-### Constraints
-| Type | Description | Columns | Referenced Columns |
-| --- | --- | --- | --- |
-| ForeignKey | Link Telescopes reference to Publications table | ['#Telescopes.reference'] | ['#Publications.reference'] |
 
+Columns marked with an exclamation mark ( :exclamation:) may not be empty.
+| Column Name | Description | Datatype | Length | Units  | UCD |
+| --- | --- | --- | --- | --- | --- |
+| :exclamation:**telescope** | Telescope, mission, or survey name | string | 30 |  | meta.id;meta.main  |
+| description | Telescope description | string | 100 |  | meta.note  |
+| reference | Publication reference; links to Publications table | string | 30 |  |   |
+
+## Foreign Keys
+| Description | Columns | Referenced Columns |
+| --- | --- | --- |
+| Link Telescopes reference to Publications table | ['#Telescopes.reference'] | ['#Publications.reference'] |
