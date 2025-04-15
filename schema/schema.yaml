@@ -277,7 +277,9 @@ tables:
 
   - name: ParameterList
     "@id": "#ParameterList"
-    description: Parameters lookup table
+    description:  "The ParameterList table is a lookup table that contains 
+      names and descriptions for parameters referred to in the ModeledParameters table.
+      The *parameter* name is required to be unique."
     primaryKey: 
     - "#ParameterList.parameter"
 
@@ -286,7 +288,7 @@ tables:
       "@id": "#ParameterList.parameter"
       datatype: string
       length: 30
-      description: Main identifier for a parameter
+      description: Short name for a parameter
       ivoa:ucd: meta.id;meta.main
       nullable: false
     - name: description
