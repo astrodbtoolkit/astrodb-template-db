@@ -1102,7 +1102,8 @@ tables:
 
   - name: ProperMotions
     "@id": "#ProperMotions"
-    description: Proper Motions for Sources
+    description: "The ProperMotions table contains proper motion measurements for sources listed in the Sources table. 
+      The combination of *source* and *reference* is expected to be unique."
     primaryKey: 
     - "#ProperMotions.source"
     - "#ProperMotions.reference"
@@ -1118,21 +1119,23 @@ tables:
     - name: pm_ra
       "@id": "#ProperMotions.pm_ra"
       datatype: double
-      description: Proper motion in RA*cos(Dec) in mas/yr
+      description: Proper motion in RA*cos(Dec)
       fits:tunit: mas/yr
       ivoa:ucd: pos.pm;pos.eq.ra
-    - name: pm_dec
-      "@id": "#ProperMotions.pm_dec"
-      datatype: double
-      description: Proper motion in Dec in mas/yr
-      fits:tunit: mas/yr
-      ivoa:ucd: pos.pm;pos.eq.dec
+      nullable: false
     - name: pm_ra_error
       "@id": "#ProperMotions.pm_ra_error"
       datatype: double
       description: Uncertainty of the proper motion in RA
       fits:tunit: mas/yr
       ivoa:ucd: stat.error;pos.pm;pos.eq.ra
+    - name: pm_dec
+      "@id": "#ProperMotions.pm_dec"
+      datatype: double
+      description: Proper motion in declination
+      fits:tunit: mas/yr
+      ivoa:ucd: pos.pm;pos.eq.dec
+      nullable: false
     - name: pm_dec_error
       "@id": "#ProperMotions.pm_dec_error"
       datatype: double
@@ -1147,13 +1150,13 @@ tables:
       "@id": "#ProperMotions.comments"
       datatype: string
       length: 100
-      description: Free-form comments for this entry
+      description: Free form comments
       ivoa:ucd: meta.note
     - name: reference
       "@id": "#ProperMotions.reference"
       datatype: string
       length: 30
-      description: Publication reference; links to Publications table
+      description: Reference; links to Publications table
       ivoa:ucd: meta.ref
       nullable: false
 
