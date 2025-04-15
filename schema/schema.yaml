@@ -1231,7 +1231,7 @@ tables:
       datatype: double
       description: Value of the parameter
       nullable: false
-      ivoa:ucd: meta.modelled
+      ivoa:ucd: stat.value;meta.modelled
     - name: error
       "@id": "#ModeledParameters.error"
       datatype: double
