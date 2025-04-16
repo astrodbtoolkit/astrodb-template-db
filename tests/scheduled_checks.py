@@ -8,9 +8,12 @@ Because the filename doesn't begin with test_, it's not automatically run with p
 the results of the tests, and the -rpP flags are used to suppress the output of the tests that pass.
 
 """
+import pytest
+import tqdm
+import requests
 from astroquery.simbad import Simbad
 
-from astrodbkit.utils import _name_formatter
+from astrodbkit.utils import _name_formatter, internet_connection
 
 
 def test_SIMBAD_resolvable(db):
@@ -65,3 +68,25 @@ def test_SIMBAD_resolvable(db):
     assert len(unique_matches) == len(
         all_sources
     ), f"Unique matches for {unique_matches}, expected {len(all_sources)}"
+
+
+@pytest.mark.skip(reason="There are no spectra yet in the template")
+def test_spectra_urls(db):
+    spectra_urls = db.query(db.Spectra.c.access_url).astropy()
+    broken_urls = []
+    codes = []
+    internet, _ = internet_connection()
+    if internet:
+        for spectrum_url in tqdm(spectra_urls["access_url"]):
+            request_response = requests.head(spectrum_url)
+            status_code = request_response.status_code
+            # The website is up if the status code is 200
+            # cuny academic commons links give 301 status code
+            if status_code not in (200, 301):
+                broken_urls.append(spectrum_url)
+                codes.append(status_code)
+
+    # Display broken spectra regardless if it's the number we expect or not
+    print(f"found {len(broken_urls)} broken spectra urls: {broken_urls}, {codes}")
+
+    assert len(broken_urls) == 4
