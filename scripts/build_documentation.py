@@ -1,9 +1,12 @@
 # Script to build markdown documentation from the schema/schema.yaml file
-
+import os
 import yaml
 
 SCHEMA_PATH = "schema/schema.yaml"
-OUT_DIR = "docs/schema/"
+DOCS_DIR = "docs/"
+SCHEMA_DIAGRAM = "figures/auto_schema.png"
+SCHEMA_SUB_DIR = "schema/"
+SCHEMA_TOC_NAME = "README.md"
 
 # Loop over each table in the schema
 with open(SCHEMA_PATH, "r") as schema_file:
@@ -11,9 +14,10 @@ with open(SCHEMA_PATH, "r") as schema_file:
 
     for table in schema["tables"]:
         table_name = table["name"]
+        table_path = os.path.join(DOCS_DIR, SCHEMA_SUB_DIR, f"{table_name}.md")
 
         # Prepare a markdown file per table
-        with open(f"{OUT_DIR}{table_name}.md", "w") as out_file:
+        with open(table_path, "w") as out_file:
             out_file.write(f"# {table_name}\n")
             out_file.write(f"{table['description']}\n")
             out_file.write(
@@ -44,7 +48,7 @@ with open(SCHEMA_PATH, "r") as schema_file:
                 )
             out_file.write("\n")
 
-            #  Handle any indexes
+            #  Make the indexes table
             if "indexes" in table:
                 out_file.write("## Indexes\n")
                 out_file.write("| Name | Columns | Description |\n")
@@ -55,7 +59,7 @@ with open(SCHEMA_PATH, "r") as schema_file:
                     )
                 out_file.write("\n")
 
-            #  Handle any constraints
+            #  Make the constraints table
             foreign_keys_exists = False
             checks_exists = False
             if "constraints" in table:
@@ -85,3 +89,23 @@ with open(SCHEMA_PATH, "r") as schema_file:
                     out_file.write(foreign_key_table)
                 if checks_exists:
                     out_file.write(checks_table)
+
+    # Make a table of contents-type file
+    with open(os.path.join(DOCS_DIR, SCHEMA_TOC_NAME), "w") as out_file:
+        out_file.write("# Schema Documentation\n")
+        out_file.write(
+            f"This documentation is generated from the [schema.yaml]({SCHEMA_PATH}) file using [build_schema_docs.py](scripts/build_schema_docs.py).\n"
+        )
+        out_file.write("\n## Tables\n")
+        for table in schema["tables"]:
+            table_name = table["name"]
+            table_path = os.path.join(SCHEMA_SUB_DIR, f"{table_name}.md")
+            out_file.write(f"- [{table_name}]({table_path})\n")
+        out_file.write("\n")
+
+        if os.path.exists(os.path.join(DOCS_DIR, SCHEMA_DIAGRAM)):
+            out_file.write(
+                "## Schema Diagram\n"
+                f"This diagram is generated from the [schema.yaml]({SCHEMA_PATH}) file using [make_erd.py](scripts/make_erd.py).\n"
+                f"![Schema Diagram]({SCHEMA_DIAGRAM})\n"
+            )
