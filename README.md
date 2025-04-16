@@ -11,4 +11,4 @@ Usage instructions are included in the companion `astrodb-utils` package: [Getti
 
 Entity relationship diagram of the template schema
 
-![Entity Relationship Diagram](schema/schema.png)
+![Entity Relationship Diagram](docs/figures/schema_erd.png)
