@@ -5,7 +5,7 @@ Rotational parameters for sources
 Columns marked with an exclamation mark ( :exclamation:) may not be empty.
 | Column Name | Description | Datatype | Length | Units  | UCD |
 | --- | --- | --- | --- | --- | --- |
-| :exclamation:<ins>source</ins> | Main identifier for an object; links to Sources table | string | 50 |  | meta.id;meta.main  |
+| ❗️ <ins>source</ins> | Main identifier for an object; links to Sources table | string | 50 |  | meta.id;meta.main  |
 | period_hr | Rotational period in hours | double |  | hr | time.period  |
 | period_error | Uncertainty of the rotational period | double |  | hr | stat.error;time.period  |
 | v_sin_i_kms | Projected rotational velocity in km/s | double |  | km/s | phys.veloc.rotat  |
@@ -14,7 +14,7 @@ Columns marked with an exclamation mark ( :exclamation:) may not be empty.
 | inclination_error | Uncertainty of the inclination | double |  | deg | stat.error;pos.posAng  |
 | adopted | Flag to indicate if this is the adopted entry | boolean |  |  | meta.code  |
 | comments | Free-form comments for this entry | string | 100 |  | meta.note  |
-| :exclamation:<ins>reference</ins> | Publication reference; links to Publications table | string | 30 |  | meta.ref  |
+| ❗️ <ins>reference</ins> | Publication reference; links to Publications table | string | 30 |  | meta.ref  |
 
 ## Indexes
 | Name | Columns | Description |

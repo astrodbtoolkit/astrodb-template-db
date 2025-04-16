@@ -5,8 +5,8 @@ The Names table contains possible designations for sources in the Sources table.
 Columns marked with an exclamation mark ( :exclamation:) may not be empty.
 | Column Name | Description | Datatype | Length | Units  | UCD |
 | --- | --- | --- | --- | --- | --- |
-| :exclamation:<ins>source</ins> | Main identifier for an object; links to Sources table | string | 100 |  | meta.id;meta.main  |
-| :exclamation:<ins>other_name</ins> | Alternate identifier for an object | string | 100 |  | meta.id  |
+| ❗️ <ins>source</ins> | Main identifier for an object; links to Sources table | string | 100 |  | meta.id;meta.main  |
+| ❗️ <ins>other_name</ins> | Alternate identifier for an object | string | 100 |  | meta.id  |
 
 ## Indexes
 | Name | Columns | Description |

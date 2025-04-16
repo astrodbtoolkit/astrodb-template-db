@@ -48,7 +48,7 @@ with open(SCHEMA_PATH, "r") as schema_file:
 
                 # If the column is required, add an exclamation mark to the name
                 if column.get("nullable", "True") is False:
-                    column_name = f":exclamation:{column_name}"
+                    column_name = f"❗️ {column_name}"
                 else:
                     column_name = column["name"]
 
