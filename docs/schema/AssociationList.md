@@ -2,7 +2,7 @@
 Associations lookup table
 
 
-Columns marked with an exclamation mark ( :exclamation:) may not be empty.
+Columns marked with an exclamation mark (❗️) may not be empty.
 | Column Name | Description | Datatype | Length | Units  | UCD |
 | --- | --- | --- | --- | --- | --- |
 | ❗️ <ins>association</ins> | Main identifier for an association | string | 100 |  | meta.id;meta.main  |

@@ -2,7 +2,7 @@
 Companions lookup table
 
 
-Columns marked with an exclamation mark ( :exclamation:) may not be empty.
+Columns marked with an exclamation mark (❗️) may not be empty.
 | Column Name | Description | Datatype | Length | Units  | UCD |
 | --- | --- | --- | --- | --- | --- |
 | ❗️ <ins>companion</ins> | Main identifier for a companion object | string | 50 |  | meta.id;meta.main  |

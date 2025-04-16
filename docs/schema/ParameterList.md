@@ -2,7 +2,7 @@
 The ParameterList table is a lookup table that contains names and descriptions for parameters referred to in the ModeledParameters table. The *parameter* name is required to be unique.
 
 
-Columns marked with an exclamation mark ( :exclamation:) may not be empty.
+Columns marked with an exclamation mark (❗️) may not be empty.
 | Column Name | Description | Datatype | Length | Units  | UCD |
 | --- | --- | --- | --- | --- | --- |
 | ❗️ <ins>parameter</ins> | Short name for a parameter | string | 30 |  | meta.id;meta.main  |

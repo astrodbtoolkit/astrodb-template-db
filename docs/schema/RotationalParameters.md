@@ -2,7 +2,7 @@
 Rotational parameters for sources
 
 
-Columns marked with an exclamation mark ( :exclamation:) may not be empty.
+Columns marked with an exclamation mark (❗️) may not be empty.
 | Column Name | Description | Datatype | Length | Units  | UCD |
 | --- | --- | --- | --- | --- | --- |
 | ❗️ <ins>source</ins> | Main identifier for an object; links to Sources table | string | 50 |  | meta.id;meta.main  |

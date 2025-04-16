@@ -2,7 +2,7 @@
 The SourceTypes table contains types (e.g., spectral type or galaxy type) for sources listed in the Sources table. Source types are defined in the SourceTypeList table. The combination of *source*, *source_type*, and *reference* is expected to be unique.
 
 
-Columns marked with an exclamation mark ( :exclamation:) may not be empty.
+Columns marked with an exclamation mark (❗️) may not be empty.
 | Column Name | Description | Datatype | Length | Units  | UCD |
 | --- | --- | --- | --- | --- | --- |
 | ❗️ <ins>source</ins> | Main identifier for an object; links to Sources table | string | 50 |  | meta.id;meta.main  |

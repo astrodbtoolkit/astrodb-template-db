@@ -2,7 +2,7 @@
 Regime lookup table
 
 
-Columns marked with an exclamation mark ( :exclamation:) may not be empty.
+Columns marked with an exclamation mark (❗️) may not be empty.
 | Column Name | Description | Datatype | Length | Units  | UCD |
 | --- | --- | --- | --- | --- | --- |
 | ❗️ <ins>regime</ins> | Regime identifier string | string | 30 |  | meta.id;meta.main  |

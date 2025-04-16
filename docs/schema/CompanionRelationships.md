@@ -2,7 +2,7 @@
 The CompanionRelationships table contains companions to sources listed in the Sources table. The combination of *source* and *companion_name* is expected to be unique.
 
 
-Columns marked with an exclamation mark ( :exclamation:) may not be empty.
+Columns marked with an exclamation mark (❗️) may not be empty.
 | Column Name | Description | Datatype | Length | Units  | UCD |
 | --- | --- | --- | --- | --- | --- |
 | ❗️ <ins>source</ins> | Unique identifier for the source; links to Sources table | string | 50 |  | meta.id;meta.main  |

@@ -2,7 +2,7 @@
 The Telescopes table contains names and references for telescopes referred to in other tables. The *telescope* column is required to be unique.
 
 
-Columns marked with an exclamation mark ( :exclamation:) may not be empty.
+Columns marked with an exclamation mark (❗️) may not be empty.
 | Column Name | Description | Datatype | Length | Units  | UCD |
 | --- | --- | --- | --- | --- | --- |
 | ❗️ <ins>telescope</ins> | Short name for telescope, mission, or survey | string | 30 |  | instr.tel;instr.obsty  |

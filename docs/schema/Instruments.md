@@ -2,7 +2,7 @@
 The Instruments table contains names and references for instruments (and their modes) referred to in other tables. The combination of *instrument*, *mode*, and *telescope* is expected to be unique.
 
 
-Columns marked with an exclamation mark ( :exclamation:) may not be empty.
+Columns marked with an exclamation mark (❗️) may not be empty.
 | Column Name | Description | Datatype | Length | Units  | UCD |
 | --- | --- | --- | --- | --- | --- |
 | ❗️ <ins>instrument</ins> | Name of the instrument | string | 30 |  | instr;meta.main  |

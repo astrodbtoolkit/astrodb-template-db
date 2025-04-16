@@ -26,7 +26,7 @@ with open(SCHEMA_PATH, "r") as schema_file:
             out_file.write(f"# {table_name}\n")
             out_file.write(f"{table['description']}\n")
             out_file.write(
-                "\n\nColumns marked with an exclamation mark ( :exclamation:) may not be empty.\n"
+                "\n\nColumns marked with an exclamation mark (❗️) may not be empty.\n"
             )
             out_file.write(
                 "| Column Name | Description | Datatype | Length | Units  | UCD |\n"

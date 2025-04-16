@@ -2,7 +2,7 @@
 The Sources table contains all objects in the database alongside their coordinates. This is considered the 'primary' table in the database, as each source is expected to be unique and is referred to by all other object tables.
 
 
-Columns marked with an exclamation mark ( :exclamation:) may not be empty.
+Columns marked with an exclamation mark (❗️) may not be empty.
 | Column Name | Description | Datatype | Length | Units  | UCD |
 | --- | --- | --- | --- | --- | --- |
 | ❗️ <ins>source</ins> | Unique identifier for the source | string | 50 |  | meta.id;src;meta.main  |

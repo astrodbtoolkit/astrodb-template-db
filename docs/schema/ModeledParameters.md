@@ -2,7 +2,7 @@
 The ModeledParameters table contains a range of derived/inferred parameters for sources listed in the Sources table. The combination of *source*, *parameter*, and *reference* is expected to be unique. Note that *parameter* is linked to the Parameters table. 
 
 
-Columns marked with an exclamation mark ( :exclamation:) may not be empty.
+Columns marked with an exclamation mark (❗️) may not be empty.
 | Column Name | Description | Datatype | Length | Units  | UCD |
 | --- | --- | --- | --- | --- | --- |
 | ❗️ <ins>source</ins> | Unique identifier for the source; links to Sources table | string | 50 |  | meta.id;meta.main  |

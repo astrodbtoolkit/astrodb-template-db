@@ -2,7 +2,7 @@
 The Publications table contains metadata (DOI, bibcodes, etc) for each publication referred to in the database. The *reference* short identifer of each publication is required to be unique.
 
 
-Columns marked with an exclamation mark ( :exclamation:) may not be empty.
+Columns marked with an exclamation mark (❗️) may not be empty.
 | Column Name | Description | Datatype | Length | Units  | UCD |
 | --- | --- | --- | --- | --- | --- |
 | ❗️ <ins>reference</ins> | Publication short identifier | string | 30 |  | meta.ref;meta.main  |
