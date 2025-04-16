@@ -5,14 +5,14 @@ Parameters for companion objects relevant to sources
 Columns marked with an exclamation mark ( :exclamation:) may not be empty.
 | Column Name | Description | Datatype | Length | Units  | UCD |
 | --- | --- | --- | --- | --- | --- |
-| :exclamation:**source** | Main identifier for an object; links to Sources table | string | 50 |  | meta.id;meta.main  |
-| :exclamation:**companion** | Main identifier for a companion object | string | 50 |  | meta.id  |
-| :exclamation:**parameter** | Parameter name | string | 30 |  | meta.id  |
+| :exclamation:<u>source</u> | Main identifier for an object; links to Sources table | string | 50 |  | meta.id;meta.main  |
+| :exclamation:<u>companion</u> | Main identifier for a companion object | string | 50 |  | meta.id  |
+| :exclamation:<u>parameter</u> | Parameter name | string | 30 |  | meta.id  |
 | value | Value of the parameter | double |  |  |   |
 | error | Uncertainty of the parameter value | double |  |  |   |
 | unit | Unit of the parameter value. Should be astropy units compatible. | string | 30 |  |   |
 | comments | Free-form comments for this entry | string | 100 |  | meta.note  |
-| :exclamation:**reference** | Publication reference; links to Publications table | string | 30 |  | meta.ref  |
+| :exclamation:reference | Publication reference; links to Publications table | string | 30 |  | meta.ref  |
 
 ## Indexes
 | Name | Columns | Description |

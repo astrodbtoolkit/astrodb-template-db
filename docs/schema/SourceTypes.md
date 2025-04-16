@@ -5,11 +5,11 @@ The SourceTypes table contains types (e.g., spectral type or galaxy type) for so
 Columns marked with an exclamation mark ( :exclamation:) may not be empty.
 | Column Name | Description | Datatype | Length | Units  | UCD |
 | --- | --- | --- | --- | --- | --- |
-| :exclamation:**source** | Main identifier for an object; links to Sources table | string | 50 |  | meta.id;meta.main  |
-| :exclamation:**source_type** | Source type; links to SourceTypeList table | string | 30 |  | meta.id  |
+| :exclamation:<u>source</u> | Main identifier for an object; links to Sources table | string | 50 |  | meta.id;meta.main  |
+| :exclamation:<u>source_type</u> | Source type; links to SourceTypeList table | string | 30 |  | meta.id  |
 | comments | Free form comments | string | 100 |  | meta.note  |
 | adopted | Flag to indicate if this is the adopted entry | boolean |  |  | meta.code  |
-| :exclamation:**reference** | Reference; links to Publications table | string | 30 |  | meta.ref  |
+| :exclamation:<u>reference</u> | Reference; links to Publications table | string | 30 |  | meta.ref  |
 
 ## Indexes
 | Name | Columns | Description |

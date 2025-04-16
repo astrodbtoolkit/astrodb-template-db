@@ -5,7 +5,7 @@ Associations lookup table
 Columns marked with an exclamation mark ( :exclamation:) may not be empty.
 | Column Name | Description | Datatype | Length | Units  | UCD |
 | --- | --- | --- | --- | --- | --- |
-| :exclamation:**association** | Main identifier for an association | string | 100 |  | meta.id;meta.main  |
+| :exclamation:<u>association</u> | Main identifier for an association | string | 100 |  | meta.id;meta.main  |
 | association_type | Type of association | string | 30 |  |   |
 | comments | Free-form comments for this entry | string | 100 |  | meta.note  |
 | reference | Publication reference; links to Publications table | string | 30 |  | meta.ref  |
