@@ -2,15 +2,15 @@
 The RadialVelocities table contains radial velocity measurements for sources listed in the Sources table. The combination of *source* and *reference* is expected to be unique.
 
 
-Columns marked with an exclamation mark ( :exclamation:) may not be empty.
+Columns marked with an exclamation mark (❗️) may not be empty.
 | Column Name | Description | Datatype | Length | Units  | UCD |
 | --- | --- | --- | --- | --- | --- |
-| :exclamation:<ins>source</ins> | Unique identifier for a source; links to Sources table | string | 50 |  | meta.id;meta.main  |
-| :exclamation:rv_kms | Radial velocity measurement for the source | double |  | km/s | spect.dopplerVeloc  |
+| ❗️ <ins>source</ins> | Unique identifier for a source; links to Sources table | string | 50 |  | meta.id;meta.main  |
+| ❗️ rv_kms | Radial velocity measurement for the source | double |  | km/s | spect.dopplerVeloc  |
 | rv_error | Uncertainty of the radial velocity value | double |  | km/s | stat.error;spect.dopplerVeloc  |
 | adopted | Flag to indicate if this is the adopted entry | boolean |  |  |   |
 | comments | Free form comments | string | 100 |  | meta.note  |
-| :exclamation:<ins>reference</ins> | Reference; links to Publications table | string | 30 |  | meta.ref  |
+| ❗️ <ins>reference</ins> | Reference; links to Publications table | string | 30 |  | meta.ref  |
 
 ## Indexes
 | Name | Columns | Description |

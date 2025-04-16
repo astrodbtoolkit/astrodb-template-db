@@ -2,16 +2,16 @@
 The CompanionRelationships table contains companions to sources listed in the Sources table. The combination of *source* and *companion_name* is expected to be unique.
 
 
-Columns marked with an exclamation mark ( :exclamation:) may not be empty.
+Columns marked with an exclamation mark (❗️) may not be empty.
 | Column Name | Description | Datatype | Length | Units  | UCD |
 | --- | --- | --- | --- | --- | --- |
-| :exclamation:<ins>source</ins> | Unique identifier for the source; links to Sources table | string | 50 |  | meta.id;meta.main  |
-| :exclamation:<ins>companion</ins> | External identifier for a companion object. Does not link to Sources table. | string | 50 |  | meta.id  |
-| :exclamation:relationship | Relationship of the source to the companion, e.g., "parent", "sibling", "child" | string | 30 |  |   |
+| ❗️ <ins>source</ins> | Unique identifier for the source; links to Sources table | string | 50 |  | meta.id;meta.main  |
+| ❗️ <ins>companion</ins> | External identifier for a companion object. Does not link to Sources table. | string | 50 |  | meta.id  |
+| ❗️ relationship | Relationship of the source to the companion, e.g., "parent", "sibling", "child" | string | 30 |  |   |
 | projected_separation_arcsec | Projected separation between the source and companion | double |  | arcsec | pos.angDistance  |
 | projected_separation_error | Uncertainty of the projected separation | double |  | arcsec | stat.error;pos.angDistance  |
 | comments | Free form comments | string | 100 |  | meta.note  |
-| :exclamation:reference | Reference; links to Publications table | string | 30 |  | meta.ref  |
+| ❗️ reference | Reference; links to Publications table | string | 30 |  | meta.ref  |
 | other_companion_names | Additional names for the companion object, comma delimited. | string | 100 |  | meta.id  |
 
 ## Indexes
