@@ -116,6 +116,6 @@ with open(SCHEMA_PATH, "r") as schema_file:
         if os.path.exists(os.path.join(DOCS_DIR, SCHEMA_DIAGRAM)):
             out_file.write(
                 "## Schema Diagram\n"
-                f"This diagram is generated from the [schema.yaml]({SCHEMA_PATH}) file using [make_erd.py](scripts/make_erd.py).\n"
+                f"This diagram is generated from the [schema.yaml]({SCHEMA_PATH}) file using [make_schema_erd.py](scripts/make_schema_erd.py).\n"
                 f"![Schema Diagram]({SCHEMA_DIAGRAM})\n"
             )

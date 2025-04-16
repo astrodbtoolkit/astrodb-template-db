@@ -26,5 +26,5 @@ This documentation is generated from the [schema.yaml](schema/schema.yaml) file 
 - [RotationalParameters](schema/RotationalParameters.md)
 
 ## Schema Diagram
-This diagram is generated from the [schema.yaml](schema/schema.yaml) file using [make_erd.py](scripts/make_erd.py).
+This diagram is generated from the [schema.yaml](schema/schema.yaml) file using [make_schema_erd.py](scripts/make_schema_erd.py).
 ![Schema Diagram](figures/schema_erd.png)
