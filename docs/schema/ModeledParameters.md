@@ -1,26 +1,26 @@
-## ModeledParameters
-### Description
-Derived/modeled parameters for sources
-### Columns
-| Column | Datatype | Length | Units | Description | UCD | Nullable |
-| --- | --- | --- | --- | --- | --- | --- |
-| source | string | 50 |  | Main identifier for an object; links to Sources table | meta.id;meta.main | False |
-| parameter | string | 30 |  | Parameter name | meta.id | False |
-| value | double |  |  | Value of the parameter |  | True |
-| error | double |  |  | Uncertainty of the parameter value |  | True |
-| unit | string | 30 |  | Unit of the parameter value. Should be astropy units compatible. |  | True |
-| comments | string | 100 |  | Free-form comments for this entry | meta.note | True |
-| reference | string | 30 |  | Publication reference; links to Publications table | meta.ref | False |
+# ModeledParameters
+The ModeledParameters table contains a range of derived/inferred parameters for sources listed in the Sources table. The combination of *source*, *parameter*, and *reference* is expected to be unique. Note that *parameter* is linked to the Parameters table. 
 
-### Indexes
+
+Columns marked with an exclamation mark ( :exclamation:) may not be empty.
+| Column Name | Description | Datatype | Length | Units  | UCD |
+| --- | --- | --- | --- | --- | --- |
+| :exclamation:<ins>source</ins> | Unique identifier for the source; links to Sources table | string | 50 |  | meta.id;meta.main  |
+| :exclamation:<ins>parameter</ins> | Parameter name; links to ParameterList table | string | 30 |  | meta.id  |
+| :exclamation:value | Value of the parameter | double |  |  | stat.value;meta.modelled  |
+| error | Uncertainty of the parameter value | double |  |  | stat.error;meta.modelled  |
+| :exclamation:unit | Unit of the parameter value. Should be compatible with astropy.units. | string | 30 |  | meta.unit  |
+| comments | Free form comments | string | 100 |  | meta.note  |
+| :exclamation:<ins>reference</ins> | Reference; links to Publications table | string | 30 |  | meta.ref  |
+
+## Indexes
 | Name | Columns | Description |
 | --- | --- | --- |
 | PK_ModeledParameters | ['#ModeledParameters.source', '#ModeledParameters.parameter', '#ModeledParameters.reference'] | Primary key for ModeledParameters table |
 
-### Constraints
-| Type | Description | Columns | Referenced Columns |
-| --- | --- | --- | --- |
-| ForeignKey | Link ModeledParameters source to Sources table | ['#ModeledParameters.source'] | ['#Sources.source'] |
-| ForeignKey | Link ModeledParameters reference to Publications table | ['#ModeledParameters.reference'] | ['#Publications.reference'] |
-| ForeignKey | Link ModeledParameters parameter to ParameterList table | ['#ModeledParameters.parameter'] | ['#ParameterList.parameter'] |
-
+## Foreign Keys
+| Description | Columns | Referenced Columns |
+| --- | --- | --- |
+| Link ModeledParameters source to Sources table | ['#ModeledParameters.source'] | ['#Sources.source'] |
+| Link ModeledParameters reference to Publications table | ['#ModeledParameters.reference'] | ['#Publications.reference'] |
+| Link ModeledParameters parameter to ParameterList table | ['#ModeledParameters.parameter'] | ['#ParameterList.parameter'] |

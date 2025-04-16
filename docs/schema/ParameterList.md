@@ -1,13 +1,14 @@
-## ParameterList
-### Description
-Parameters lookup table
-### Columns
-| Column | Datatype | Length | Units | Description | UCD | Nullable |
-| --- | --- | --- | --- | --- | --- | --- |
-| parameter | string | 30 |  | Main identifier for a parameter | meta.id;meta.main | False |
-| description | string | 100 |  | Description of the parameter | meta.note | True |
+# ParameterList
+The ParameterList table is a lookup table that contains names and descriptions for parameters referred to in the ModeledParameters table. The *parameter* name is required to be unique.
 
-### Indexes
+
+Columns marked with an exclamation mark ( :exclamation:) may not be empty.
+| Column Name | Description | Datatype | Length | Units  | UCD |
+| --- | --- | --- | --- | --- | --- |
+| :exclamation:<ins>parameter</ins> | Short name for a parameter | string | 30 |  | meta.id;meta.main  |
+| description | Description of the parameter | string | 100 |  | meta.note  |
+
+## Indexes
 | Name | Columns | Description |
 | --- | --- | --- |
 | PK_ParameterList | ['#ParameterList.parameter'] | Primary key for ParameterList table |

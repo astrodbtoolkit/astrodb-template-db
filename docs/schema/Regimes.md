@@ -1,8 +1,14 @@
-## Regimes
-### Description
+# Regimes
 Regime lookup table
-### Columns
-| Column | Datatype | Length | Units | Description | UCD | Nullable |
-| --- | --- | --- | --- | --- | --- | --- |
-| regime | string | 30 |  | Regime identifier string | meta.id;meta.main | False |
+
+
+Columns marked with an exclamation mark ( :exclamation:) may not be empty.
+| Column Name | Description | Datatype | Length | Units  | UCD |
+| --- | --- | --- | --- | --- | --- |
+| :exclamation:<ins>regime</ins> | Regime identifier string | string | 30 |  | meta.id;meta.main  |
+
+## Indexes
+| Name | Columns | Description |
+| --- | --- | --- |
+| PK_Regimes | ['#Regimes.regime'] | Primary key for Regimes table |
 

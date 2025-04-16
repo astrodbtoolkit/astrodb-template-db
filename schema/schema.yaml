@@ -5,10 +5,12 @@ description: "Template database for use by the AstroDB Toolkit"
 
 ######################################################
 # CONVENTIONS
+# - Table description describes linked tables and primary keys.
 # - Source length is 50 characters
 # - Reference is 30 characters. ivoa:ucd: meta.ref
 # - Comments are 100 characters. ivoa:ucd: meta.note
 # - Description is 100 characters. ivoa:ucd: meta.note
+# - Column description does not include units.
 # - Values are datatype: double
 # - Adopted: ivoa:ucd: meta.code
 ######################################################
@@ -21,7 +23,8 @@ tables:
 
   - name: Publications
     "@id": "#Publications"
-    description: Reference information (DOI, bibcodes, etc)
+    description: "The Publications table contains metadata (DOI, bibcodes, etc) for each publication referred to in the database. 
+      The *reference* short identifer of each publication is required to be unique."
     primaryKey: 
     - "#Publications.reference"
 
@@ -30,31 +33,41 @@ tables:
       "@id": "#Publications.reference"
       datatype: string
       length: 30
-      description: Publication reference identifier
+      description: Publication short identifier
       ivoa:ucd: meta.ref;meta.main
       nullable: false
     - name: bibcode
       "@id": "#Publications.bibcode"
       datatype: string
       length: 100
-      description: Publication bibcode
+      description: Publication bibcode from NASA ADS
       ivoa:ucd: meta.bib.bibcode
     - name: doi
       "@id": "#Publications.doi"
       datatype: string
       length: 100
-      description: Publication DOI
+      description: Publication Document Object Identifier (DOI)
       ivoa:ucd: meta.ref.doi
     - name: description
       "@id": "#Publications.description"
       datatype: string
       length: 1000
       description: Publication description
+      ivoa:ucd: meta.title
+
+    indexes:
+    - name: PK_Publications
+      "@id": "#PK_Publications"
+      description: Primary key for Publications table
+      columns: 
+      - "#Publications.reference"
 
 
   - name: Telescopes
     "@id": "#Telescopes"
-    description: Telescope, mission, and survey information
+    description: "The Telescopes table contains names and references 
+      for telescopes referred to in other tables.
+      The *telescope* column is required to be unique."
     primaryKey: 
     - "#Telescopes.telescope"
 
@@ -63,8 +76,8 @@ tables:
       "@id": "#Telescopes.telescope"
       datatype: string
       length: 30
-      description: Telescope, mission, or survey name
-      ivoa:ucd: meta.id;meta.main
+      description: Short name for telescope, mission, or survey
+      ivoa:ucd: instr.tel;instr.obsty
       nullable: false
     - name: description
       "@id": "#Telescopes.description"
@@ -77,6 +90,14 @@ tables:
       datatype: string
       length: 30
       description: Publication reference; links to Publications table
+      ivoa:ucd: meta.ref
+
+    indexes:
+      - name: PK_Telescopes
+        "@id": "#PK_Telescopes"
+        description: Primary key for Telescopes table
+        columns: 
+        - "#Telescopes.telescope"
 
     constraints:
       - name: Telescopes_reference_Publications_reference
@@ -91,7 +112,9 @@ tables:
 
   - name: Instruments
     "@id": "#Instruments"
-    description: Instrument information
+    description: "The Instruments table contains names and references for instruments 
+      (and their modes) referred to in other tables. 
+      The combination of *instrument*, *mode*, and *telescope* is expected to be unique." 
     primaryKey: 
     - "#Instruments.instrument"
     - "#Instruments.mode"
@@ -102,7 +125,7 @@ tables:
       "@id": "#Instruments.instrument"
       datatype: string
       length: 30
-      description: Instrument name
+      description: Name of the instrument
       ivoa:ucd: instr;meta.main
       nullable: false
     - name: mode
@@ -127,8 +150,17 @@ tables:
       "@id": "#Instruments.reference"
       datatype: string
       length: 30
-      description: Publication reference; links to Publications table
+      description: Reference for the instrument and/or mode; links to Publications table
       ivoa:ucd: meta.ref
+
+    indexes:
+      - name: PK_Instruments
+        "@id": "#PK_Instruments"
+        description: Primary key for Instruments table
+        columns: 
+        - "#Instruments.instrument"
+        - "#Instruments.mode"
+        - "#Instruments.telescope"
 
     constraints:
       - name: Instruments_reference_Publications_reference
@@ -160,6 +192,7 @@ tables:
       datatype: string
       length: 100
       description: Unified Content Descriptor of the photometry filter
+      ivoa:ucd: meta.ucd
     - name: effective_wavelength_angstroms
       "@id": "#PhotometryFilters.effective_wavelength_angstroms"
       datatype: double
@@ -172,6 +205,13 @@ tables:
       fits:tunit: Angstrom
       description: Width of the ephotometry filter in Angstroms
       ivoa:ucd: instr.bandwidth
+
+    indexes:
+    - name: PK_PhotometryFilters
+      "@id": "#PK_PhotometryFilters"
+      description: Primary key for PhotometryFilters table
+      columns: 
+      - "#PhotometryFilters.band"
 
 
   - name: Versions
@@ -204,6 +244,13 @@ tables:
       length: 1000
       description: Description of changes associated with this version
 
+    indexes:
+      - name: PK_Versions
+        "@id": "#PK_Versions"
+        description: Primary key for Versions table
+        columns: 
+        - "#Versions.version"
+
 
   - name: Regimes
     "@id": "#Regimes"
@@ -219,6 +266,13 @@ tables:
       description: Regime identifier string
       ivoa:ucd: meta.id;meta.main
       nullable: false
+
+    indexes:
+      - name: PK_Regimes
+        "@id": "#PK_Regimes"
+        description: Primary key for Regimes table
+        columns: 
+        - "#Regimes.regime"
 
 
   - name: AssociationList
@@ -273,7 +327,9 @@ tables:
 
   - name: ParameterList
     "@id": "#ParameterList"
-    description: Parameters lookup table
+    description:  "The ParameterList table is a lookup table that contains 
+      names and descriptions for parameters referred to in the ModeledParameters table.
+      The *parameter* name is required to be unique."
     primaryKey: 
     - "#ParameterList.parameter"
 
@@ -282,7 +338,7 @@ tables:
       "@id": "#ParameterList.parameter"
       datatype: string
       length: 30
-      description: Main identifier for a parameter
+      description: Short name for a parameter
       ivoa:ucd: meta.id;meta.main
       nullable: false
     - name: description
@@ -353,7 +409,9 @@ tables:
 
   - name: Sources
     "@id": "#Sources"
-    description: "Main identifiers for objects along with coordinates."
+    description:  "The Sources table contains all objects in the database alongside their coordinates. 
+      This is considered the 'primary' table in the database, as each source 
+      is expected to be unique and is referred to by all other object tables."
     primaryKey:
     - "#Sources.source"
 
@@ -362,49 +420,49 @@ tables:
       "@id": "#Sources.source"
       datatype: string
       length: 50
-      description: Unique identifier for an object
+      description: Unique identifier for the source
       ivoa:ucd: meta.id;src;meta.main
       nullable: false
     - name: ra_deg
       "@id": "#Sources.ra_deg"
       datatype: double
-      description: ICRS Right Ascension of object
+      description: Right Ascension the source, ICRS recommended
       fits:tunit: deg
       ivoa:ucd: pos.eq.ra;meta.main
     - name: dec_deg
       "@id": "#Sources.dec_deg"
       datatype: double
-      description: ICRS Declination of object
+      description: Declination of the source, ICRS recommended
       fits:tunit: deg
       ivoa:ucd: pos.eq.dec;meta.main
     - name: epoch_year
       "@id": "#Sources.epoch_year"
       datatype: double
-      description: Decimal year for coordinates (eg, 2015.5)
+      description: Decimal year for coordinates (e.g., 2015.5)
       fits:tunit: yr
     - name: equinox
       "@id": "#Sources.equinox"
       datatype: string
       length: 10
-      description: Equinox reference frame year (eg, J2000)
+      description: Equinox reference frame year (e.g., J2000). Not needed if using IRCS coordinates.
     - name: reference
       "@id": "#Sources.reference"
       datatype: string
       length: 30
-      description: Publication reference; links to Publications table
+      description: Discovery reference for the source; links to Publications table
       ivoa:ucd: meta.ref;meta.main
       nullable: false
     - name: other_references
       "@id": "#Sources.other_references"
       datatype: string
       length: 50
-      description: Additional references
+      description: Additional references, comma-separated
       ivoa:ucd: meta.ref
     - name: comments
       "@id": "#Sources.comments"
       datatype: string
       length: 100
-      description: Free-form comments on this Source
+      description: Free form comments
       ivoa:ucd: meta.note
 
 
@@ -437,7 +495,11 @@ tables:
 
   - name: Names
     "@id": "#Names"
-    description: "Additional identifiers for objects in Sources table"
+    description: "The Names table contains possible designations for sources in the Sources table. 
+      Every source must have an entry in the Names table.
+      This table is not meant to be a comprehensive list of all designations for a source, but rather 
+      for storing unofficial names and for quick name matching independent of external services. 
+      The combination of *source* and *other_name* is expected to be unique." 
     primaryKey:
     - "#Names.source"
     - "#Names.other_name"
@@ -487,7 +549,8 @@ tables:
 
   - name: Photometry
     "@id": "#Photometry"
-    description: Photometry for Sources
+    description: "The Photometry table contains photometric measurements for sources listed in the Sources table. 
+      The combination of *source*, *band*, and *reference* is expected to be unique. "
     primaryKey: 
     - "#Photometry.source"
     - "#Photometry.band"
@@ -498,7 +561,7 @@ tables:
       "@id": "#Photometry.source"
       datatype: string
       length: 100
-      description: Main identifier for an object; links to Sources table
+      description: Unique identifier for a source; links to Sources table
       ivoa:ucd: meta.id;meta.main
       nullable: false
     - name: band
@@ -509,35 +572,40 @@ tables:
     - name: magnitude
       "@id": "#Photometry.magnitude"
       datatype: double
-      description: Magnitude value for this entry
+      description: Photometric magnitude  
       fits:tunit: mag
+      ivoa:ucd: phot.mag
     - name: magnitude_error
       "@id": "#Photometry.magnitude_error"
       datatype: double
-      description: Uncertainty of this magnitude value
+      description: Uncertainty of the magnitude
       fits:tunit: mag
+      ivoa:ucd: stat.error;phot.mag
     - name: telescope
       "@id": "#Photometry.telescope"
       datatype: string
       length: 30
       description: Telescope, mission, or survey name; links to Telescopes table
+      ivoa:ucd: instr.tel;instr.obsty
     - name: epoch
       "@id": "#Photometry.epoch"
       datatype: double
       description: Decimal year
       fits:tunit: yr
+      ivoa:ucd: time.epoch
     - name: comments
       "@id": "#Photometry.comments"
       datatype: string
       length: 100
-      description: Free-form comments for this entry
+      description: Free form comments
       ivoa:ucd: meta.note
     - name: reference
       "@id": "#Photometry.reference"
       datatype: string
       length: 30
-      description: Publication reference; links to Publications table
+      description: Reference; links to Publications table
       nullable: false
+      ivoa:ucd: meta.ref
     - name: regime
       "@id": "#Photometry.regime"
       datatype: string
@@ -597,7 +665,9 @@ tables:
 
   - name: Parallaxes
     "@id": "#Parallaxes"
-    description: Parallaxes for Sources
+    description: "The Parallaxes table contains parallax measurements for sources 
+      listed in the Sources table. 
+      The combination of *source* and *reference* is expected to be unique."
     primaryKey: 
     - "#Parallaxes.source"
     - "#Parallaxes.reference"
@@ -607,36 +677,37 @@ tables:
       "@id": "#Parallaxes.source"
       datatype: string
       length: 100
-      description: Main identifier for an object; links to Sources table
+      description: Unique identifier for a source; links to Sources table
       ivoa:ucd: meta.id;meta.main
       nullable: false
     - name: parallax_mas
       "@id": "#Parallaxes.parallax_mas"
       datatype: double
-      description: Parallax value for this entry
+      description: Parallax measurement for the source
       fits:tunit: mas
       ivoa:ucd: pos.parallax
+      nullable: false
     - name: parallax_error
       "@id": "#Parallaxes.magnitude_error"
       datatype: double
-      description: Uncertainty of this parallax value
+      description: Uncertainty of the parallax value
       fits:tunit: mas
       ivoa:ucd: stat.error;pos.parallax
     - name: adopted
       "@id": "#Parallaxes.adopted"
       datatype: boolean
-      description: Flag to indicate if this is the adopted entry
+      description: Flag to indicate if this is the adopted measurement
     - name: comments
       "@id": "#Parallaxes.comments"
       datatype: string
       length: 100
-      description: Free-form comments for this entry
+      description: Free form comments 
       ivoa:ucd: meta.note
     - name: reference
       "@id": "#Parallaxes.reference"
       datatype: string
       length: 30
-      description: Publication reference; links to Publications table
+      description: Reference; links to Publications table
       ivoa:ucd: meta.ref
       nullable: false
 
@@ -668,7 +739,8 @@ tables:
 
   - name: RadialVelocities
     "@id": "#RadialVelocities"
-    description: Radial Velocities of Sources
+    description: "The RadialVelocities table contains radial velocity measurements for sources listed in the Sources table. 
+      The combination of *source* and *reference* is expected to be unique."
     primaryKey: 
     - "#RadialVelocities.source"
     - "#RadialVelocities.reference"
@@ -678,15 +750,16 @@ tables:
       "@id": "#RadialVelocities.source"
       datatype: string
       length: 50
-      description: Main identifier for an object; links to Sources table
+      description: Unique identifier for a source; links to Sources table
       ivoa:ucd: meta.id;meta.main
       nullable: false
     - name: rv_kms
       "@id": "#RadialVelocities.rv_kms"
       datatype: double
-      description: Radial velocity value for this entry
+      description: Radial velocity measurement for the source
       fits:tunit: km/s
       ivoa:ucd: spect.dopplerVeloc
+      nullable: false
     - name: rv_error
       "@id": "#RadialVelocities.rv_error"
       datatype: double
@@ -697,18 +770,17 @@ tables:
       "@id": "#RadialVelocities.adopted"
       datatype: boolean
       description: Flag to indicate if this is the adopted entry
-      ivoa:ucd: meta.code
     - name: comments
       "@id": "#RadialVelocities.comments"
       datatype: string
       length: 100
-      description: Free-form comments for this entry
+      description: Free form comments
       ivoa:ucd: meta.note
     - name: reference
       "@id": "#RadialVelocities.reference"
       datatype: string
       length: 30
-      description: Publication reference; links to Publications table
+      description: Reference; links to Publications table
       ivoa:ucd: meta.ref
       nullable: false
 
@@ -745,7 +817,8 @@ tables:
 
   - name: CompanionRelationships
     "@id": "#CompanionRelationships"
-    description: Relationships between sources
+    description: The CompanionRelationships table contains companions to sources listed in the Sources table. 
+      The combination of *source* and *companion_name* is expected to be unique.
     primaryKey: 
     - "#CompanionRelationships.source"
     - "#CompanionRelationships.companion" # or companion_name
@@ -755,7 +828,7 @@ tables:
       "@id": "#CompanionRelationships.source"
       datatype: string
       length: 50
-      description: Main identifier for an object; links to Sources table
+      description: Unique identifier for the source; links to Sources table
       ivoa:ucd: meta.id;meta.main
       nullable: false
     - name: companion
@@ -769,31 +842,31 @@ tables:
       "@id": "#CompanionRelationships.relationship"
       datatype: string
       length: 30
-      description: Relationship of the source to the companion, e.g., "parent", "child", "sibling"
+      description: Relationship of the source to the companion, e.g., "parent", "sibling", "child"
       nullable: false
     - name: projected_separation_arcsec
       "@id": "#CompanionRelationships.projected_separation_arcsec"
       datatype: double
-      description: Projected separation between the source and companion in arcseconds
+      description: Projected separation between the source and companion
       fits:tunit: arcsec
       ivoa:ucd: pos.angDistance
     - name: projected_separation_error
       "@id": "#CompanionRelationships.projected_separation_error"
       datatype: double
-      description: Uncertainty of the projected separation in arcseconds
+      description: Uncertainty of the projected separation
       fits:tunit: arcsec
       ivoa:ucd: stat.error;pos.angDistance
     - name: comments
       "@id": "#CompanionRelationships.comments"
       datatype: string
       length: 100
-      description: Free-form comments for this entry
+      description: Free form comments
       ivoa:ucd: meta.note
     - name: reference
       "@id": "#CompanionRelationships.reference"
       datatype: string
       length: 30
-      description: Publication reference; links to Publications table
+      description: Reference; links to Publications table
       ivoa:ucd: meta.ref
       nullable: false
     - name: other_companion_names
@@ -1017,10 +1090,14 @@ tables:
 
   - name: SourceTypes
     "@id": "#SourceTypes"
-    description: Source Types for Sources
+    description: The SourceTypes table contains types (e.g., spectral type or galaxy type) 
+      for sources listed in the Sources table. 
+      Source types are defined in the SourceTypeList table.
+      The combination of *source*, *source_type*, and *reference* is expected to be unique.
     primaryKey: 
     - "#SourceTypes.source"
     - "#SourceTypes.source_type"
+    - "#SourceTypes.reference"
 
     columns:
     - name: source
@@ -1041,7 +1118,7 @@ tables:
       "@id": "#SourceTypes.comments"
       datatype: string
       length: 100
-      description: Free-form comments for this entry
+      description: Free form comments
       ivoa:ucd: meta.note
     - name: adopted
       "@id": "#SourceTypes.adopted"
@@ -1052,7 +1129,7 @@ tables:
       "@id": "#SourceTypes.reference"
       datatype: string
       length: 30
-      description: Publication reference; links to Publications table
+      description: Reference; links to Publications table
       ivoa:ucd: meta.ref
       nullable: false
 
@@ -1063,6 +1140,7 @@ tables:
         columns: 
         - "#SourceTypes.source"
         - "#SourceTypes.source_type"
+        - "#SourceTypes.reference"
 
     constraints:
       - name: SourceTypes_source_Sources_source
@@ -1093,7 +1171,8 @@ tables:
 
   - name: ProperMotions
     "@id": "#ProperMotions"
-    description: Proper Motions for Sources
+    description: "The ProperMotions table contains proper motion measurements for sources listed in the Sources table. 
+      The combination of *source* and *reference* is expected to be unique."
     primaryKey: 
     - "#ProperMotions.source"
     - "#ProperMotions.reference"
@@ -1109,21 +1188,23 @@ tables:
     - name: pm_ra
       "@id": "#ProperMotions.pm_ra"
       datatype: double
-      description: Proper motion in RA*cos(Dec) in mas/yr
+      description: Proper motion in RA*cos(Dec)
       fits:tunit: mas/yr
       ivoa:ucd: pos.pm;pos.eq.ra
-    - name: pm_dec
-      "@id": "#ProperMotions.pm_dec"
-      datatype: double
-      description: Proper motion in Dec in mas/yr
-      fits:tunit: mas/yr
-      ivoa:ucd: pos.pm;pos.eq.dec
+      nullable: false
     - name: pm_ra_error
       "@id": "#ProperMotions.pm_ra_error"
       datatype: double
       description: Uncertainty of the proper motion in RA
       fits:tunit: mas/yr
       ivoa:ucd: stat.error;pos.pm;pos.eq.ra
+    - name: pm_dec
+      "@id": "#ProperMotions.pm_dec"
+      datatype: double
+      description: Proper motion in declination
+      fits:tunit: mas/yr
+      ivoa:ucd: pos.pm;pos.eq.dec
+      nullable: false
     - name: pm_dec_error
       "@id": "#ProperMotions.pm_dec_error"
       datatype: double
@@ -1138,13 +1219,13 @@ tables:
       "@id": "#ProperMotions.comments"
       datatype: string
       length: 100
-      description: Free-form comments for this entry
+      description: Free form comments
       ivoa:ucd: meta.note
     - name: reference
       "@id": "#ProperMotions.reference"
       datatype: string
       length: 30
-      description: Publication reference; links to Publications table
+      description: Reference; links to Publications table
       ivoa:ucd: meta.ref
       nullable: false
 
@@ -1177,7 +1258,10 @@ tables:
 
   - name: ModeledParameters
     "@id": "#ModeledParameters"
-    description: Derived/modeled parameters for sources
+    description: "The ModeledParameters table contains a range of derived/inferred 
+      parameters for sources listed in the Sources table. 
+      The combination of *source*, *parameter*, and *reference* is expected to be unique.
+      Note that *parameter* is linked to the Parameters table. "
     primaryKey: 
     - "#ModeledParameters.source"
     - "#ModeledParameters.parameter"
@@ -1188,40 +1272,45 @@ tables:
       "@id": "#ModeledParameters.source"
       datatype: string
       length: 50
-      description: Main identifier for an object; links to Sources table
+      description: Unique identifier for the source; links to Sources table
       ivoa:ucd: meta.id;meta.main
       nullable: false
     - name: parameter
       "@id": "#ModeledParameters.parameter"
       datatype: string
       length: 30
-      description: Parameter name
+      description: Parameter name; links to ParameterList table
       ivoa:ucd: meta.id
       nullable: false
     - name: value
       "@id": "#ModeledParameters.value"
       datatype: double
       description: Value of the parameter
+      nullable: false
+      ivoa:ucd: stat.value;meta.modelled
     - name: error
       "@id": "#ModeledParameters.error"
       datatype: double
       description: Uncertainty of the parameter value
+      ivoa:ucd: stat.error;meta.modelled
     - name: unit
       "@id": "#ModeledParameters.unit"
       datatype: string
       length: 30
-      description: Unit of the parameter value. Should be astropy units compatible.
+      description: Unit of the parameter value. Should be compatible with astropy.units.
+      nullable: false
+      ivoa:ucd: meta.unit
     - name: comments
       "@id": "#ModeledParameters.comments"
       datatype: string
       length: 100
-      description: Free-form comments for this entry
+      description: Free form comments
       ivoa:ucd: meta.note
     - name: reference
       "@id": "#ModeledParameters.reference"
       datatype: string
       length: 30
-      description: Publication reference; links to Publications table
+      description: Reference; links to Publications table
       ivoa:ucd: meta.ref
       nullable: false
 
@@ -1259,6 +1348,7 @@ tables:
         - "#ModeledParameters.parameter"
         referencedColumns:
         - "#ParameterList.parameter"
+
 
   - name: RotationalParameters
     "@id": "#RotationalParameters"

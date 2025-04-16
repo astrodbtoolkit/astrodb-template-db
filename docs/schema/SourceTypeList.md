@@ -1,9 +1,10 @@
-## SourceTypeList
-### Description
+# SourceTypeList
 Source types lookup table
-### Columns
-| Column | Datatype | Length | Units | Description | UCD | Nullable |
-| --- | --- | --- | --- | --- | --- | --- |
-| source_type | string | 30 |  | Source type identifier string | meta.id;meta.main | False |
-| comments | string | 100 |  | Free-form comments for this entry | meta.note | True |
+
+
+Columns marked with an exclamation mark ( :exclamation:) may not be empty.
+| Column Name | Description | Datatype | Length | Units  | UCD |
+| --- | --- | --- | --- | --- | --- |
+| :exclamation:<ins>source_type</ins> | Source type identifier string | string | 30 |  | meta.id;meta.main  |
+| comments | Free-form comments for this entry | string | 100 |  | meta.note  |
 
