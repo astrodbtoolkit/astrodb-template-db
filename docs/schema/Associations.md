@@ -5,8 +5,8 @@ Association Membership for Sources
 Columns marked with an exclamation mark ( :exclamation:) may not be empty.
 | Column Name | Description | Datatype | Length | Units  | UCD |
 | --- | --- | --- | --- | --- | --- |
-| :exclamation:<u>source</u> | Main identifier for an object; links to Sources table | string | 50 |  | meta.id;meta.main  |
-| :exclamation:<u>association</u> | Association name; links to Associations table | string | 100 |  | meta.id  |
+| :exclamation:<ins>source</ins> | Main identifier for an object; links to Sources table | string | 50 |  | meta.id;meta.main  |
+| :exclamation:<ins>association</ins> | Association name; links to Associations table | string | 100 |  | meta.id  |
 | membership_probability | Probability of membership in this association | double |  |  | stat.probability  |
 | comments | Free-form comments for this entry | string | 100 |  | meta.note  |
 | adopted | Flag to indicate if this is the adopted entry | boolean |  |  |   |

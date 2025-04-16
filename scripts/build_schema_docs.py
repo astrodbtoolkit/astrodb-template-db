@@ -4,7 +4,7 @@ import yaml
 
 SCHEMA_PATH = "schema/schema.yaml"
 DOCS_DIR = "docs/"
-SCHEMA_DIAGRAM = "figures/auto_schema.png"
+SCHEMA_DIAGRAM = "figures/schema_erd.png"
 SCHEMA_SUB_DIR = "schema/"
 SCHEMA_TOC_NAME = "README.md"
 
