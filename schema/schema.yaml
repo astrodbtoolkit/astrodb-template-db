@@ -660,7 +660,7 @@ tables:
         columns:
         - "#Photometry.regime"
         referencedColumns:
-        - "#RegimeList.regime"
+        - "#Regime.regime"
 
 
   - name: Parallaxes
