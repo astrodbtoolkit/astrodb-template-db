@@ -252,15 +252,15 @@ tables:
         - "#Versions.version"
 
 
-  - name: Regimes
-    "@id": "#Regimes"
+  - name: RegimeList
+    "@id": "#RegimeList"
     description: Regime lookup table
     primaryKey: 
-    - "#Regimes.regime"
+    - "#RegimeList.regime"
 
     columns:
     - name: regime
-      "@id": "#Regimes.regime"
+      "@id": "#RegimeList.regime"
       datatype: string
       length: 30
       description: Regime identifier string
@@ -268,11 +268,11 @@ tables:
       nullable: false
 
     indexes:
-      - name: PK_Regimes
-        "@id": "#PK_Regimes"
-        description: Primary key for Regimes table
+      - name: PK_RegimeList
+        "@id": "#PK_RegimeList"
+        description: Primary key for RegimeList table
         columns: 
-        - "#Regimes.regime"
+        - "#RegimeList.regime"
 
 
   - name: AssociationList
@@ -610,7 +610,7 @@ tables:
       "@id": "#Photometry.regime"
       datatype: string
       length: 30
-      description: Regime for this entry; links to Regimes table
+      description: Regime for this entry; links to RegimeList table
 
     indexes:
       - name: PK_Photometry
@@ -653,14 +653,14 @@ tables:
         - "#Photometry.reference"
         referencedColumns:
         - "#Publications.reference"
-      - name: Photometry_regime_Regimes_regime
+      - name: Photometry_regime_RegimeList_regime
         "@type": "ForeignKey"
-        "@id": "#FK_Photometry_regime_Regimes_regime"
-        description: Link Photometry regime to Regimes table
+        "@id": "#FK_Photometry_regime_RegimeList_regime"
+        description: Link Photometry regime to RegimeList table
         columns:
         - "#Photometry.regime"
         referencedColumns:
-        - "#Regimes.regime"
+        - "#RegimeList.regime"
 
 
   - name: Parallaxes

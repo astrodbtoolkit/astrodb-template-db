@@ -21,7 +21,7 @@ def test_table_presence(db):
     assert "RadialVelocities" in db.metadata.tables.keys()
     # Photometric data
     assert "Photometry" in db.metadata.tables.keys()
-    assert "Regimes" in db.metadata.tables.keys()
+    assert "RegimeList" in db.metadata.tables.keys()
     assert "PhotometryFilters" in db.metadata.tables.keys()
     # Companion data
     assert "CompanionRelationships" in db.metadata.tables.keys()
