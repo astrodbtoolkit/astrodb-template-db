@@ -7,7 +7,7 @@ This documentation is generated from the [schema.yaml](schema/schema.yaml) file 
 - [Instruments](schema/Instruments.md)
 - [PhotometryFilters](schema/PhotometryFilters.md)
 - [Versions](schema/Versions.md)
-- [Regimes](schema/Regimes.md)
+- [RegimeList](schema/RegimeList.md)
 - [AssociationList](schema/AssociationList.md)
 - [ParameterList](schema/ParameterList.md)
 - [CompanionList](schema/CompanionList.md)

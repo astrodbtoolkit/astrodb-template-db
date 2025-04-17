@@ -13,7 +13,7 @@ Columns marked with an exclamation mark (❗️) may not be empty.
 | epoch | Decimal year | double |  | yr | time.epoch  |
 | comments | Free form comments | string | 100 |  | meta.note  |
 | ❗️ <ins>reference</ins> | Reference; links to Publications table | string | 30 |  | meta.ref  |
-| regime | Regime for this entry; links to Regimes table | string | 30 |  |   |
+| regime | Regime for this entry; links to RegimeList table | string | 30 |  |   |
 
 ## Indexes
 | Name | Columns | Description |
@@ -27,4 +27,4 @@ Columns marked with an exclamation mark (❗️) may not be empty.
 | Link Photometry band to PhotometryFilters table | ['#Photometry.band'] | ['#PhotometryFilters.band'] |
 | Link Photometry telescope to Telescopes table | ['#Photometry.telescope'] | ['#Telescopes.telescope'] |
 | Link Photometry reference to Publications table | ['#Photometry.reference'] | ['#Publications.reference'] |
-| Link Photometry regime to Regimes table | ['#Photometry.regime'] | ['#Regimes.regime'] |
+| Link Photometry regime to RegimeList table | ['#Photometry.regime'] | ['#RegimeList.regime'] |
