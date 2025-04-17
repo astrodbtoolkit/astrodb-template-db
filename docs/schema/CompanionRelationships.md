@@ -6,7 +6,7 @@ Columns marked with an exclamation mark (❗️) may not be empty.
 | Column Name | Description | Datatype | Length | Units  | UCD |
 | --- | --- | --- | --- | --- | --- |
 | ❗️ <ins>source</ins> | Unique identifier for the source; links to Sources table | string | 50 |  | meta.id;meta.main  |
-| ❗️ <ins>companion</ins> | External identifier for a companion object. Does not link to Sources table. | string | 50 |  | meta.id  |
+| ❗️ <ins>companion</ins> | External identifier for a companion object, links to the CompanionList table | string | 50 |  | meta.id  |
 | ❗️ relationship | Relationship of the source to the companion, e.g., "parent", "sibling", "child" | string | 30 |  |   |
 | projected_separation_arcsec | Projected separation between the source and companion | double |  | arcsec | pos.angDistance  |
 | projected_separation_error | Uncertainty of the projected separation | double |  | arcsec | stat.error;pos.angDistance  |
