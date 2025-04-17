@@ -171,6 +171,14 @@ tables:
         - "#Instruments.reference"
         referencedColumns:
         - "#Publications.reference"
+      - name: Instruments_telescope_Telescopes_telescope
+        "@type": "ForeignKey"
+        "@id": "#FK_Instruments_telescope_Telescopes_telescope"
+        description: Link Instruments telescope to Telescopes table
+        columns:
+        - "#Instruments.telescope"
+        referencedColumns:
+        - "#Telescopes.telescope"
 
 
   - name: PhotometryFilters
