@@ -20,3 +20,4 @@ Columns marked with an exclamation mark (❗️) may not be empty.
 | Description | Columns | Referenced Columns |
 | --- | --- | --- |
 | Link Instruments reference to Publications table | ['#Instruments.reference'] | ['#Publications.reference'] |
+| Link Instruments telescope to Telescopes table | ['#Instruments.telescope'] | ['#Telescopes.telescope'] |

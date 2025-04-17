@@ -1,4 +1,4 @@
-# Regimes
+# RegimeList
 Regime lookup table
 
 
@@ -10,5 +10,5 @@ Columns marked with an exclamation mark (❗️) may not be empty.
 ## Indexes
 | Name | Columns | Description |
 | --- | --- | --- |
-| PK_Regimes | ['#Regimes.regime'] | Primary key for Regimes table |
+| PK_RegimeList | ['#RegimeList.regime'] | Primary key for RegimeList table |
 

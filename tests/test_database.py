@@ -53,14 +53,14 @@ def test_adding_data(db):
     Telescopes = Base.classes.Telescopes
     Photometry = Base.classes.Photometry
     PhotometryFilters = Base.classes.PhotometryFilters
-    Regimes = Base.classes.Regimes
+    RegimeList = Base.classes.RegimeList
 
     # Insert supporting data to (Sources, Publications, Telescopes, PhotometryFilters)
     s = Sources(source="V4046 Sgr", ra_deg=273.54, dec_deg=-32.79, reference="Cohe03")
     ref = Publications(reference="Cutri03")
     tel = Telescopes(telescope="Fake 2MASS", reference="Cutri03")
     pf = PhotometryFilters(band="Fake 2MASS.Ks", effective_wavelength_angstroms=2.159)
-    reg = Regimes(regime="fake optical")
+    reg = RegimeList(regime="fake optical")
 
     with db.session as session:
         session.add_all([ref, pf, tel, s, reg])

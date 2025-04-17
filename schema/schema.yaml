@@ -171,6 +171,14 @@ tables:
         - "#Instruments.reference"
         referencedColumns:
         - "#Publications.reference"
+      - name: Instruments_telescope_Telescopes_telescope
+        "@type": "ForeignKey"
+        "@id": "#FK_Instruments_telescope_Telescopes_telescope"
+        description: Link Instruments telescope to Telescopes table
+        columns:
+        - "#Instruments.telescope"
+        referencedColumns:
+        - "#Telescopes.telescope"
 
 
   - name: PhotometryFilters
@@ -252,15 +260,15 @@ tables:
         - "#Versions.version"
 
 
-  - name: Regimes
-    "@id": "#Regimes"
+  - name: RegimeList
+    "@id": "#RegimeList"
     description: Regime lookup table
     primaryKey: 
-    - "#Regimes.regime"
+    - "#RegimeList.regime"
 
     columns:
     - name: regime
-      "@id": "#Regimes.regime"
+      "@id": "#RegimeList.regime"
       datatype: string
       length: 30
       description: Regime identifier string
@@ -268,11 +276,11 @@ tables:
       nullable: false
 
     indexes:
-      - name: PK_Regimes
-        "@id": "#PK_Regimes"
-        description: Primary key for Regimes table
+      - name: PK_RegimeList
+        "@id": "#PK_RegimeList"
+        description: Primary key for RegimeList table
         columns: 
-        - "#Regimes.regime"
+        - "#RegimeList.regime"
 
 
   - name: AssociationList
@@ -610,7 +618,7 @@ tables:
       "@id": "#Photometry.regime"
       datatype: string
       length: 30
-      description: Regime for this entry; links to Regimes table
+      description: Regime for this entry; links to RegimeList table
 
     indexes:
       - name: PK_Photometry
@@ -653,14 +661,14 @@ tables:
         - "#Photometry.reference"
         referencedColumns:
         - "#Publications.reference"
-      - name: Photometry_regime_Regimes_regime
+      - name: Photometry_regime_RegimeList_regime
         "@type": "ForeignKey"
-        "@id": "#FK_Photometry_regime_Regimes_regime"
-        description: Link Photometry regime to Regimes table
+        "@id": "#FK_Photometry_regime_RegimeList_regime"
+        description: Link Photometry regime to RegimeList table
         columns:
         - "#Photometry.regime"
         referencedColumns:
-        - "#Regimes.regime"
+        - "#RegimeList.regime"
 
 
   - name: Parallaxes
@@ -835,7 +843,7 @@ tables:
       "@id": "#CompanionRelationships.companion"
       datatype: string
       length: 50
-      description: External identifier for a companion object. Does not link to Sources table.
+      description: External identifier for a companion object, links to the CompanionList table
       ivoa:ucd: meta.id
       nullable: false
     - name: relationship
@@ -1394,13 +1402,13 @@ tables:
       datatype: double
       description: Inclination of the rotation axis in degrees
       fits:tunit: deg
-      ivoa:ucd: pos.posAng
+      ivoa:ucd: src.orbital.inclination
     - name: inclination_error
       "@id": "#RotationalParameters.inclination_error"
       datatype: double
       description: Uncertainty of the inclination
       fits:tunit: deg
-      ivoa:ucd: stat.error;pos.posAng
+      ivoa:ucd: stat.error;src.orbital.inclination
     - name: adopted
       "@id": "#RotationalParameters.adopted"
       datatype: boolean
