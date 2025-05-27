@@ -1467,6 +1467,7 @@ tables:
     primaryKey: 
     - "#Spectra.source"
     - "#Spectra.regime"
+    - "#Spectra.mode"
     - "#Spectra.observation_date"
     - "#Spectra.reference"
 
@@ -1483,6 +1484,12 @@ tables:
       datatype: string
       length: 200
       description: URL to access the spectral data
+      ivoa:ucd: meta.ref.url;meta.file;meta.dataset
+    - name: original_spectrum
+      "@id": "#Spectra.original_spectrum"
+      datatype: string
+      length: 200
+      description: URL for the original spectrum
       ivoa:ucd: meta.ref.url;meta.file;meta.dataset
     - name: local_spectrum
       "@id": "#Spectra.local_spectrum"
@@ -1516,6 +1523,7 @@ tables:
       length: 30
       description: Observation mode (e.g., imaging, spectroscopy)
       ivoa:ucd: instr.setup
+      nullable: false
     - name: observation_date
       "@id": "#Spectra.observation_date"
       datatype: string
@@ -1549,6 +1557,7 @@ tables:
         columns: 
         - "#Spectra.source"
         - "#Spectra.regime"
+        - "#Spectra.mode"
         - "#Spectra.observation_date"
         - "#Spectra.reference"
 
