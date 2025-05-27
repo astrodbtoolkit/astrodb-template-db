@@ -1463,7 +1463,7 @@ tables:
   - name: Spectra
     "@id": "#Spectra"
     description: "The Spectra table contains spectral data for sources listed in the Sources table. 
-      The combination of *source*, *regime*, *observation_date*, and *reference* is expected to be unique."
+      The combination of *source*, *regime*, *mode*, *observation_date*, and *reference* is expected to be unique."
     primaryKey: 
     - "#Spectra.source"
     - "#Spectra.regime"
@@ -1526,10 +1526,10 @@ tables:
       nullable: false
     - name: observation_date
       "@id": "#Spectra.observation_date"
-      datatype: string
-      length: 30
+      datatype: timestamp
       description: Date of the observation in ISO format (YYYY-MM-DD)
       ivoa:ucd: time.epoch
+      nullable: false
     - name: comments
       "@id": "#Spectra.comments"
       datatype: string

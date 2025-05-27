@@ -1,5 +1,5 @@
 # Spectra
-The Spectra table contains spectral data for sources listed in the Sources table. The combination of *source*, *regime*, *observation_date*, and *reference* is expected to be unique.
+The Spectra table contains spectral data for sources listed in the Sources table. The combination of *source*, *regime*, *mode*, *observation_date*, and *reference* is expected to be unique.
 
 
 Columns marked with an exclamation mark (❗️) may not be empty.
@@ -13,7 +13,7 @@ Columns marked with an exclamation mark (❗️) may not be empty.
 | telescope | Telescope, mission, or survey name; links to Telescopes table | string | 30 |  | instr.tel;instr.obsty  |
 | ❗️ instrument | Instrument used for the observation; links to Instruments table | string | 30 |  | instr  |
 | ❗️ <ins>mode</ins> | Observation mode (e.g., imaging, spectroscopy) | string | 30 |  | instr.setup  |
-| observation_date | Date of the observation in ISO format (YYYY-MM-DD) | string | 30 |  | time.epoch  |
+| ❗️ <ins>observation_date</ins> | Date of the observation in ISO format (YYYY-MM-DD) | timestamp |  |  | time.epoch  |
 | comments | Free form comments | string | 100 |  | meta.note  |
 | ❗️ <ins>reference</ins> | Reference; links to Publications table | string | 30 |  | meta.ref  |
 | other_references | Additional references for the spectrum, comma delimited. | string | 100 |  | meta.ref  |
