@@ -1,0 +1,17 @@
+name: Trigger AstroDB Utils Tests
+
+on:
+  push:
+    branches:
+      - main  # or whichever branches you want to monitor
+
+jobs:
+  trigger_repo1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger AstroDB Utils Tests workflow
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.UTILS_TOKEN }}
+          repository: astrodbtoolkit/astrodb_utils
+          event-type: run-tests
