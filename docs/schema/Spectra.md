@@ -10,7 +10,7 @@ Columns marked with an exclamation mark (❗️) may not be empty.
 | original_spectrum | URL for the original spectrum | string | 200 |  | meta.ref.url;meta.file;meta.dataset  |
 | local_spectrum | Local file path to the spectrum data | string | 200 |  | meta.dataset;meta.file  |
 | ❗️ <ins>regime</ins> | Spectral regime (e.g., optical, IR, radio); links to RegimeList table | string | 30 |  | meta.id  |
-| telescope | Telescope, mission, or survey name; links to Telescopes table | string | 30 |  | instr.tel;instr.obsty  |
+| ❗️ telescope | Telescope, mission, or survey name; links to Telescopes table | string | 30 |  | instr.tel;instr.obsty  |
 | ❗️ instrument | Instrument used for the observation; links to Instruments table | string | 30 |  | instr  |
 | ❗️ <ins>mode</ins> | Observation mode (e.g., imaging, spectroscopy) | string | 30 |  | instr.setup  |
 | ❗️ <ins>observation_date</ins> | Date of the observation in ISO format (YYYY-MM-DD) | timestamp |  |  | time.epoch  |
