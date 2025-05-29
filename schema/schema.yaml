@@ -1460,6 +1460,7 @@ tables:
         referencedColumns:
         - "#Publications.reference"
 
+
   - name: Spectra
     "@id": "#Spectra"
     description: "The Spectra table contains spectral data for sources listed in the Sources table. 
@@ -1483,13 +1484,13 @@ tables:
       "@id": "#Spectra.access_url"
       datatype: string
       length: 200
-      description: URL to access the spectral data
+      description: URL to access the spectral data. Ideally, should be readable by specutils.
       ivoa:ucd: meta.ref.url;meta.file;meta.dataset
     - name: original_spectrum
       "@id": "#Spectra.original_spectrum"
       datatype: string
       length: 200
-      description: URL for the original spectrum
+      description: URL for the original spectrum, if relevant.
       ivoa:ucd: meta.ref.url;meta.file;meta.dataset
     - name: local_spectrum
       "@id": "#Spectra.local_spectrum"
@@ -1522,7 +1523,7 @@ tables:
       "@id": "#Spectra.mode"
       datatype: string
       length: 30
-      description: Observation mode (e.g., imaging, spectroscopy)
+      description: Instrument mode; links to Instruments table
       ivoa:ucd: instr.setup
       nullable: false
     - name: observation_date
