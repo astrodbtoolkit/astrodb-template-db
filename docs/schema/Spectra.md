@@ -6,13 +6,13 @@ Columns marked with an exclamation mark (❗️) may not be empty.
 | Column Name | Description | Datatype | Length | Units  | UCD |
 | --- | --- | --- | --- | --- | --- |
 | ❗️ <ins>source</ins> | Unique identifier for the source; links to Sources table | string | 50 |  | meta.id;meta.main  |
-| access_url | URL to access the spectral data | string | 200 |  | meta.ref.url;meta.file;meta.dataset  |
-| original_spectrum | URL for the original spectrum | string | 200 |  | meta.ref.url;meta.file;meta.dataset  |
+| access_url | URL to access the spectral data. Ideally, should be readable by specutils. | string | 200 |  | meta.ref.url;meta.file;meta.dataset  |
+| original_spectrum | URL for the original spectrum, if relevant. | string | 200 |  | meta.ref.url;meta.file;meta.dataset  |
 | local_spectrum | Local file path to the spectrum data | string | 200 |  | meta.dataset;meta.file  |
 | ❗️ <ins>regime</ins> | Spectral regime (e.g., optical, IR, radio); links to RegimeList table | string | 30 |  | meta.id  |
 | ❗️ telescope | Telescope, mission, or survey name; links to Telescopes table | string | 30 |  | instr.tel;instr.obsty  |
 | ❗️ instrument | Instrument used for the observation; links to Instruments table | string | 30 |  | instr  |
-| ❗️ <ins>mode</ins> | Observation mode (e.g., imaging, spectroscopy) | string | 30 |  | instr.setup  |
+| ❗️ <ins>mode</ins> | Instrument mode; links to Instruments table | string | 30 |  | instr.setup  |
 | ❗️ <ins>observation_date</ins> | Date of the observation in ISO format (YYYY-MM-DD) | timestamp |  |  | time.epoch  |
 | comments | Free form comments | string | 100 |  | meta.note  |
 | ❗️ <ins>reference</ins> | Reference; links to Publications table | string | 30 |  | meta.ref  |
