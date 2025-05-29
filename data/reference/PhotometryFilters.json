@@ -1,146 +1,440 @@
 [
     {
-        "band": "2MASS/2MASS.J",
-        "ucd": "em.IR.J",
-        "effective_wavelength_angstroms": 12350.0,
-        "width_angstroms": 1624.3190191027
-    },
-    {
-        "band": "2MASS/2MASS.H",
-        "ucd": "em.IR.H",
-        "effective_wavelength_angstroms": 16620.0,
-        "width_angstroms": 2509.4034987068
-    },
-    {
-        "band": "2MASS/2MASS.Ks",
-        "ucd": "em.IR.K",
-        "effective_wavelength_angstroms": 21590.0,
-        "width_angstroms": 2618.8695332218
-    },
-    {
-        "band": "GAIA/GAIA3.G",
-        "ucd": "em.opt.V",
-        "effective_wavelength_angstroms": 5822.3887136979,
-        "width_angstroms": 4052.9683037356
-    },
-    {
-        "band": "GAIA/GAIA3.Gbp",
-        "ucd": "em.opt.V",
-        "effective_wavelength_angstroms": 5035.7502754443,
-        "width_angstroms": 2157.5049836097
-    },
-    {
-        "band": "GAIA/GAIA3.Grp",
-        "ucd": "em.opt.I",
-        "effective_wavelength_angstroms": 7619.9599926215,
-        "width_angstroms": 2924.4362576966
-    },
-    {
-        "band": "SLOAN/SDSS.u",
-        "ucd": "em.opt.U",
-        "effective_wavelength_angstroms": 3608.0403153219,
-        "width_angstroms": 540.97112586776
-    },
-    {
-        "band": "SLOAN/SDSS.g",
-        "ucd": "em.opt.B",
-        "effective_wavelength_angstroms": 4671.7822137652,
-        "width_angstroms": 1064.6831251068
-    },
-    {
-        "band": "SLOAN/SDSS.r",
-        "ucd": "em.opt.R",
-        "effective_wavelength_angstroms": 6141.1230039377,
-        "width_angstroms": 1055.5126512194
-    },
-    {
-        "band": "SLOAN/SDSS.i",
-        "ucd": "em.opt.R",
-        "effective_wavelength_angstroms": 7457.889035897,
-        "width_angstroms": 1102.565344818
-    },
-    {
-        "band": "SLOAN/SDSS.z",
-        "ucd": "em.opt.I",
-        "effective_wavelength_angstroms": 8922.7797236408,
-        "width_angstroms": 1164.0149198605
-    },
-    {
-        "band": "WISE/WISE.W1",
+        "band": "WISE.W1",
         "ucd": "em.IR.3-4um",
         "effective_wavelength_angstroms": 33526.0,
-        "width_angstroms": 6626.4194684289
+        "width_angstroms": 6357.9
     },
     {
-        "band": "WISE/WISE.W2",
+        "band": "WISE.W2",
         "ucd": "em.IR.4-8um",
         "effective_wavelength_angstroms": 46028.0,
-        "width_angstroms": 10422.65979919
+        "width_angstroms": 11073.2
     },
     {
-        "band": "WISE/WISE.W3",
+        "band": "WISE.W3",
         "ucd": "em.IR.8-15um",
         "effective_wavelength_angstroms": 115608.0,
-        "width_angstroms": 55055.230026996
+        "width_angstroms": 62758.0
     },
     {
-        "band": "WISE/WISE.W4",
+        "band": "WISE.W4",
         "ucd": "em.IR.15-30um",
         "effective_wavelength_angstroms": 220883.0,
-        "width_angstroms": 41016.796142649
+        "width_angstroms": 47397.3
     },
     {
-        "band": "Generic/Johnson.U",
-        "ucd": "em.opt.U",
-        "effective_wavelength_angstroms": 3551.0524592918,
-        "width_angstroms": 657.0000000004
+        "band": "IRAC.I1",
+        "ucd": "em.IR.3-4um",
+        "effective_wavelength_angstroms": 35075.1,
+        "width_angstroms": 7431.7
     },
     {
-        "band": "Generic/Johnson.B",
-        "ucd": "em.opt.B",
-        "effective_wavelength_angstroms": 4369.5312126406,
-        "width_angstroms": 972.49998451092
+        "band": "IRAC.I2",
+        "ucd": "em.IR.3-4um",
+        "effective_wavelength_angstroms": 44365.8,
+        "width_angstroms": 10096.8
     },
     {
-        "band": "Generic/Johnson.V",
-        "ucd": "em.opt.V",
-        "effective_wavelength_angstroms": 5467.5739972259,
-        "width_angstroms": 889.79616253946
-    },
-    {
-        "band": "Generic/Johnson.R",
-        "ucd": "em.opt.R",
-        "effective_wavelength_angstroms": 6695.8342495754,
-        "width_angstroms": 2070.0000092451
-    },
-    {
-        "band": "Generic/Johnson.I",
-        "ucd": "em.opt.I",
-        "effective_wavelength_angstroms": 8568.8882978854,
-        "width_angstroms": 2316.000266667
-    },
-    {
-        "band": "Generic/Johnson.J",
-        "ucd": "em.IR.J",
-        "effective_wavelength_angstroms": 12094.209729528,
-        "width_angstroms": 3193.5483870968
-    },
-    {
-        "band": "Generic/Johnson.M",
+        "band": "IRAC.I3",
         "ucd": "em.IR.4-8um",
-        "effective_wavelength_angstroms": 48906.067815836,
-        "width_angstroms": 11280.00104
+        "effective_wavelength_angstroms": 56281.0,
+        "width_angstroms": 13911.9
     },
     {
-        "band": "Generic/Cousins.R",
+        "band": "IRAC.I4",
+        "ucd": "em.IR.8-15um",
+        "effective_wavelength_angstroms": 75891.6,
+        "width_angstroms": 28311.8
+    },
+    {
+        "band": "2MASS.J",
+        "ucd": "em.IR.J",
+        "effective_wavelength_angstroms": 12350.0,
+        "width_angstroms": 2149.1
+    },
+    {
+        "band": "2MASS.H",
+        "ucd": "em.IR.H",
+        "effective_wavelength_angstroms": 16620.0,
+        "width_angstroms": 2609.6
+    },
+    {
+        "band": "2MASS.Ks",
+        "ucd": "em.IR.K",
+        "effective_wavelength_angstroms": 21590.0,
+        "width_angstroms": 2784.6
+    },
+    {
+        "band": "GAIA2.Gbp",
+        "ucd": "em.opt.B",
+        "effective_wavelength_angstroms": 5050.0,
+        "width_angstroms": 2347.0
+    },
+    {
+        "band": "GAIA2.G",
+        "ucd": "em.opt",
+        "effective_wavelength_angstroms": 6230.0,
+        "width_angstroms": 4183.0
+    },
+    {
+        "band": "GAIA2.Grp",
         "ucd": "em.opt.R",
-        "effective_wavelength_angstroms": 6357.3538564366,
-        "width_angstroms": 1381.0999434837
+        "effective_wavelength_angstroms": 7730.0,
+        "width_angstroms": 2757.0
     },
     {
-        "band": "Generic/Cousins.I",
+        "band": "GAIA3.G",
+        "ucd": "em.opt",
+        "effective_wavelength_angstroms": 5822.0,
+        "width_angstroms": 4053.0
+    },
+    {
+        "band": "GAIA3.Grp",
+        "ucd": "em.opt.R",
+        "effective_wavelength_angstroms": 7620.0,
+        "width_angstroms": 2924.0
+    },
+    {
+        "band": "SDSS.i",
         "ucd": "em.opt.I",
-        "effective_wavelength_angstroms": 7828.6503589813,
-        "width_angstroms": 1011.0663970885
+        "effective_wavelength_angstroms": 7458.0,
+        "width_angstroms": 1103.0
+    },
+    {
+        "band": "SDSS.z",
+        "ucd": "em.opt.I",
+        "effective_wavelength_angstroms": 8923.0,
+        "width_angstroms": 1164.0
+    },
+    {
+        "band": "ACAM.i",
+        "ucd": "em.opt.I",
+        "effective_wavelength_angstroms": 7458.0,
+        "width_angstroms": 1103.0
+    },
+    {
+        "band": "ACAM.z",
+        "ucd": "em.opt.I",
+        "effective_wavelength_angstroms": 8923.0,
+        "width_angstroms": 1164.0
+    },
+    {
+        "band": "VISTA.Y",
+        "ucd": "em.opt.I",
+        "effective_wavelength_angstroms": 10196.43,
+        "width_angstroms": 870.63
+    },
+    {
+        "band": "VISTA.J",
+        "ucd": "em.IR.J",
+        "effective_wavelength_angstroms": 12481.0,
+        "width_angstroms": 1542.53
+    },
+    {
+        "band": "VISTA.H",
+        "ucd": "em.IR.H",
+        "effective_wavelength_angstroms": 16348.19,
+        "width_angstroms": 2674.02
+    },
+    {
+        "band": "VISTA.Ks",
+        "ucd": "em.IR.K",
+        "effective_wavelength_angstroms": 21435.46,
+        "width_angstroms": 2793.85
+    },
+    {
+        "band": "SDSS.g",
+        "ucd": "em.opt.B",
+        "effective_wavelength_angstroms": 4671.78,
+        "width_angstroms": null
+    },
+    {
+        "band": "SDSS.r",
+        "ucd": "em.opt.R",
+        "effective_wavelength_angstroms": 6141.12,
+        "width_angstroms": null
+    },
+    {
+        "band": "SDSS.u",
+        "ucd": "em.opt.U",
+        "effective_wavelength_angstroms": 3608.04,
+        "width_angstroms": null
+    },
+    {
+        "band": "DENIS.I",
+        "ucd": "em.opt.I",
+        "effective_wavelength_angstroms": 7862.1,
+        "width_angstroms": null
+    },
+    {
+        "band": "DENIS.J",
+        "ucd": "em.IR.J",
+        "effective_wavelength_angstroms": 12210.6,
+        "width_angstroms": null
+    },
+    {
+        "band": "DENIS.Ks",
+        "ucd": "em.IR.K",
+        "effective_wavelength_angstroms": 21465.01,
+        "width_angstroms": null
+    },
+    {
+        "band": "UFTI.J",
+        "ucd": "em.IR.J",
+        "effective_wavelength_angstroms": 12418.99,
+        "width_angstroms": null
+    },
+    {
+        "band": "UFTI.H",
+        "ucd": "em.IR.H",
+        "effective_wavelength_angstroms": 16206.18,
+        "width_angstroms": null
+    },
+    {
+        "band": "UFTI.K",
+        "ucd": "em.IR.K",
+        "effective_wavelength_angstroms": 21874.57,
+        "width_angstroms": null
+    },
+    {
+        "band": "NICMOS1.F110W",
+        "ucd": "em.IR.J",
+        "effective_wavelength_angstroms": 10826.77,
+        "width_angstroms": null
+    },
+    {
+        "band": "NICMOS1.F090M",
+        "ucd": "em.opt.I",
+        "effective_wavelength_angstroms": 9006.59,
+        "width_angstroms": null
+    },
+    {
+        "band": "GALEX.FUV",
+        "ucd": "em.UV.100-200nm",
+        "effective_wavelength_angstroms": 1549.02,
+        "width_angstroms": null
+    },
+    {
+        "band": "GALEX.NUV",
+        "ucd": "em.UV.200-300nm",
+        "effective_wavelength_angstroms": 2304.74,
+        "width_angstroms": null
+    },
+    {
+        "band": "MIPS.24mu",
+        "ucd": "em.IR.15-30um",
+        "effective_wavelength_angstroms": 232096.04,
+        "width_angstroms": null
+    },
+    {
+        "band": "WFCAM.Y",
+        "ucd": "em.opt.I",
+        "effective_wavelength_angstroms": 10305.0,
+        "width_angstroms": null
+    },
+    {
+        "band": "WFCAM.J",
+        "ucd": "em.IR.J",
+        "effective_wavelength_angstroms": 12483.0,
+        "width_angstroms": null
+    },
+    {
+        "band": "WFCAM.H",
+        "ucd": "em.IR.H",
+        "effective_wavelength_angstroms": 16313.0,
+        "width_angstroms": null
+    },
+    {
+        "band": "WFCAM.K",
+        "ucd": "em.IR.J",
+        "effective_wavelength_angstroms": 22010.0,
+        "width_angstroms": null
+    },
+    {
+        "band": "UKIDSS.Z",
+        "ucd": "em.opt.I",
+        "effective_wavelength_angstroms": 8817.0,
+        "width_angstroms": null
+    },
+    {
+        "band": "UKIDSS.Y",
+        "ucd": "em.opt.I",
+        "effective_wavelength_angstroms": 10305.0,
+        "width_angstroms": null
+    },
+    {
+        "band": "UKIDSS.J",
+        "ucd": "em.IR.J",
+        "effective_wavelength_angstroms": 12483.0,
+        "width_angstroms": null
+    },
+    {
+        "band": "UKIDSS.H",
+        "ucd": "em.IR.H",
+        "effective_wavelength_angstroms": 16313.0,
+        "width_angstroms": null
+    },
+    {
+        "band": "UKIDSS.K",
+        "ucd": "em.IR.K",
+        "effective_wavelength_angstroms": 22010.0,
+        "width_angstroms": null
+    },
+    {
+        "band": "PS1.g",
+        "ucd": "em.opt.B",
+        "effective_wavelength_angstroms": 4810.88,
+        "width_angstroms": null
+    },
+    {
+        "band": "PS1.r",
+        "ucd": "em.opt.R",
+        "effective_wavelength_angstroms": 6156.36,
+        "width_angstroms": null
+    },
+    {
+        "band": "PS1.i",
+        "ucd": "em.opt.I",
+        "effective_wavelength_angstroms": 7503.68,
+        "width_angstroms": null
+    },
+    {
+        "band": "PS1.z",
+        "ucd": "em.opt.I",
+        "effective_wavelength_angstroms": 8668.56,
+        "width_angstroms": null
+    },
+    {
+        "band": "PS1.y",
+        "ucd": "em.opt.I",
+        "effective_wavelength_angstroms": 9613.45,
+        "width_angstroms": null
+    },
+    {
+        "band": "Johnson.U",
+        "ucd": "em.opt.U",
+        "effective_wavelength_angstroms": 3656.0,
+        "width_angstroms": null
+    },
+    {
+        "band": "Johnson.B",
+        "ucd": "em.opt.B",
+        "effective_wavelength_angstroms": 4353.0,
+        "width_angstroms": null
+    },
+    {
+        "band": "Johnson.V",
+        "ucd": "em.opt.V",
+        "effective_wavelength_angstroms": 5477.0,
+        "width_angstroms": null
+    },
+    {
+        "band": "Cousins.R",
+        "ucd": "em.opt.R",
+        "effective_wavelength_angstroms": 6349.0,
+        "width_angstroms": null
+    },
+    {
+        "band": "Cousins.I",
+        "ucd": "em.opt.I",
+        "effective_wavelength_angstroms": 8797.0,
+        "width_angstroms": null
+    },
+    {
+        "band": "NSFCam.Lp",
+        "ucd": "em.IR.3-4um",
+        "effective_wavelength_angstroms": 37301.73,
+        "width_angstroms": null
+    },
+    {
+        "band": "NSFCam.J",
+        "ucd": "em.IR.J",
+        "effective_wavelength_angstroms": 12417.4,
+        "width_angstroms": null
+    },
+    {
+        "band": "NSFCam.H",
+        "ucd": "em.IR.H",
+        "effective_wavelength_angstroms": 16141.06,
+        "width_angstroms": null
+    },
+    {
+        "band": "NSFCam.K",
+        "ucd": "em.IR.K",
+        "effective_wavelength_angstroms": 21840.44,
+        "width_angstroms": null
+    },
+    {
+        "band": "NSFCam.Ks",
+        "ucd": "em.IR.K",
+        "effective_wavelength_angstroms": 21307.65,
+        "width_angstroms": null
+    },
+    {
+        "band": "NSFCam.Mp",
+        "ucd": "em.IR.4-8um",
+        "effective_wavelength_angstroms": 46803.76,
+        "width_angstroms": null
+    },
+    {
+        "band": "NSFCam.M",
+        "ucd": "em.IR.4-8um",
+        "effective_wavelength_angstroms": 48257.57,
+        "width_angstroms": null
+    },
+    {
+        "band": "UFTI.Y",
+        "ucd": "em.opt.I",
+        "effective_wavelength_angstroms": 10170.36,
+        "width_angstroms": null
+    },
+    {
+        "band": "NACO.Lp",
+        "ucd": "em.IR.3-4um",
+        "effective_wavelength_angstroms": 37701.21,
+        "width_angstroms": null
+    },
+    {
+        "band": "Wircam.Y",
+        "ucd": "em.opt.I",
+        "effective_wavelength_angstroms": 10220.9,
+        "width_angstroms": 1084.17
+    },
+    {
+        "band": "NIRI.Y",
+        "ucd": "em.opt.I",
+        "effective_wavelength_angstroms": 10211.18,
+        "width_angstroms": 943.58
+    },
+    {
+        "band": "GPI.Y",
+        "ucd": "em.opt.I",
+        "effective_wavelength_angstroms": 10375.56,
+        "width_angstroms": 1707.3
+    },
+    {
+        "band": "VisAO.Ys",
+        "ucd": "em.opt.I",
+        "effective_wavelength_angstroms": 9793.5,
+        "width_angstroms": 907.02
+    },
+    {
+        "band": "JWST/MIRI.F1000W",
+        "ucd": "em.IR.8-15um",
+        "effective_wavelength_angstroms": 98793.448532805,
+        "width_angstroms": 18679.183123014
+    },
+    {
+        "band": "JWST/MIRI.F1280W",
+        "ucd": "em.IR.8-15um",
+        "effective_wavelength_angstroms": 127059.67976377,
+        "width_angstroms": 25306.737398933
+    },
+    {
+        "band": "JWST/MIRI.F1800W",
+        "ucd": "em.IR.15-30um",
+        "effective_wavelength_angstroms": 178734.17093674,
+        "width_angstroms": 29839.892353346
     }
 ]
