@@ -8,7 +8,7 @@ from sqlalchemy import or_
 
 def test_table_presence(db):
     # Confirm the tables that should be present
-    assert len(db.metadata.tables.keys()) == 22
+    assert len(db.metadata.tables.keys()) == 23
     assert "Sources" in db.metadata.tables.keys()
     assert "Publications" in db.metadata.tables.keys()
     assert "Names" in db.metadata.tables.keys()
@@ -37,6 +37,7 @@ def test_table_presence(db):
     assert "ModeledParameters" in db.metadata.tables.keys()
     assert "RotationalParameters" in db.metadata.tables.keys()
     assert "ParameterList" in db.metadata.tables.keys()
+    assert "Spectra" in db.metadata.tables.keys()
 
 
 def test_magnitudes(db):

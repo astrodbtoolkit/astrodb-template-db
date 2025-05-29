@@ -23,5 +23,10 @@
         "telescope": "Generic",
         "description": "Generic telescope",
         "reference": null
+    },
+    {
+        "telescope": "IRTF",
+        "description": "Infrared Telescope Facility, Mauna Kea, Hawaii",
+        "reference": null
     }
 ]
