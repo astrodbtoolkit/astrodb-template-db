@@ -24,6 +24,7 @@ This documentation is generated from the [schema.yaml](schema/schema.yaml) file 
 - [ProperMotions](schema/ProperMotions.md)
 - [ModeledParameters](schema/ModeledParameters.md)
 - [RotationalParameters](schema/RotationalParameters.md)
+- [Spectra](schema/Spectra.md)
 
 ## Schema Diagram
 This diagram is generated from the [schema.yaml](schema/schema.yaml) file using [make_schema_erd.py](scripts/make_schema_erd.py).

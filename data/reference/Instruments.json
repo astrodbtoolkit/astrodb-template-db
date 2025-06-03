@@ -40,5 +40,12 @@
         "telescope": "Generic",
         "description": null,
         "reference": null
+    },
+    {
+        "instrument": "SpeX",
+        "mode": "Prism",
+        "telescope": "IRTF",
+        "description": "SpeX spectrograph on the Infrared Telescope Facility",
+        "reference": null
     }
 ]
