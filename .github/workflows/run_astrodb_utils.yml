@@ -1,0 +1,46 @@
+# Run astrodb-utils using this branch of the template
+
+name: Test astrodb-utils with this template
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+
+    steps:
+    - name: Checkout utils repo
+      uses: actions/checkout@v4
+      with:
+        repository: astrodbtoolkit/astrodb_utils
+
+    - name: Checkout template database repo
+      uses: actions/checkout@v4
+      with:
+        path: astrodb-template-db
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install .[test]
+
+    - name: Test with pytest
+      run: |
+        pytest
