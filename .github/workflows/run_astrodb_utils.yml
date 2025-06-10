@@ -43,11 +43,13 @@ jobs:
 
     - name: Confirm branches
       run: |
-        echo "astrodb-utils branch:"
+        # Settings for the main directory
+        git config --get remote.origin.url
         git branch --show-current
 
-        echo "astrodb-template-db branch:"
-        cd astrodb-template-db
+        # Settings for the astrodb-template-db directory
+        cd astrodb-template-db/
+        git config --get remote.origin.url
         git branch --show-current
         cd ..
 
