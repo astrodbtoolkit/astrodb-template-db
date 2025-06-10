@@ -16,9 +16,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.11", "3.12", "3.13"]
 
     steps:
     - name: Checkout utils repo
@@ -26,17 +23,17 @@ jobs:
       with:
         repository: astrodbtoolkit/astrodb_utils
 
-    - name: Checkout template database repo
+    - name: Checkout template database repo to subdirectory
       uses: actions/checkout@v4
       with:
         path: astrodb-template-db
 
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python 3.13
       uses: actions/setup-python@v5
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: "3.13"
 
-    - name: Install dependencies
+    - name: Install astrodb_utils and dependencies needed for running tests
       run: |
         python -m pip install --upgrade pip
         pip install .[test]
@@ -47,12 +44,12 @@ jobs:
         git config --get remote.origin.url
         git branch --show-current
 
-        # Settings for the astrodb-template-db directory
+        # Settings for the astrodb-template-db directory (no branch name if HEAD)
         cd astrodb-template-db/
         git config --get remote.origin.url
         git branch --show-current
         cd ..
 
-    - name: Test with pytest
+    - name: Test astrodb_utils with current branch of template
       run: |
         pytest
