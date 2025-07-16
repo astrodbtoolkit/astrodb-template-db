@@ -1,4 +1,4 @@
-astrodb-template-db
+silly change astrodb-template-db
 ---------------------------
 
 [![build](https://github.com/astrodbtoolkit/astrotemplate-db/actions/workflows/run_tests.yml/badge.svg)](https://github.com/astrodbtoolkit/astrotemplate-db/actions/workflows/run_tests.yml)  ![GitHub License](https://img.shields.io/github/license/astrodbtoolkit/astrodb-template-db)
