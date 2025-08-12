@@ -31,6 +31,7 @@ jobs:
         pip install astrodbkit
         pip install lsst-felis
         pip install pytest pytest-cov
+        pip install astrodb-utils
     - name: Test with pytest
       run: |
         pytest --cov=schema -s -rpP tests/scheduled_checks.py

@@ -13,14 +13,15 @@ import tqdm
 import requests
 from astroquery.simbad import Simbad
 
-from astrodbkit.utils import _name_formatter, internet_connection
+from astrodbkit.utils import _name_formatter
+from astrodb_utils import internet_connection
 
 
 def test_SIMBAD_resolvable(db):
-    # Verify that sources have SIMBAD-resolvable names```
+    # Verify that sources have SIMBAD-resolvable names
+
     all_sources = db.query(db.Sources.c.source).all()
-    name_list = [s[0] for s in all_sources]
-    # print(f"SIMBAD name list: {name_list}")
+    name_list = [s[0] for s in all_sources]  # Convert table to list of names
 
     # Include all SIMBAD Identifiers and our provided name to the SIMBAD query results table.
     Simbad.add_votable_fields("ids")
@@ -33,7 +34,6 @@ def test_SIMBAD_resolvable(db):
     for row in simbad_results[["main_id", "ids"]].iterrows():
         try:
             name, ids = row[0].decode("utf-8"), row[1].decode("utf-8")
-            # print(f"SIMBAD name: {name}")
         except AttributeError:
             # Catch decoding error
             name, ids = row[0], row[1]
