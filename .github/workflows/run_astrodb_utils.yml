@@ -28,9 +28,7 @@ jobs:
       uses: actions/checkout@v5
       with:
         repository: astrodbtoolkit/astrodb_utils
-        ref: $BRANCH
-      env:
-          BRANCH: ${{ inputs.scripts_branch }}
+        ref: ${{ inputs.scripts_branch }}
 
     - name: Checkout template database repo to subdirectory
       uses: actions/checkout@v5
