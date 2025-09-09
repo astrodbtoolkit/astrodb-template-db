@@ -8,6 +8,12 @@ on:
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
+    inputs:
+      scripts_branch:
+        description: 'Branch to use for astrodb_utils'
+        type: string
+        default: "main"
+        required: true
 
 permissions:
   contents: read
@@ -19,12 +25,15 @@ jobs:
 
     steps:
     - name: Checkout utils repo
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         repository: astrodbtoolkit/astrodb_utils
+        ref: $BRANCH
+      env:
+          BRANCH: ${{ inputs.scripts_branch }}
 
     - name: Checkout template database repo to subdirectory
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         path: astrodb-template-db
 
