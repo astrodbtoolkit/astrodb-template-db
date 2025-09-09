@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
     inputs:
       scripts_branch:
-        description: 'Branch to use for astrodb_utils'
+        description: 'Branch of astrodb_utils to use'
         type: string
         default: "main"
         required: true
