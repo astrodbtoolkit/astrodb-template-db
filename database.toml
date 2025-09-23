@@ -1,4 +1,5 @@
-REFERENCE_TABLES = [
+[database settings]
+lookup_tables = [
     "Publications",
     "Telescopes",
     "Instruments",
@@ -8,5 +9,7 @@ REFERENCE_TABLES = [
     "AssociationList",
     "SourceTypeList",
     "ParameterList",
-    "CompanionList",
-]
+    "CompanionList"]
+db_data_path = "data/"
+felis_path = "schema/schema.yaml"
+db_name = "astrodb-template.sqlite"
