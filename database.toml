@@ -1,4 +1,6 @@
-[database settings]
+db_name = "astrodb-template"  # Will be used to name db file
+data_path = "data/" # relative path to JSON files
+felis_path = "schema/schema.yaml" # relative path to felis schema YAML file
 lookup_tables = [
     "Publications",
     "Telescopes",
@@ -9,7 +11,6 @@ lookup_tables = [
     "AssociationList",
     "SourceTypeList",
     "ParameterList",
-    "CompanionList"]
-db_data_path = "data/"
-felis_path = "schema/schema.yaml"
-db_name = "astrodb-template.sqlite"
+    "CompanionList"
+    ]
+    
