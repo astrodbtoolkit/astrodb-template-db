@@ -4,21 +4,8 @@ import pytest
 from astrodbkit.astrodb import Database, create_database
 
 
-REFERENCE_TABLES = [
-    "Publications",
-    "Telescopes",
-    "Instruments",
-    "PhotometryFilters",
-    "Versions",
-    "Regimes",
-    "AssociationList",
-    "SourceTypeList",
-    "ParameterList",
-    "CompanionList",
-]
-DB_PATH = "data"
-DB_NAME = "tests/astrodb_template_tests.sqlite"
-SCHEMA_PATH = "schema/schema.yaml"
+# DB_NAME = "tests/astrodb_template_tests.sqlite"
+
 CONNECTION_STRING = "sqlite:///" + DB_NAME
 
 
