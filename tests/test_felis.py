@@ -4,12 +4,12 @@ import yaml
 from pydantic import ValidationError
 
 from felis.datamodel import Schema
-
-SCHEMA_PATH = "schema/schema.yaml"
-
+from astrodb_utils import read_database_settings
 
 def test_schema():
-    data = yaml.safe_load(open(SCHEMA_PATH, "r"))
+    settings = read_database_settings()
+    schema_path = settings["felis_path"]
+    data = yaml.safe_load(open(schema_path, "r"))
 
     try:
         schema = Schema.model_validate(data)  # noqa: F841
