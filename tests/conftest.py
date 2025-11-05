@@ -1,32 +1,31 @@
 import os
 import pytest
+import logging
 
-from astrodbkit.astrodb import Database, create_database
+# from astrodbkit.astrodb import Database, create_database
+import astrodb_utils
+from astrodb_utils import build_db_from_json, check_database_settings
 
-
-# DB_NAME = "tests/astrodb_template_tests.sqlite"
-
-CONNECTION_STRING = "sqlite:///" + DB_NAME
-
+logger = logging.getLogger(__name__)
 
 # Create a fresh template database for the data and integrity tests
 @pytest.fixture(scope="session", autouse=True)
 def db():
+    logger.info(f"Using version {astrodb_utils.__version__} of astrodb_utils")
 
-    # Confirm the schema yaml file is present
-    assert os.path.exists(SCHEMA_PATH)
+    if not check_database_settings():
+        msg = "Default database settings are not correct."
+        raise ValueError(msg)
 
-    # Remove any existing copy of the test database
-    if os.path.exists(DB_NAME):
-        os.remove(DB_NAME)
-        assert not os.path.exists(DB_NAME)
+    db = build_db_from_json()
 
-    # Create the database using the Felis schema
-    create_database(CONNECTION_STRING, felis_schema=SCHEMA_PATH)
-    assert os.path.exists(DB_NAME)
+    # Confirm file was created
+    assert os.path.exists(
+        "astrodb-template.sqlite"
+    ), "Database file 'astrodb-template.sqlite' was not created."
 
-    # Connect and load to the database
-    db = Database(CONNECTION_STRING, reference_tables=REFERENCE_TABLES)
-    db.load_database(DB_PATH, verbose=False)
+    logger.info(
+        "Loaded AstroDB Template database using build_db_from_json function in conftest.py"
+    )
 
     return db
