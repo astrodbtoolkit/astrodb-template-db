@@ -533,6 +533,23 @@ tables:
       description: Alternate identifier for an object
       ivoa:ucd: meta.id
       nullable: false
+    - name: ra_deg
+      "@id": "#Names.ra_deg"
+      datatype: double
+      description: Right Ascension the source, ICRS recommended
+      fits:tunit: deg
+      ivoa:ucd: pos.eq.ra;meta.main
+    - name: dec_deg
+      "@id": "#Names.dec_deg"
+      datatype: double
+      description: Declination of the source, ICRS recommended
+      fits:tunit: deg
+      ivoa:ucd: pos.eq.dec;meta.main
+    - name: epoch_year
+      "@id": "#Names.epoch_year"
+      datatype: double
+      description: Decimal year for coordinates (e.g., 2015.5)
+      fits:tunit: yr
 
     indexes:
       - name: PK_Names_source
