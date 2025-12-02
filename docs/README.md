@@ -14,6 +14,7 @@ This documentation is generated from the [schema.yaml](schema/schema.yaml) file 
 - [SourceTypeList](schema/SourceTypeList.md)
 - [Sources](schema/Sources.md)
 - [Names](schema/Names.md)
+- [Positions](schema/Positions.md)
 - [Photometry](schema/Photometry.md)
 - [Parallaxes](schema/Parallaxes.md)
 - [RadialVelocities](schema/RadialVelocities.md)

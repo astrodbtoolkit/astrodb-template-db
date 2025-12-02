@@ -8,10 +8,11 @@ from sqlalchemy import or_
 
 def test_table_presence(db):
     # Confirm the tables that should be present
-    assert len(db.metadata.tables.keys()) == 23
+    assert len(db.metadata.tables.keys()) == 24
     assert "Sources" in db.metadata.tables.keys()
     assert "Publications" in db.metadata.tables.keys()
     assert "Names" in db.metadata.tables.keys()
+    assert "Positions" in db.metadata.tables.keys()
     assert "Telescopes" in db.metadata.tables.keys()
     assert "Instruments" in db.metadata.tables.keys()
     assert "Versions" in db.metadata.tables.keys()

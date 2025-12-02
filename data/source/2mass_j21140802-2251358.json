@@ -19,6 +19,14 @@
             "other_name": "PSO J318.5-22"
         }
     ],
+    "Positions": [
+        {
+            "ra_deg": 318.533,
+            "dec_deg": -22.86,
+            "epoch_year": 2000.0,
+            "reference": "Liu_13"
+        }
+    ],
     "RadialVelocities": [
         {
             "rv_kms": -6.0,
