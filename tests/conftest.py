@@ -4,7 +4,7 @@ import logging
 
 # from astrodbkit.astrodb import Database, create_database
 import astrodb_utils
-from astrodb_utils import build_db_from_json, check_database_settings
+from astrodb_utils import build_db_from_json
 
 logger = logging.getLogger(__name__)
 
@@ -12,10 +12,6 @@ logger = logging.getLogger(__name__)
 @pytest.fixture(scope="session", autouse=True)
 def db():
     logger.info(f"Using version {astrodb_utils.__version__} of astrodb_utils")
-
-    if not check_database_settings():
-        msg = "Default database settings are not correct."
-        raise ValueError(msg)
 
     db = build_db_from_json()
 
