@@ -418,6 +418,7 @@ tables:
 # MAIN TABLES
 # Sources - primary table for the database 
 # Names - used to store additional identifiers for sources
+# Positions - used to store the positions of sources
 ######################################################
 
 
@@ -550,6 +551,76 @@ tables:
         - "#Names.source"
         referencedColumns:
         - "#Sources.source"
+
+
+  - name: Positions
+    "@id": "#Positions"
+    description: "The Positions table contains the positions of sources in the Sources table.
+      The combination of *source* and *reference* is expected to be unique."
+    primaryKey: 
+    - "#Positions.source"
+    - "#Positions.reference"
+
+    columns:
+    - name: source
+      "@id": "#Positions.source"
+      datatype: string
+      length: 100
+      description: Unique identifier for a source; links to Sources table
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: ra_deg
+      "@id": "#Positions.ra_deg"
+      datatype: double
+      description: Right Ascension the source, ICRS recommended
+      fits:tunit: deg
+      ivoa:ucd: pos.eq.ra;meta.main
+    - name: dec_deg
+      "@id": "#Positions.dec_deg"
+      datatype: double
+      description: Declination of the source, ICRS recommended
+      fits:tunit: deg
+      ivoa:ucd: pos.eq.dec;meta.main
+    - name: epoch_year
+      "@id": "#Positions.epoch_year"
+      datatype: double
+      description: Decimal year for coordinates (e.g., 2015.5)
+      fits:tunit: yr
+    - name: reference
+      "@id": "#Positions.reference"
+      datatype: string
+      length: 30
+      description: Reference; links to Publications table
+      ivoa:ucd: meta.ref
+      nullable: false
+
+
+    indexes:
+      - name: PK_Positions_source
+        "@id": "#PK_Positions_source"
+        description: Primary key for Positions table
+        columns: 
+        - "#Positions.source"
+        - "#Positions.reference"
+    constraints:
+      - name: check_ra
+        "@type": Check
+        "@id": "#Positions_check_ra_bounds"
+        description: Validate RA range
+        expression: ra_deg >= 0 AND ra_deg <= 360
+      - name: check_dec
+        "@type": Check
+        "@id": "#Positions_check_dec_bounds"
+        description: Validate Dec range
+        expression: dec_deg >= -90 AND dec_deg <= 90
+      - name: Positions_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_Positions_reference_Publications_reference"
+        description: Link Positions reference to Publications table
+        columns:
+        - "#Positions.reference"
+        referencedColumns:
+        - "#Positions.reference"
 
 
 #########################################################
