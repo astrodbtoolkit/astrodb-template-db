@@ -603,12 +603,12 @@ tables:
         - "#Positions.source"
         - "#Positions.reference"
     constraints:
-      - name: check_ra
+      - name: positions_check_ra
         "@type": Check
         "@id": "#Positions_check_ra_bounds"
         description: Validate RA range
         expression: ra_deg >= 0 AND ra_deg <= 360
-      - name: check_dec
+      - name: positions_check_dec
         "@type": Check
         "@id": "#Positions_check_dec_bounds"
         description: Validate Dec range
@@ -620,7 +620,7 @@ tables:
         columns:
         - "#Positions.reference"
         referencedColumns:
-        - "#Positions.reference"
+        - "#Publications.reference"
 
 
 #########################################################
