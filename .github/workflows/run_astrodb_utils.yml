@@ -52,10 +52,10 @@ jobs:
         git branch --show-current
 
         # Settings for the astrodb-template-db directory (no branch name if HEAD)
-        cd astrodb-template-db/
+        cd tests/astrodb-template-db/
         git config --get remote.origin.url
         git branch --show-current
-        cd ..
+        cd ../..
 
     - name: Test astrodb_utils with current branch of template
       run: |
