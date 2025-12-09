@@ -1,8 +1,8 @@
-# Script to build markdown documentation from the schema/schema.yaml file
+# Script to build markdown documentation from the schema.yaml file
 import os
 import yaml
 
-SCHEMA_PATH = "schema/schema.yaml"
+SCHEMA_PATH = "schema.yaml"
 DOCS_DIR = "docs/"
 SCHEMA_DIAGRAM = "figures/schema_erd.png"
 SCHEMA_SUB_DIR = "schema/"

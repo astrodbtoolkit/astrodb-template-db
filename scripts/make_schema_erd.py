@@ -10,7 +10,7 @@ from felis.metadata import MetaDataBuilder
 sys.path.append("./")  # needed for github actions to find the template module
 
 # Load up schema
-data = yaml.safe_load(open("schema/schema.yaml", "r"))
+data = yaml.safe_load(open("schema.yaml", "r"))
 schema = Schema.model_validate(data)
 
 # Create from Felis schema
