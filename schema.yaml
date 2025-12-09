@@ -666,6 +666,18 @@ tables:
       description: Uncertainty of the magnitude
       fits:tunit: mag
       ivoa:ucd: stat.error;phot.mag
+    - name: magnitude_error_upper
+      "@id": "#Photometry.magnitude_error_upper"
+      datatype: double
+      description: Upper uncertainty of the magnitude
+      fits:tunit: mag
+      ivoa:ucd: stat.error;phot.mag
+    - name: magnitude_error_lower
+      "@id": "#Photometry.magnitude_error_lower"
+      datatype: double
+      description: Lower uncertainty of the magnitude
+      fits:tunit: mag
+      ivoa:ucd: stat.error;phot.mag
     - name: telescope
       "@id": "#Photometry.telescope"
       datatype: string
@@ -778,6 +790,18 @@ tables:
       description: Uncertainty of the parallax value
       fits:tunit: mas
       ivoa:ucd: stat.error;pos.parallax
+    - name: parallax_error_upper
+      "@id": "#Parallaxes.parallax_error_upper"
+      datatype: double
+      description: Upper uncertainty of the parallax value
+      fits:tunit: mas
+      ivoa:ucd: stat.error;pos.parallax
+    - name: parallax_error_lower
+      "@id": "#Parallaxes.parallax_error_lower"
+      datatype: double
+      description: Lower uncertainty of the parallax value
+      fits:tunit: mas
+      ivoa:ucd: stat.error;pos.parallax
     - name: adopted
       "@id": "#Parallaxes.adopted"
       datatype: boolean
@@ -849,6 +873,18 @@ tables:
       "@id": "#RadialVelocities.rv_error"
       datatype: double
       description: Uncertainty of the radial velocity value
+      fits:tunit: km/s
+      ivoa:ucd: stat.error;spect.dopplerVeloc
+    - name: rv_error_upper
+      "@id": "#RadialVelocities.rv_error_upper"
+      datatype: double
+      description: Upper uncertainty of the radial velocity value
+      fits:tunit: km/s
+      ivoa:ucd: stat.error;spect.dopplerVeloc
+    - name: rv_error_lower
+      "@id": "#RadialVelocities.rv_error_lower"
+      datatype: double
+      description: Lower uncertainty of the radial velocity value
       fits:tunit: km/s
       ivoa:ucd: stat.error;spect.dopplerVeloc
     - name: adopted
@@ -939,6 +975,18 @@ tables:
       "@id": "#CompanionRelationships.projected_separation_error"
       datatype: double
       description: Uncertainty of the projected separation
+      fits:tunit: arcsec
+      ivoa:ucd: stat.error;pos.angDistance
+    - name: projected_separation_error_upper
+      "@id": "#CompanionRelationships.projected_separation_error_upper"
+      datatype: double
+      description: Upper uncertainty of the projected separation
+      fits:tunit: arcsec
+      ivoa:ucd: stat.error;pos.angDistance
+    - name: projected_separation_error_lower
+      "@id": "#CompanionRelationships.projected_separation_error_lower"
+      datatype: double
+      description: Lower uncertainty of the projected separation
       fits:tunit: arcsec
       ivoa:ucd: stat.error;pos.angDistance
     - name: comments
@@ -1033,6 +1081,14 @@ tables:
       "@id": "#CompanionParameters.error"
       datatype: double
       description: Uncertainty of the parameter value
+    - name: error_upper
+      "@id": "#CompanionParameters.error_upper"
+      datatype: double
+      description: Upper uncertainty of the parameter value
+    - name: error_lower
+      "@id": "#CompanionParameters.error_lower"
+      datatype: double
+      description: Lower uncertainty of the parameter value
     - name: unit
       "@id": "#CompanionParameters.unit"
       datatype: string
@@ -1283,6 +1339,18 @@ tables:
       description: Uncertainty of the proper motion in RA
       fits:tunit: mas/yr
       ivoa:ucd: stat.error;pos.pm;pos.eq.ra
+    - name: pm_ra_error_upper
+      "@id": "#ProperMotions.pm_ra_error_upper"
+      datatype: double
+      description: Upper uncertainty of the proper motion in RA
+      fits:tunit: mas/yr
+      ivoa:ucd: stat.error;pos.pm;pos.eq.ra
+    - name: pm_ra_error_lower
+      "@id": "#ProperMotions.pm_ra_error_lower"
+      datatype: double
+      description: Lower uncertainty of the proper motion in RA
+      fits:tunit: mas/yr
+      ivoa:ucd: stat.error;pos.pm;pos.eq.ra
     - name: pm_dec
       "@id": "#ProperMotions.pm_dec"
       datatype: double
@@ -1294,6 +1362,18 @@ tables:
       "@id": "#ProperMotions.pm_dec_error"
       datatype: double
       description: Uncertainty of the proper motion in Dec
+      fits:tunit: mas/yr
+      ivoa:ucd: stat.error;pos.pm;pos.eq.dec
+    - name: pm_dec_error_upper
+      "@id": "#ProperMotions.pm_dec_error_upper"
+      datatype: double
+      description: Upper uncertainty of the proper motion in Dec
+      fits:tunit: mas/yr
+      ivoa:ucd: stat.error;pos.pm;pos.eq.dec
+    - name: pm_dec_error_lower
+      "@id": "#ProperMotions.pm_dec_error_lower"
+      datatype: double
+      description: Lower uncertainty of the proper motion in Dec
       fits:tunit: mas/yr
       ivoa:ucd: stat.error;pos.pm;pos.eq.dec
     - name: adopted
@@ -1377,6 +1457,16 @@ tables:
       "@id": "#ModeledParameters.error"
       datatype: double
       description: Uncertainty of the parameter value
+      ivoa:ucd: stat.error;meta.modelled
+    - name: error_upper
+      "@id": "#ModeledParameters.error_upper"
+      datatype: double
+      description: Upper uncertainty of the parameter value
+      ivoa:ucd: stat.error;meta.modelled
+    - name: error_lower
+      "@id": "#ModeledParameters.error_lower"
+      datatype: double
+      description: Lower uncertainty of the parameter value
       ivoa:ucd: stat.error;meta.modelled
     - name: unit
       "@id": "#ModeledParameters.unit"
@@ -1462,6 +1552,18 @@ tables:
       description: Uncertainty of the rotational period
       fits:tunit: hr
       ivoa:ucd: stat.error;time.period
+    - name: period_error_upper
+      "@id": "#RotationalParameters.period_error_upper"
+      datatype: double
+      description: Upper uncertainty of the rotational period
+      fits:tunit: hr
+      ivoa:ucd: stat.error;time.period
+    - name: period_error_lower
+      "@id": "#RotationalParameters.period_error_lower"
+      datatype: double
+      description: Lower uncertainty of the rotational period
+      fits:tunit: hr
+      ivoa:ucd: stat.error;time.period
     - name: v_sin_i_kms
       "@id": "#RotationalParameters.v_sin_i_kms"
       datatype: double
@@ -1474,6 +1576,18 @@ tables:
       description: Uncertainty of the projected rotational velocity
       fits:tunit: km/s
       ivoa:ucd: stat.error;phys.veloc.rotat
+    - name: v_sin_i_error_upper
+      "@id": "#RotationalParameters.v_sin_i_error_upper"
+      datatype: double
+      description: Upper uncertainty of the projected rotational velocity
+      fits:tunit: km/s
+      ivoa:ucd: stat.error;phys.veloc.rotat
+    - name: v_sin_i_error_lower
+      "@id": "#RotationalParameters.v_sin_i_error_lower"
+      datatype: double
+      description: Lower uncertainty of the projected rotational velocity
+      fits:tunit: km/s
+      ivoa:ucd: stat.error;phys.veloc.rotat
     - name: inclination
       "@id": "#RotationalParameters.inclination"
       datatype: double
@@ -1484,6 +1598,18 @@ tables:
       "@id": "#RotationalParameters.inclination_error"
       datatype: double
       description: Uncertainty of the inclination
+      fits:tunit: deg
+      ivoa:ucd: stat.error;src.orbital.inclination
+    - name: inclination_error_upper
+      "@id": "#RotationalParameters.inclination_error_upper"
+      datatype: double
+      description: Upper uncertainty of the inclination
+      fits:tunit: deg
+      ivoa:ucd: stat.error;src.orbital.inclination
+    - name: inclination_error_lower
+      "@id": "#RotationalParameters.inclination_error_lower"
+      datatype: double
+      description: Lower uncertainty of the inclination
       fits:tunit: deg
       ivoa:ucd: stat.error;src.orbital.inclination
     - name: adopted
@@ -1560,6 +1686,18 @@ tables:
       description: Uncertainty of the position angle
       fits:tunit: deg
       ivoa:ucd: stat.error;pos.posAng
+    - name: position_angle_error_upper
+      "@id": "#Morphology.position_angle_error_upper"
+      datatype: double
+      description: Upper uncertainty of the position angle
+      fits:tunit: deg
+      ivoa:ucd: stat.error;pos.posAng
+    - name: position_angle_error_lower
+      "@id": "#Morphology.position_angle_error_lower"
+      datatype: double
+      description: Lower uncertainty of the position angle
+      fits:tunit: deg
+      ivoa:ucd: stat.error;pos.posAng
     - name: ellipticity
       "@id": "#Morphology.ellipticity"
       datatype: double
@@ -1569,6 +1707,16 @@ tables:
       "@id": "#Morphology.ellipticity_error"
       datatype: double
       description: Uncertainty of the ellipticity
+      ivoa:ucd: stat.error;phys.size.axisRatio
+    - name: ellipticity_error_upper
+      "@id": "#Morphology.ellipticity_error_upper"
+      datatype: double
+      description: Upper uncertainty of the ellipticity
+      ivoa:ucd: stat.error;phys.size.axisRatio
+    - name: ellipticity_error_lower
+      "@id": "#Morphology.ellipticity_error_lower"
+      datatype: double
+      description: Lower uncertainty of the ellipticity
       ivoa:ucd: stat.error;phys.size.axisRatio
     - name: half_light_radius_arcmin
       "@id": "#Morphology.half_light_radius_arcmin"
@@ -1580,6 +1728,18 @@ tables:
       "@id": "#Morphology.half_light_radius_error"
       datatype: double
       description: Uncertainty of the half-light radius
+      fits:tunit: arcmin
+      ivoa:ucd: stat.error;phys.size
+    - name: half_light_radius_error_upper
+      "@id": "#Morphology.half_light_radius_error_upper"
+      datatype: double
+      description: Upper uncertainty of the half-light radius
+      fits:tunit: arcmin
+      ivoa:ucd: stat.error;phys.size
+    - name: half_light_radius_error_lower
+      "@id": "#Morphology.half_light_radius_error_lower"
+      datatype: double
+      description: Lower uncertainty of the half-light radius
       fits:tunit: arcmin
       ivoa:ucd: stat.error;phys.size
     - name: adopted

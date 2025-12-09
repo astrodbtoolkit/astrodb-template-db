@@ -9,6 +9,8 @@ Columns marked with an exclamation mark (❗️) may not be empty.
 | band | Photometry band for this measurement; links to PhotometryFilters table | string | 30 |  |   |
 | magnitude | Photometric magnitude | double |  | mag | phot.mag  |
 | magnitude_error | Uncertainty of the magnitude | double |  | mag | stat.error;phot.mag  |
+| magnitude_error_upper | Upper uncertainty of the magnitude | double |  | mag | stat.error;phot.mag  |
+| magnitude_error_lower | Lower uncertainty of the magnitude | double |  | mag | stat.error;phot.mag  |
 | telescope | Telescope, mission, or survey name; links to Telescopes table | string | 30 |  | instr.tel;instr.obsty  |
 | epoch | Decimal year | double |  | yr | time.epoch  |
 | comments | Free form comments | string | 100 |  | meta.note  |

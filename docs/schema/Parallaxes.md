@@ -8,6 +8,8 @@ Columns marked with an exclamation mark (❗️) may not be empty.
 | ❗️ <ins>source</ins> | Unique identifier for a source; links to Sources table | string | 100 |  | meta.id;meta.main  |
 | ❗️ parallax_mas | Parallax measurement for the source | double |  | mas | pos.parallax  |
 | parallax_error | Uncertainty of the parallax value | double |  | mas | stat.error;pos.parallax  |
+| parallax_error_upper | Upper uncertainty of the parallax value | double |  | mas | stat.error;pos.parallax  |
+| parallax_error_lower | Lower uncertainty of the parallax value | double |  | mas | stat.error;pos.parallax  |
 | adopted | Flag to indicate if this is the adopted measurement | boolean |  |  |   |
 | comments | Free form comments | string | 100 |  | meta.note  |
 | ❗️ <ins>reference</ins> | Reference; links to Publications table | string | 30 |  | meta.ref  |

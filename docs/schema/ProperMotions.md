@@ -8,8 +8,12 @@ Columns marked with an exclamation mark (❗️) may not be empty.
 | ❗️ <ins>source</ins> | Main identifier for an object; links to Sources table | string | 50 |  | meta.id;meta.main  |
 | ❗️ pm_ra | Proper motion in RA*cos(Dec) | double |  | mas/yr | pos.pm;pos.eq.ra  |
 | pm_ra_error | Uncertainty of the proper motion in RA | double |  | mas/yr | stat.error;pos.pm;pos.eq.ra  |
+| pm_ra_error_upper | Upper uncertainty of the proper motion in RA | double |  | mas/yr | stat.error;pos.pm;pos.eq.ra  |
+| pm_ra_error_lower | Lower uncertainty of the proper motion in RA | double |  | mas/yr | stat.error;pos.pm;pos.eq.ra  |
 | ❗️ pm_dec | Proper motion in declination | double |  | mas/yr | pos.pm;pos.eq.dec  |
 | pm_dec_error | Uncertainty of the proper motion in Dec | double |  | mas/yr | stat.error;pos.pm;pos.eq.dec  |
+| pm_dec_error_upper | Upper uncertainty of the proper motion in Dec | double |  | mas/yr | stat.error;pos.pm;pos.eq.dec  |
+| pm_dec_error_lower | Lower uncertainty of the proper motion in Dec | double |  | mas/yr | stat.error;pos.pm;pos.eq.dec  |
 | adopted | Flag to indicate if this is the adopted entry | boolean |  |  |   |
 | comments | Free form comments | string | 100 |  | meta.note  |
 | ❗️ <ins>reference</ins> | Reference; links to Publications table | string | 30 |  | meta.ref  |
