@@ -33,7 +33,7 @@ jobs:
     - name: Checkout template database repo to subdirectory
       uses: actions/checkout@v5
       with:
-        path: astrodb-template-db
+        path: tests/astrodb-template-db
 
     - name: Set up Python 3.13
       uses: actions/setup-python@v5
