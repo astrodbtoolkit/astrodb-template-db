@@ -6,6 +6,7 @@ Columns marked with an exclamation mark (❗️) may not be empty.
 | Column Name | Description | Datatype | Length | Units  | UCD |
 | --- | --- | --- | --- | --- | --- |
 | ❗️ <ins>source</ins> | Unique identifier for the source; links to Sources table | string | 50 |  | meta.id;meta.main  |
+| model | Model name | string | 30 |  | meta.id  |
 | ❗️ <ins>parameter</ins> | Parameter name; links to ParameterList table | string | 30 |  | meta.id  |
 | ❗️ value | Value of the parameter | double |  |  | stat.value;meta.modelled  |
 | error | Uncertainty of the parameter value | double |  |  | stat.error;meta.modelled  |
@@ -18,7 +19,7 @@ Columns marked with an exclamation mark (❗️) may not be empty.
 ## Indexes
 | Name | Columns | Description |
 | --- | --- | --- |
-| PK_ModeledParameters | ['#ModeledParameters.source', '#ModeledParameters.parameter', '#ModeledParameters.reference'] | Primary key for ModeledParameters table |
+| PK_ModeledParameters | ['#ModeledParameters.source', '#ModeledParameters.model', '#ModeledParameters.parameter', '#ModeledParameters.reference'] | Primary key for ModeledParameters table |
 
 ## Foreign Keys
 | Description | Columns | Referenced Columns |
