@@ -14,14 +14,12 @@ Columns marked with an exclamation mark (❗️) may not be empty.
 ## Indexes
 | Name | Columns | Description |
 | --- | --- | --- |
-| PK_Positions | ['#Positions.source', '#Positions.reference'] | Primary key for Positions table |
+| PK_Positions_source | ['#Positions.source', '#Positions.reference'] | Primary key for Positions table |
 
 ## Foreign Keys
 | Description | Columns | Referenced Columns |
 | --- | --- | --- |
-| Link Positions source to Sources table | ['#Positions.source'] | ['#Sources.source'] |
 | Link Positions reference to Publications table | ['#Positions.reference'] | ['#Publications.reference'] |
-
 ## Checks
 | Description | Expression |
 | --- | --- |

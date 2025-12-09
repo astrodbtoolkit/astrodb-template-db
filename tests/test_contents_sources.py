@@ -11,7 +11,7 @@ from sqlalchemy import or_
 def test_sources(db):
     # Test that Sources has expected number of entries
     n_sources = db.query(db.Sources).count()
-    assert n_sources == 6, f"found {n_sources} sources"
+    assert n_sources == 7, f"found {n_sources} sources"
 
 
 @pytest.mark.parametrize(

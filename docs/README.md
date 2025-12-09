@@ -1,5 +1,5 @@
 # Schema Documentation
-This documentation is generated from the [schema.yaml](schema/schema.yaml) file using [build_schema_docs.py](scripts/build_schema_docs.py).
+This documentation is generated from the [schema.yaml](schema.yaml) file using [build_schema_docs.py](scripts/build_schema_docs.py).
 
 ## Tables
 - [Publications](schema/Publications.md)
@@ -25,8 +25,9 @@ This documentation is generated from the [schema.yaml](schema/schema.yaml) file 
 - [ProperMotions](schema/ProperMotions.md)
 - [ModeledParameters](schema/ModeledParameters.md)
 - [RotationalParameters](schema/RotationalParameters.md)
+- [Morphology](schema/Morphology.md)
 - [Spectra](schema/Spectra.md)
 
 ## Schema Diagram
-This diagram is generated from the [schema.yaml](schema/schema.yaml) file using [make_schema_erd.py](scripts/make_schema_erd.py).
+This diagram is generated from the [schema.yaml](schema.yaml) file using [make_schema_erd.py](scripts/make_schema_erd.py).
 ![Schema Diagram](figures/schema_erd.png)

@@ -1532,6 +1532,106 @@ tables:
         - "#Publications.reference"
 
 
+  - name: Morphology
+    "@id": "#Morphology"
+    description: "The Morphology table contains morphological measurements for sources listed in the Sources table. 
+      The combination of *source* and *reference* is expected to be unique."
+    primaryKey: 
+    - "#Morphology.source"
+    - "#Morphology.reference"
+
+    columns:
+    - name: source
+      "@id": "#Morphology.source"
+      datatype: string
+      length: 50
+      description: Unique identifier for a source; links to Sources table
+      ivoa:ucd: meta.id;meta.main
+      nullable: false
+    - name: position_angle_deg
+      "@id": "#Morphology.position_angle_deg"
+      datatype: double
+      description: Position angle of the source
+      fits:tunit: deg
+      ivoa:ucd: pos.posAng
+    - name: position_angle_error
+      "@id": "#Morphology.position_angle_error"
+      datatype: double
+      description: Uncertainty of the position angle
+      fits:tunit: deg
+      ivoa:ucd: stat.error;pos.posAng
+    - name: ellipticity
+      "@id": "#Morphology.ellipticity"
+      datatype: double
+      description: Ellipticity of the source (0-1)
+      ivoa:ucd: phys.size.axisRatio
+    - name: ellipticity_error
+      "@id": "#Morphology.ellipticity_error"
+      datatype: double
+      description: Uncertainty of the ellipticity
+      ivoa:ucd: stat.error;phys.size.axisRatio
+    - name: half_light_radius_arcmin
+      "@id": "#Morphology.half_light_radius_arcmin"
+      datatype: double
+      description: Half-light radius of the source
+      fits:tunit: arcmin
+      ivoa:ucd: phys.size
+    - name: half_light_radius_error
+      "@id": "#Morphology.half_light_radius_error"
+      datatype: double
+      description: Uncertainty of the half-light radius
+      fits:tunit: arcmin
+      ivoa:ucd: stat.error;phys.size
+    - name: adopted
+      "@id": "#Morphology.adopted"
+      datatype: boolean
+      description: Flag to indicate if this is the adopted entry
+      ivoa:ucd: meta.code
+    - name: comments
+      "@id": "#Morphology.comments"
+      datatype: string
+      length: 100
+      description: Free form comments
+      ivoa:ucd: meta.note
+    - name: reference
+      "@id": "#Morphology.reference"
+      datatype: string
+      length: 30
+      description: Reference; links to Publications table
+      ivoa:ucd: meta.ref
+      nullable: false
+
+    indexes:
+      - name: PK_Morphology
+        "@id": "#PK_Morphology"
+        description: Primary key for Morphology table
+        columns: 
+        - "#Morphology.source"
+        - "#Morphology.reference"
+    constraints:
+      - name: Morphology_source_Sources_source
+        "@type": "ForeignKey"
+        "@id": "#FK_Morphology_source_Sources_source"
+        description: Link Morphology source to Sources table
+        columns:
+        - "#Morphology.source"
+        referencedColumns:
+        - "#Sources.source"
+      - name: Morphology_reference_Publications_reference
+        "@type": "ForeignKey"
+        "@id": "#FK_Morphology_reference_Publications_reference"
+        description: Link Morphology reference to Publications table
+        columns:
+        - "#Morphology.reference"
+        referencedColumns:
+        - "#Publications.reference"
+      - name: check_ellipticity
+        "@type": Check
+        "@id": "#Morphology_check_ellipticity"
+        description: Validate ellipticity range
+        expression: ellipticity >= 0 AND ellipticity <= 1
+
+
   - name: Spectra
     "@id": "#Spectra"
     description: "The Spectra table contains spectral data for sources listed in the Sources table. 

@@ -5,6 +5,11 @@
 .vscode
 .pytest_cache
 .ds_store
-*.sqlite
 .coverage
 .env
+.cursor
+
+# Database files
+*.db
+*.sqlite
+!astrodb-template.sqlite
