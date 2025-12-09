@@ -9,6 +9,8 @@ Columns marked with an exclamation mark (❗️) may not be empty.
 | ❗️ <ins>parameter</ins> | Parameter name; links to ParameterList table | string | 30 |  | meta.id  |
 | ❗️ value | Value of the parameter | double |  |  | stat.value;meta.modelled  |
 | error | Uncertainty of the parameter value | double |  |  | stat.error;meta.modelled  |
+| error_upper | Upper uncertainty of the parameter value | double |  |  | stat.error;meta.modelled  |
+| error_lower | Lower uncertainty of the parameter value | double |  |  | stat.error;meta.modelled  |
 | ❗️ unit | Unit of the parameter value. Should be compatible with astropy.units. | string | 30 |  | meta.unit  |
 | comments | Free form comments | string | 100 |  | meta.note  |
 | ❗️ <ins>reference</ins> | Reference; links to Publications table | string | 30 |  | meta.ref  |

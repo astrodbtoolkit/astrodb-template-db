@@ -10,6 +10,8 @@ Columns marked with an exclamation mark (❗️) may not be empty.
 | ❗️ relationship | Relationship of the source to the companion, e.g., "parent", "sibling", "child" | string | 30 |  |   |
 | projected_separation_arcsec | Projected separation between the source and companion | double |  | arcsec | pos.angDistance  |
 | projected_separation_error | Uncertainty of the projected separation | double |  | arcsec | stat.error;pos.angDistance  |
+| projected_separation_error_upper | Upper uncertainty of the projected separation | double |  | arcsec | stat.error;pos.angDistance  |
+| projected_separation_error_lower | Lower uncertainty of the projected separation | double |  | arcsec | stat.error;pos.angDistance  |
 | comments | Free form comments | string | 100 |  | meta.note  |
 | ❗️ reference | Reference; links to Publications table | string | 30 |  | meta.ref  |
 | other_companion_names | Additional names for the companion object, comma delimited. | string | 100 |  | meta.id  |

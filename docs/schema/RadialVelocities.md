@@ -8,6 +8,8 @@ Columns marked with an exclamation mark (❗️) may not be empty.
 | ❗️ <ins>source</ins> | Unique identifier for a source; links to Sources table | string | 50 |  | meta.id;meta.main  |
 | ❗️ rv_kms | Radial velocity measurement for the source | double |  | km/s | spect.dopplerVeloc  |
 | rv_error | Uncertainty of the radial velocity value | double |  | km/s | stat.error;spect.dopplerVeloc  |
+| rv_error_upper | Upper uncertainty of the radial velocity value | double |  | km/s | stat.error;spect.dopplerVeloc  |
+| rv_error_lower | Lower uncertainty of the radial velocity value | double |  | km/s | stat.error;spect.dopplerVeloc  |
 | adopted | Flag to indicate if this is the adopted entry | boolean |  |  |   |
 | comments | Free form comments | string | 100 |  | meta.note  |
 | ❗️ <ins>reference</ins> | Reference; links to Publications table | string | 30 |  | meta.ref  |

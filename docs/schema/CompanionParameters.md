@@ -10,6 +10,8 @@ Columns marked with an exclamation mark (❗️) may not be empty.
 | ❗️ <ins>parameter</ins> | Parameter name | string | 30 |  | meta.id  |
 | value | Value of the parameter | double |  |  |   |
 | error | Uncertainty of the parameter value | double |  |  |   |
+| error_upper | Upper uncertainty of the parameter value | double |  |  |   |
+| error_lower | Lower uncertainty of the parameter value | double |  |  |   |
 | unit | Unit of the parameter value. Should be astropy units compatible. | string | 30 |  |   |
 | comments | Free-form comments for this entry | string | 100 |  | meta.note  |
 | ❗️ reference | Publication reference; links to Publications table | string | 30 |  | meta.ref  |
