@@ -118,5 +118,11 @@
         "bibcode": "2021ApJ...906...64A",
         "doi": "10.3847/1538-4357/abcb97",
         "description": "TESS Observations of the Luhman 16 AB Brown Dwarf System: Rotational Periods, Lightcurve Evolution, and Zonal Circulation"
+    },
+    {
+        "reference": "McConnachie12",
+        "bibcode": "2012AJ....144....4M",
+        "doi": "10.1088/0004-6256/144/1/4",
+        "description": "The observed properties of dwarf galaxies in and around the Local Group"
     }
 ]

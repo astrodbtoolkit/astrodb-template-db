@@ -1,0 +1,26 @@
+{
+    "Sources": [
+        {
+            "source": "Draco 2",
+            "ra_deg": 238.198333,
+            "dec_deg": 64.565278,
+            "equinox": "ICRS",
+            "reference": "McConnachie12",
+            "other_references": "Rubin80",
+            "comments": null
+        }
+    ],
+    "Morphology": [
+        {
+            "source": "Draco 2",
+            "position_angle": 76.0,
+            "position_angle_error": 20.0,
+            "ellipticity": 0.23,
+            "ellipticity_error": 0.15,
+            "half_light_radius": 3.0,
+            "half_light_radius_error": 0.6,
+            "adopted": true,
+            "reference": "McConnachie12"
+        }
+    ]
+}
