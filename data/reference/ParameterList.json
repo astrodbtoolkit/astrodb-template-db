@@ -1,11 +1,11 @@
 [
     {
         "parameter": "age",
-        "description": "Age of the object"
+        "description": "Age of the source"
     },
     {
         "parameter": "mass",
-        "description": "Mass of the object"
+        "description": "Mass of the source"
     },
     {
         "parameter": "metallicity",
