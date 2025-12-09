@@ -1548,8 +1548,8 @@ tables:
       description: Unique identifier for a source; links to Sources table
       ivoa:ucd: meta.id;meta.main
       nullable: false
-    - name: position_angle
-      "@id": "#Morphology.position_angle"
+    - name: position_angle_deg
+      "@id": "#Morphology.position_angle_deg"
       datatype: double
       description: Position angle of the source
       fits:tunit: deg
@@ -1570,8 +1570,8 @@ tables:
       datatype: double
       description: Uncertainty of the ellipticity
       ivoa:ucd: stat.error;phys.size.axisRatio
-    - name: half_light_radius
-      "@id": "#Morphology.half_light_radius"
+    - name: half_light_radius_arcmin
+      "@id": "#Morphology.half_light_radius_arcmin"
       datatype: double
       description: Half-light radius of the source
       fits:tunit: arcmin

@@ -15,17 +15,17 @@ def test_morphology(db):
 def test_for_valid_morphology(db):
     # Verify that all sources have valid morphology
     t = (
-        db.query(db.Morphology.c.source, db.Morphology.c.position_angle, db.Morphology.c.ellipticity, db.Morphology.c.half_light_radius)
+        db.query(db.Morphology.c.source, db.Morphology.c.position_angle_deg, db.Morphology.c.ellipticity, db.Morphology.c.half_light_radius_arcmin)
         .filter(
             or_(
-                db.Morphology.c.position_angle.is_(None),
-                db.Morphology.c.position_angle < 0,
-                db.Morphology.c.position_angle > 360,
+                db.Morphology.c.position_angle_deg.is_(None),
+                db.Morphology.c.position_angle_deg < 0,
+                db.Morphology.c.position_angle_deg > 360,
                 db.Morphology.c.ellipticity.is_(None),
                 db.Morphology.c.ellipticity < 0,
                 db.Morphology.c.ellipticity > 1,
-                db.Morphology.c.half_light_radius.is_(None),
-                db.Morphology.c.half_light_radius < 0,
+                db.Morphology.c.half_light_radius_arcmin.is_(None),
+                db.Morphology.c.half_light_radius_arcmin < 0,
             )
         )
         .astropy()

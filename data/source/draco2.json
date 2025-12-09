@@ -13,11 +13,11 @@
     "Morphology": [
         {
             "source": "Draco 2",
-            "position_angle": 76.0,
+            "position_angle_deg": 76.0,
             "position_angle_error": 20.0,
             "ellipticity": 0.23,
             "ellipticity_error": 0.15,
-            "half_light_radius": 3.0,
+            "half_light_radius_arcmin": 3.0,
             "half_light_radius_error": 0.6,
             "adopted": true,
             "reference": "McConnachie12"
