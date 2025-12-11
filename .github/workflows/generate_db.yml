@@ -45,7 +45,7 @@ jobs:
         if [[ ${{ github.event_name }} == "release" ]]; then
           # Copy database file with release tag
           cp astrodb-template.sqlite astrodb-template-${release_tag}.sqlite
-
+          echo "Release copy created: astrodb-template-${release_tag}.sqlite"
         else
           echo "Not running as a release: No release copy created."
         fi
@@ -60,25 +60,29 @@ jobs:
           git add *.sqlite
           git commit -m "Updating database"
           git push
-
-          # Tag handling (move the tag to this commit if it is a release)
-          if [[ ${{ github.event_name }} == "release" ]]; then
-            # Get release tag
-            release_tag=${{ github.event.release.tag_name }}
-            echo "Release tag: $release_tag"
-
-            # Remove existing tag in local and remove
-            git tag -d $release_tag
-            git push origin :refs/tags/$release_tag
-
-            # Replace the tag
-            git tag -fa $release_tag
-
-            # Push the tag
-            git push origin $release_tag
-
-          fi
         else
           echo "No changes were detected. git commit push action skipped."
         fi
       shell: bash
+
+    - name: Move tag to this commit
+      run: |
+        # Git configuration
+        git config user.name "${{ secrets.USER_LOGIN }}"
+        git config user.email "${{ secrets.USER_ID }}+${{ secrets.USER_LOGIN }}@users.noreply.github.com"
+
+        # Get release tag
+        release_tag=${{ github.event.release.tag_name }}
+        echo "Release tag: $release_tag"
+
+        # Remove existing tag in local and remove
+        git tag -d $release_tag
+        git push origin :refs/tags/$release_tag
+
+        # Replace the tag
+        git tag -fa $release_tag
+
+        # Push the tag
+        git push origin $release_tag
+      shell: bash
+      if: ${{ github.event_name == 'release' }}
