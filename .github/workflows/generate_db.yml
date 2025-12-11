@@ -2,12 +2,13 @@
 # run the python script to generate the database,
 # and push it back to the repo.
 
-name: Generate Database
+name: Generate Database SQLite file
 
 on:
   workflow_dispatch:  # manual execution
   release:
     types: [published]
+  push:  # remove this once we finish testing
 
 jobs:
   build:
