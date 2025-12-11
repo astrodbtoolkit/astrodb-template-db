@@ -8,6 +8,7 @@ on:
   workflow_dispatch:  # manual execution
   release:
     types: [published]
+  push: # for temporary testing
 
 jobs:
   build:
@@ -29,10 +30,9 @@ jobs:
     - name: Generate sqlite (file) database
       run: |
         # Generate database
-        python -c "from astrodb_utils.loaders import build_db_from_json; build_db_from_json(settings_file='database.toml')"
-        # TODO: Update with actual command to generate the database:
-        # build_db_from_json database.toml
+        build_db_from_json database.toml
       working-directory: .
+      shell: bash
 
     - name: Create release copy
       run: |
