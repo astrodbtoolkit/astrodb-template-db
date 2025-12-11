@@ -37,7 +37,7 @@ jobs:
     - name: Create release copy
       run: |
         # Get release tag
-        release_tag=$(git describe --tags --abbrev=0)
+        release_tag=${{ github.event.release.tag_name }}
         echo "Release tag: $release_tag"
 
         # Check if workflow is running on a release
