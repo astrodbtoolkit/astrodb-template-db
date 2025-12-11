@@ -55,7 +55,7 @@ jobs:
 
         # Adding database file(s)
         git add *.sqlite
-        git commit -m "Updating database"
+        git commit -m "Updating database" || true
         git push
       shell: bash
 
