@@ -48,18 +48,15 @@ jobs:
       if: ${{ github.event_name == 'release' }}
 
     - name: Commit database file
-      run: |
-        if [[ `git status --porcelain` ]]; then            
-          git config user.name "${{ secrets.USER_LOGIN }}"
-          git config user.email "${{ secrets.USER_ID }}+${{ secrets.USER_LOGIN }}@users.noreply.github.com"
+      run: |       
+        # Git configuration
+        git config user.name "${{ secrets.USER_LOGIN }}"
+        git config user.email "${{ secrets.USER_ID }}+${{ secrets.USER_LOGIN }}@users.noreply.github.com"
 
-          # Adding database file
-          git add *.sqlite
-          git commit -m "Updating database"
-          git push
-        else
-          echo "No changes were detected. git commit push action skipped."
-        fi
+        # Adding database file(s)
+        git add *.sqlite
+        git commit -m "Updating database"
+        git push
       shell: bash
 
     - name: Move tag to this commit
