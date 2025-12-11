@@ -41,15 +41,11 @@ jobs:
         echo "Event name: ${{ github.event_name }}"
         echo "Release tag: $release_tag"
 
-        # Check if workflow is running on a release
-        if [[ ${{ github.event_name }} == "release" ]]; then
-          # Copy database file with release tag
-          cp astrodb-template.sqlite astrodb-template-${release_tag}.sqlite
-          echo "Release copy created: astrodb-template-${release_tag}.sqlite"
-
-        else
-          echo "Not running as a release: No release copy created."
-        fi
+        # Create copy of database file with release tag
+        cp astrodb-template.sqlite astrodb-template-${release_tag}.sqlite
+        echo "Release copy created: astrodb-template-${release_tag}.sqlite"
+      shell: bash
+      if: ${{ github.event_name == 'release' }}
 
     - name: Commit database file
       run: |
