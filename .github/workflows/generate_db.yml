@@ -53,10 +53,35 @@ jobs:
         git config user.name "${{ secrets.USER_LOGIN }}"
         git config user.email "${{ secrets.USER_ID }}+${{ secrets.USER_LOGIN }}@users.noreply.github.com"
 
+        # Determine the branch name
+        # For release events, default to main (we're on a tag, detached HEAD)
+        # For workflow_dispatch, use head_ref if available, otherwise detect from git
+        if [ "${{ github.event_name }}" == "release" ]; then
+          branch_name="main"
+        elif [ -n "${{ github.head_ref }}" ]; then
+          branch_name="${{ github.head_ref }}"
+        else
+          # Try to get branch from git (works if we're on a branch)
+          branch_name=$(git symbolic-ref --short HEAD 2>/dev/null || echo "")
+          # If detached HEAD, try ref_name (might be a branch or tag)
+          if [ -z "$BRANCH" ]; then
+            branch_name="${{ github.ref_name }}"
+            # If ref_name looks like a tag (contains dots or starts with v), use main
+            if [[ "$BRANCH" =~ \. ]] || [[ "$BRANCH" =~ ^v ]]; then
+              branch_name="main"
+            fi
+          fi
+        fi
+
+        echo "Target branch: $branch_name"
+
+        # Checkout the branch (handles detached HEAD state)
+        git checkout -B "$branch_name" || git checkout "$branch_name"
+
         # Adding database file(s)
         git add *.sqlite
         git commit -m "Updating database" || true
-        git push
+        git push origin "$branch_name"
       shell: bash
 
     - name: Move tag to this commit
