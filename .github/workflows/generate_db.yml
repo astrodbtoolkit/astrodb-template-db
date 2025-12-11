@@ -31,7 +31,8 @@ jobs:
       run: |
         # Generate database
         python -c "from astrodb_utils.loaders import build_db_from_json; build_db_from_json(settings_file='database.toml')"
-        # TODO: Update with actual command to generate the database
+        # TODO: Update with actual command to generate the database:
+        # build_db_from_json database.toml
       working-directory: .
 
     - name: Create release copy
@@ -41,8 +42,6 @@ jobs:
 
         echo "Event name: ${{ github.event_name }}"
         echo "Release tag: $release_tag"
-
-        git remote -v
 
         # Check if workflow is running on a release
         if [[ ${{ github.event_name }} == "release" ]]; then
@@ -63,7 +62,7 @@ jobs:
           git add *.sqlite
           git commit -m "Updating database"
           git push
-          
+
           # Tag handling (move the tag to this commit if it is a release)
           if [[ ${{ github.event_name }} == "release" ]]; then
             # Get release tag
@@ -85,4 +84,3 @@ jobs:
           echo "No changes were detected. git commit push action skipped."
         fi
       shell: bash
-# The user email is {user.id}+{user.login}@users.noreply.github.com. See users API: https://api.github.com/users/github-actions%5Bbot%5D
