@@ -11,5 +11,4 @@
 
 # Database files
 *.db
-*.sqlite
-!astrodb-template.sqlite
+tests/*.sqlite
