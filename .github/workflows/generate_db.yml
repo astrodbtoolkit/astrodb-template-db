@@ -29,16 +29,29 @@ jobs:
 
     - name: Generate sqlite (file) database
       run: |
+        # Generate database
+        python -c "from astrodb_utils.loaders import build_db_from_json; build_db_from_json(settings_file='database.toml')"
         # TODO: Update with actual command to generate the database
-        echo "Generating database..."
       working-directory: .
+
+    - name: Create release copy
+      run: |
+        # Get release tag
+        release_tag=$(echo ${{ github.ref }} | sed 's/refs\/tags\///')
+        echo "Release tag: $release_tag"
+
+        # Check if workflow is running on a release
+        if [[ ${{ github.event_name }} == "release" ]]; then
+          # Copy database file with release tag
+          cp astrodb-template.sqlite astrodb-template-${release_tag}.sqlite
+        fi
 
     - name: Commit database file
       run: |
         if [[ `git status --porcelain` ]]; then            
           git config user.name "${{ secrets.USER_LOGIN }}"
           git config user.email "${{ secrets.USER_ID }}+${{ secrets.USER_LOGIN }}@users.noreply.github.com"
-          git add astrodb-template.sqlite
+          git add *.sqlite
           git commit -m "Updating database"
           git push    
         else
