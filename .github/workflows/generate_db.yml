@@ -46,6 +46,7 @@ jobs:
           # Copy database file with release tag
           cp astrodb-template.sqlite astrodb-template-${release_tag}.sqlite
           echo "Release copy created: astrodb-template-${release_tag}.sqlite"
+
         else
           echo "Not running as a release: No release copy created."
         fi
