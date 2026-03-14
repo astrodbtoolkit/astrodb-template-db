@@ -31,4 +31,4 @@ jobs:
         uv pip install astrodbkit lsst-felis pytest pytest-cov astrodb-utils
     - name: Test with pytest
       run: |
-        uv run pytest --cov=schema -s -rpP tests/scheduled_checks.py
+        uv run pytest -s -rpP tests/scheduled_checks.py

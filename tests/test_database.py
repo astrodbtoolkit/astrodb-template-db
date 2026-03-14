@@ -101,3 +101,15 @@ def test_adding_data(db):
         db.query(db.Photometry).filter(db.Photometry.c.source == "V4046 Sgr").count()
         == 1
     )
+
+    # Clean up — remove in reverse FK order so constraints aren't violated
+    with db.session as session:
+        session.delete(phot)
+        session.commit()
+    with db.session as session:
+        session.delete(s)
+        session.delete(ref)
+        session.delete(tel)
+        session.delete(pf)
+        session.delete(reg)
+        session.commit()

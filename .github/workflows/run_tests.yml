@@ -34,4 +34,4 @@ jobs:
 
     - name: Test with pytest
       run: |
-        uv run pytest -p no:warnings --cov=schema tests
+        uv run pytest -p no:warnings tests

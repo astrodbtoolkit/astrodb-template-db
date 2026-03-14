@@ -64,10 +64,10 @@ jobs:
           # Try to get branch from git (works if we're on a branch)
           branch_name=$(git symbolic-ref --short HEAD 2>/dev/null || echo "")
           # If detached HEAD, try ref_name (might be a branch or tag)
-          if [ -z "$BRANCH" ]; then
+          if [ -z "$branch_name" ]; then
             branch_name="${{ github.ref_name }}"
             # If ref_name looks like a tag (contains dots or starts with v), use main
-            if [[ "$BRANCH" =~ \. ]] || [[ "$BRANCH" =~ ^v ]]; then
+            if [[ "$branch_name" =~ \. ]] || [[ "$branch_name" =~ ^v ]]; then
               branch_name="main"
             fi
           fi

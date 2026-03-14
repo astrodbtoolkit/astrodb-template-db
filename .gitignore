@@ -1,15 +1,15 @@
 # Ignore the database file and misc
 *.db
 *.pyc
+__pycache__/
 .idea
 .vscode
 .pytest_cache
-.ds_store
+.DS_Store
 .coverage
 .env
 .cursor
 CLAUDE.md
 
 # Database files
-*.db
 tests/*.sqlite

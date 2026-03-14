@@ -25,25 +25,25 @@ jobs:
 
     steps:
     - name: Checkout utils repo
-      uses: actions/checkout@v5
+      uses: actions/checkout@v4
       with:
         repository: astrodbtoolkit/astrodb_utils
         ref: ${{ inputs.scripts_branch }}
 
     - name: Checkout template database repo to subdirectory
-      uses: actions/checkout@v5
+      uses: actions/checkout@v4
       with:
         path: tests/astrodb-template-db
 
-    - name: Set up Python 3.13
-      uses: actions/setup-python@v5
+    - uses: astral-sh/setup-uv@v5
       with:
         python-version: "3.13"
+        enable-cache: true
 
     - name: Install astrodb_utils and dependencies needed for running tests
       run: |
-        python -m pip install --upgrade pip
-        pip install .[test]
+        uv venv
+        uv pip install .[test]
 
     - name: Confirm branches
       run: |
@@ -59,4 +59,4 @@ jobs:
 
     - name: Test astrodb_utils with current branch of template
       run: |
-        pytest
+        uv run pytest
