@@ -28,11 +28,12 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt install graphviz libgraphviz-dev
-        uv pip install --system astrodbkit eralchemy2 lsst-felis
+        uv venv
+        uv pip install astrodbkit eralchemy2 lsst-felis
 
     - name: Run script
       run: |
-        python scripts/make_schema_erd.py
+        uv run python scripts/make_schema_erd.py
 
     - name: Commit diagram
       run: |

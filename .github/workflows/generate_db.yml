@@ -22,12 +22,14 @@ jobs:
         enable-cache: true
 
     - name: Install dependencies
-      run: uv pip install --system astrodb_utils
+      run: |
+        uv venv
+        uv pip install astrodb_utils
 
     - name: Generate sqlite (file) database
       run: |
         # Generate database
-        build_db_from_json database.toml
+        uv run build_db_from_json database.toml
       working-directory: .
       shell: bash
 
