@@ -9,7 +9,6 @@
 .env
 .cursor
 CLAUDE.md
-.claude/
 
 # Database files
 *.db
