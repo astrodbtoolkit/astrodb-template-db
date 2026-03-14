@@ -42,7 +42,6 @@ jobs:
 
     - name: Install astrodb_utils and dependencies needed for running tests
       run: |
-        uv venv
         uv pip install .[test]
 
     - name: Confirm branches

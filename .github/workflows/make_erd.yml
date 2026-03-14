@@ -28,7 +28,6 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt install graphviz libgraphviz-dev
-        uv venv
         uv pip install astrodbkit eralchemy2 lsst-felis
 
     - name: Run script
