@@ -1,7 +1,7 @@
 {
     "Sources": [
         {
-            "source": "Draco 2",
+            "source": "Draco II",
             "ra_deg": 238.198333,
             "dec_deg": 64.565278,
             "equinox": "ICRS",
@@ -10,9 +10,17 @@
             "comments": null
         }
     ],
+    "Names": [
+        {
+            "other_name": "Draco II"
+        },
+        {
+            "other_name": "Draco 2"
+        }
+    ],
     "Morphology": [
         {
-            "source": "Draco 2",
+            "source": "Draco II",
             "position_angle_deg": 76.0,
             "position_angle_error_upper": 22.0,
             "position_angle_error_lower": 32.0,
