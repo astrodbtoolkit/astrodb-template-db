@@ -77,7 +77,7 @@ def test_spectra_urls(db):
     codes = []
     internet, _ = internet_connection()
     if internet:
-        for spectrum_url in tqdm(spectra_urls["access_url"]):
+        for spectrum_url in tqdm.tqdm(spectra_urls["access_url"]):
             request_response = requests.head(spectrum_url)
             status_code = request_response.status_code
             # The website is up if the status code is 200
@@ -89,4 +89,4 @@ def test_spectra_urls(db):
     # Display broken spectra regardless if it's the number we expect or not
     print(f"found {len(broken_urls)} broken spectra urls: {broken_urls}, {codes}")
 
-    assert len(broken_urls) == 4
+    assert len(broken_urls) == 0

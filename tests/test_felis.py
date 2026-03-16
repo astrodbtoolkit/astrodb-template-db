@@ -14,4 +14,4 @@ def test_schema():
     try:
         schema = Schema.model_validate(data)  # noqa: F841
     except ValidationError as e:
-        print(e)
+        raise AssertionError(f"Schema failed Felis validation:\n{e}") from e

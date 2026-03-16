@@ -20,20 +20,19 @@ jobs:
       with:
         token: ${{ secrets.GH_TOKEN }}
 
-    - name: Set up Python 3.13
-      uses: actions/setup-python@v3
+    - uses: astral-sh/setup-uv@v5
       with:
         python-version: "3.13"
+        enable-cache: true
 
     - name: Install dependencies
       run: |
         sudo apt install graphviz libgraphviz-dev
-        python -m pip install --upgrade pip
-        pip install astrodbkit eralchemy2 lsst-felis
+        uv pip install astrodbkit eralchemy2 lsst-felis
 
     - name: Run script
       run: |
-        python scripts/make_schema_erd.py
+        uv run python scripts/make_schema_erd.py
 
     - name: Commit diagram
       run: |
