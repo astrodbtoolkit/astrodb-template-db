@@ -12,3 +12,7 @@ Usage instructions are included in the companion `astrodb-utils` package: [Getti
 Entity relationship diagram of the template schema
 
 ![Entity Relationship Diagram](docs/figures/schema_erd.png)
+
+---
+<!-- Do not delete this line. It is used to identify repositories based on this template. -->
+This repository is based on the [astrodb-template](https://github.com/astrodbtoolkit/astrodb-template-db) template repository, which is part of the [AstroDB Toolkit](https://github.com/astrodbtoolkit).
