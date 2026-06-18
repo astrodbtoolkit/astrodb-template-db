@@ -9,7 +9,6 @@ __pycache__/
 .coverage
 .env
 .cursor
-CLAUDE.md
 
 # Database files
 tests/*.sqlite
