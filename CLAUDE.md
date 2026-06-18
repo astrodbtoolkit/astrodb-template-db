@@ -60,6 +60,10 @@ additionally creates a release-tagged copy of the sqlite file and moves the rele
 does not run on every push/PR, so the committed sqlite file can lag behind `schema.yaml`/`data/` between manual
 runs or releases.
 
+Note: running the test suite locally rebuilds `astrodb-template.sqlite` in place (the `db` fixture writes it), so
+it shows up as modified in `git status` after any `pytest` run. Don't commit that incidental change — revert it
+with `git checkout -- astrodb-template.sqlite` and let the CI workflow regenerate the committed copy.
+
 ## Architecture
 
 **Source of truth is `schema.yaml`**, a Felis-format schema defining every table, column, datatype, and foreign
@@ -72,6 +76,17 @@ tables are "lookup tables" (reference tables that must be loaded before tables t
   for that object across multiple tables (Sources, Names, Photometry, CompanionParameters, etc.)
 - [data/reference/](data/reference/) — JSON files for lookup/reference tables (Publications, Instruments,
   PhotometryFilters, etc.) shared across all objects
+
+`PhotometryFilters.band` values use the SVO Filter Profile Service naming convention,
+`Facility/Instrument.Filter` (e.g. `2MASS/2MASS.J`, `WISE/WISE.W1`, `JWST/MIRI.F1000W`) — see
+<https://svo2.cab.inta-csic.es/theory/fps/>. Don't hand-type wavelengths/widths/UCDs: get them from
+`astrodb_utils.photometry.fetch_svo(telescope, instrument, filter_name)` (returns filter_id, effective
+wavelength, FWHM, and effective width — `width_angstroms` is the *effective* width) and
+`assign_ucd(wave_eff)`. To discover the exact filter IDs for a facility, query SVO in bulk:
+`http://svo2.cab.inta-csic.es/svo/theory/fps3/fps.php?Facility=<Facility>` returns a VOTable of every filter
+(note: some facility names differ from the band prefix — e.g. PS1 lives under `Facility=PAN-STARRS`, VISTA/NACO
+under `Paranal`, UFTI/WFCAM/UKIDSS under `UKIRT`). `tests/scheduled_checks.py::test_filters_resolvable_in_svo`
+re-validates every band against SVO in the monthly suite.
 
 **The build pipeline** (`astrodb_utils.build_db_from_json`, called from `tests/conftest.py` and CI) reads
 `schema.yaml` + `database.toml`, creates a fresh SQLite database, and loads every JSON file in `data/` into it,
