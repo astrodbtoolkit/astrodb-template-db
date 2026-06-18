@@ -13,6 +13,8 @@ validates them. Downstream users fork this repo as a starting point for their ow
 - **Companion package (astrodb-utils)**: <https://astrodb-utils.readthedocs.io/en/latest/>
 - **Getting started with a new database**: <https://astrodb-utils.readthedocs.io/en/latest/pages/make_new_db/getting_started_new_database.html>
 - **Schema docs**: [docs/schema/](docs/schema/) (auto-generated, one markdown file per table)
+- **CI/CD workflows**: [.github/workflows/README.md](.github/workflows/README.md) (what each GitHub Actions
+  workflow does, and the repo secrets the committing workflows need)
 
 ## Commands
 
