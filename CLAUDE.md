@@ -16,6 +16,14 @@ that mutates history or remote state on the user's behalf — e.g. `git commit`,
 releases, comments). Even when asked to "commit," default to preparing the change and letting
 the user perform the git step themselves.
 
+**One exception:** Claude may modify a commit message to add itself as a co-author trailer.
+This covers amending the most recent local commit (`git commit --amend`) to append a
+`Co-Authored-By: Claude <model> <noreply@anthropic.com>` trailer when it's missing. Only do
+this for commits that have **not** been pushed (amending rewrites history, which is disruptive
+once the commit is on the remote). Change only the trailer — leave the rest of the message and
+the commit's contents untouched. Don't rewrite older commits via interactive rebase unless the
+user explicitly asks.
+
 Read-only work is fine and encouraged: inspecting local state (`git status`, `git diff`,
 `git log`) and GitHub *research* via `gh` (e.g. `gh pr view`, `gh pr list`, `gh issue view`,
 `gh run list`, `gh api` GET requests) to gather context.
@@ -25,7 +33,16 @@ changed, and offer to help (e.g. draft a commit message or PR description, show 
 Wait for the user to do the actual commit/push/PR.
 
 Keep suggested commit messages brief — a short one-line summary is usually enough. Don't
-spend many tokens overthinking them.
+spend many tokens overthinking them. Always add Claude as a co-author trailer on suggested
+commit messages, naming the model that actually did the work:
+
+```text
+Co-Authored-By: Claude <model name and version> <noreply@anthropic.com>
+```
+
+For example, `Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>`. Use whichever Claude
+model is currently active — if it changed mid-session (e.g. via `/model`), use the one that
+produced the commit.
 
 ## Documentation
 
