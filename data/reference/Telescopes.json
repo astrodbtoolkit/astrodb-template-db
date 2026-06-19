@@ -230,6 +230,16 @@
         "reference": null
     },
     {
+        "telescope": "Kepler",
+        "description": "Kepler Space Telescope, Satellite/Spacecraft",
+        "reference": null
+    },
+    {
+        "telescope": "TESS",
+        "description": "Transiting Exoplanet Survey Satellite, Satellite/Spacecraft",
+        "reference": null
+    },
+    {
         "telescope": "Swift-UVOT",
         "description": "UV/Optical Telescope on Swift, Satellite/Spacecraft",
         "reference": null

@@ -1,37 +1,681 @@
 [
     {
         "instrument": "2MASS",
-        "mode": "Imaging",
+        "mode": "imaging",
         "telescope": "2MASS",
         "description": null,
         "reference": "Cohe03"
     },
     {
         "instrument": "Gaia3",
-        "mode": "Imaging",
+        "mode": "imaging",
         "telescope": "Gaia",
         "description": null,
         "reference": "Gaia23"
     },
     {
         "instrument": "SDSS",
-        "mode": "Imaging",
+        "mode": "imaging",
         "telescope": "SDSS",
         "description": null,
         "reference": null
     },
     {
         "instrument": "WISE",
-        "mode": "Imaging",
+        "mode": "imaging",
         "telescope": "WISE",
         "description": null,
         "reference": null
     },
     {
         "instrument": "SpeX",
-        "mode": "Prism",
+        "mode": "prism",
         "telescope": "IRTF",
         "description": "SpeX spectrograph on the Infrared Telescope Facility",
+        "reference": null
+    },
+    {
+        "instrument": "DBSP",
+        "mode": "spectroscopy",
+        "telescope": "Hale-5.1m",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "LRIS",
+        "mode": "spectroscopy",
+        "telescope": "Keck-1",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "LRIS",
+        "mode": "imaging",
+        "telescope": "Keck-1",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "HIRES",
+        "mode": "spectroscopy",
+        "telescope": "Keck-1",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "MOSFIRE",
+        "mode": "spectroscopy",
+        "telescope": "Keck-1",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "DEIMOS",
+        "mode": "spectroscopy",
+        "telescope": "Keck-2",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "NIRES",
+        "mode": "spectroscopy",
+        "telescope": "Keck-2",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "KCWI",
+        "mode": "spectroscopy",
+        "telescope": "Keck-2",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "KOSMOS",
+        "mode": "spectroscopy",
+        "telescope": "Mayall-4m",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "DESI",
+        "mode": "spectroscopy",
+        "telescope": "Mayall-4m",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "GMOS",
+        "mode": "spectroscopy",
+        "telescope": "Gemini-N",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "GNIRS",
+        "mode": "spectroscopy",
+        "telescope": "Gemini-N",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "GMOS-S",
+        "mode": "spectroscopy",
+        "telescope": "Gemini-S",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "Flamingos-2",
+        "mode": "spectroscopy",
+        "telescope": "Gemini-S",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "Flamingos-2",
+        "mode": "imaging",
+        "telescope": "Gemini-S",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "FORS2",
+        "mode": "spectroscopy",
+        "telescope": "VLT-UT1",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "X-Shooter",
+        "mode": "spectroscopy",
+        "telescope": "VLT-UT2",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "UVES",
+        "mode": "spectroscopy",
+        "telescope": "VLT-UT2",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "ISAAC",
+        "mode": "spectroscopy",
+        "telescope": "VLT-UT3",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "ISAAC",
+        "mode": "imaging",
+        "telescope": "VLT-UT3",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "MUSE",
+        "mode": "spectroscopy",
+        "telescope": "VLT-UT4",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "ISIS",
+        "mode": "spectroscopy",
+        "telescope": "WHT-4.2m",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "LIRIS",
+        "mode": "spectroscopy",
+        "telescope": "WHT-4.2m",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "LIRIS",
+        "mode": "imaging",
+        "telescope": "WHT-4.2m",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "CGS4",
+        "mode": "spectroscopy",
+        "telescope": "UKIRT",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "UVOT-Imager",
+        "mode": "imaging",
+        "telescope": "Swift-UVOT",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "UV-grism",
+        "mode": "spectroscopy",
+        "telescope": "Swift-UVOT",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "IRS",
+        "mode": "spectroscopy",
+        "telescope": "SST",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "IRAC",
+        "mode": "imaging",
+        "telescope": "SST",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "LDSS-3",
+        "mode": "spectroscopy",
+        "telescope": "Magellan-Clay",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "MIKE",
+        "mode": "spectroscopy",
+        "telescope": "Magellan-Clay",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "IMACS",
+        "mode": "spectroscopy",
+        "telescope": "Magellan-Baade",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "IMACS",
+        "mode": "imaging",
+        "telescope": "Magellan-Baade",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "FIRE",
+        "mode": "spectroscopy",
+        "telescope": "Magellan-Baade",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "MagE",
+        "mode": "spectroscopy",
+        "telescope": "Magellan-Baade",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "FOCAS",
+        "mode": "spectroscopy",
+        "telescope": "Subaru",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "FOCAS",
+        "mode": "imaging",
+        "telescope": "Subaru",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "HDS",
+        "mode": "spectroscopy",
+        "telescope": "Subaru",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "HSC",
+        "mode": "imaging",
+        "telescope": "Subaru",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "DECAM",
+        "mode": "imaging",
+        "telescope": "Blanco-4m",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "COSMOS",
+        "mode": "spectroscopy",
+        "telescope": "Blanco-4m",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "STIS",
+        "mode": "spectroscopy",
+        "telescope": "HST",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "WFC3",
+        "mode": "imaging",
+        "telescope": "HST",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "OSIRIS",
+        "mode": "spectroscopy",
+        "telescope": "GTC",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "OSIRIS",
+        "mode": "imaging",
+        "telescope": "GTC",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "EMIR",
+        "mode": "spectroscopy",
+        "telescope": "GTC",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "MEGARA",
+        "mode": "spectroscopy",
+        "telescope": "GTC",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "GALEX",
+        "mode": "spectroscopy",
+        "telescope": "GALEX",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "IUE",
+        "mode": "spectroscopy",
+        "telescope": "IUE",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "MMIRS",
+        "mode": "spectroscopy",
+        "telescope": "MMT",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "MMIRS",
+        "mode": "imaging",
+        "telescope": "MMT",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "BINOSPEC",
+        "mode": "spectroscopy",
+        "telescope": "MMT",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "BINOSPEC",
+        "mode": "imaging",
+        "telescope": "MMT",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "HET-LRS",
+        "mode": "spectroscopy",
+        "telescope": "HET",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "HET-HRS",
+        "mode": "spectroscopy",
+        "telescope": "HET",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "MODS1",
+        "mode": "spectroscopy",
+        "telescope": "LBT",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "MODS1",
+        "mode": "imaging",
+        "telescope": "LBT",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "LUCI",
+        "mode": "spectroscopy",
+        "telescope": "LBT",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "RSS",
+        "mode": "spectroscopy",
+        "telescope": "SALT",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "HRS-SALT",
+        "mode": "spectroscopy",
+        "telescope": "SALT",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "Goodman",
+        "mode": "spectroscopy",
+        "telescope": "SOAR",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "TripleSpec",
+        "mode": "spectroscopy",
+        "telescope": "SOAR",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "SM-WFCam",
+        "mode": "imaging",
+        "telescope": "SkyMapper",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "GPC1",
+        "mode": "imaging",
+        "telescope": "PS-1",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "GPC2",
+        "mode": "imaging",
+        "telescope": "PS-2",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "ZTF-Cam",
+        "mode": "imaging",
+        "telescope": "Palomar-48",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "AAOmega-2DF",
+        "mode": "spectroscopy",
+        "telescope": "AAT",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "NIRCam",
+        "mode": "imaging",
+        "telescope": "JWST",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "NIRSpec",
+        "mode": "spectroscopy",
+        "telescope": "JWST",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "NIRISS",
+        "mode": "spectroscopy",
+        "telescope": "JWST",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "MIRI",
+        "mode": "spectroscopy",
+        "telescope": "JWST",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "MegaCam",
+        "mode": "imaging",
+        "telescope": "CFHT",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "FRB",
+        "mode": "spectroscopy",
+        "telescope": "CHIME",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "PULSAR",
+        "mode": "spectroscopy",
+        "telescope": "CHIME",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "UWL",
+        "mode": "spectroscopy",
+        "telescope": "Parkes",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "WIDAR",
+        "mode": "spectroscopy",
+        "telescope": "VLA",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "GUPPI",
+        "mode": "spectroscopy",
+        "telescope": "GBT",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "ALFA",
+        "mode": "spectroscopy",
+        "telescope": "Arecibo",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "LPA",
+        "mode": "spectroscopy",
+        "telescope": "LPA",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "UTMOST",
+        "mode": "spectroscopy",
+        "telescope": "MOST",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "FlysEye",
+        "mode": "spectroscopy",
+        "telescope": "ASKAP",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "Apertif",
+        "mode": "spectroscopy",
+        "telescope": "WSRT",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "FAST-MB",
+        "mode": "spectroscopy",
+        "telescope": "FAST",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "DSA-10",
+        "mode": "spectroscopy",
+        "telescope": "DSA-110",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "GMRT-Band3",
+        "mode": "spectroscopy",
+        "telescope": "GMRT",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "MPSR",
+        "mode": "spectroscopy",
+        "telescope": "UTMOST-EW",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "NPSR",
+        "mode": "spectroscopy",
+        "telescope": "UTMOST-NS",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "VIS",
+        "mode": "imaging",
+        "telescope": "Euclid",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "NISP",
+        "mode": "spectroscopy",
+        "telescope": "Euclid",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "LSSTCam",
+        "mode": "imaging",
+        "telescope": "Rubin",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "TESS",
+        "mode": "imaging",
+        "telescope": "TESS",
+        "description": "TESS wide-field CCD cameras",
+        "reference": null
+    },
+    {
+        "instrument": "Kepler",
+        "mode": "imaging",
+        "telescope": "Kepler",
+        "description": "Kepler photometer",
         "reference": null
     }
 ]
