@@ -13,6 +13,8 @@ validates them. Downstream users fork this repo as a starting point for their ow
 - **Companion package (astrodb-utils)**: <https://astrodb-utils.readthedocs.io/en/latest/>
 - **Getting started with a new database**: <https://astrodb-utils.readthedocs.io/en/latest/pages/make_new_db/getting_started_new_database.html>
 - **Schema docs**: [docs/schema/](docs/schema/) (auto-generated, one markdown file per table)
+- **CI/CD workflows**: [.github/workflows/README.md](.github/workflows/README.md) (what each GitHub Actions
+  workflow does, and the repo secrets the committing workflows need)
 
 ## Commands
 
@@ -59,10 +61,6 @@ GitHub Actions workflow. It runs on manual `workflow_dispatch` or when a release
 additionally creates a release-tagged copy of the sqlite file and moves the release tag to the new commit. It
 does not run on every push/PR, so the committed sqlite file can lag behind `schema.yaml`/`data/` between manual
 runs or releases.
-
-Note: running the test suite locally rebuilds `astrodb-template.sqlite` in place (the `db` fixture writes it), so
-it shows up as modified in `git status` after any `pytest` run. Don't commit that incidental change — revert it
-with `git checkout -- astrodb-template.sqlite` and let the CI workflow regenerate the committed copy.
 
 ## Architecture
 
