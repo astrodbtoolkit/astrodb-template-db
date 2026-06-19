@@ -15,6 +15,7 @@ from astroquery.simbad import Simbad
 
 from astrodbkit.utils import _name_formatter
 from astrodb_utils import internet_connection
+from astrodb_utils.photometry import fetch_svo
 
 
 def test_SIMBAD_resolvable(db):
@@ -68,6 +69,24 @@ def test_SIMBAD_resolvable(db):
     assert len(unique_matches) == len(
         all_sources
     ), f"Unique matches for {unique_matches}, expected {len(all_sources)}"
+
+
+def test_filters_resolvable_in_svo(db):
+    # Verify that every PhotometryFilters.band is a valid SVO Filter Profile Service ID,
+    # in the "Facility/Instrument.Filter" naming convention used by SVO.
+
+    filters_table = db.query(db.PhotometryFilters).astropy()
+    unresolved = []
+    for band in filters_table["band"]:
+        telescope, _, rest = band.partition("/")
+        instrument, _, filter_name = rest.partition(".")
+        try:
+            fetch_svo(telescope=telescope, instrument=instrument, filter_name=filter_name)
+        except Exception as e:
+            unresolved.append((band, str(e)))
+            print(f"Could not resolve {band} in SVO: {e}")
+
+    assert len(unresolved) == 0, f"{len(unresolved)} PhotometryFilters bands failed SVO checks: {unresolved}"
 
 
 @pytest.mark.skip(reason="There are no spectra yet in the template")
