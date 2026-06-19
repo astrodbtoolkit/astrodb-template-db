@@ -8,6 +8,25 @@ A template schema for astronomical databases, part of the `astrodbtoolkit` ecosy
 application code — it defines a database schema (Felis YAML), example data (JSON), and the test suite that
 validates them. Downstream users fork this repo as a starting point for their own astronomical database.
 
+## Git and GitHub
+
+The user handles all *state-changing* git and GitHub actions by hand. Do **not** run anything
+that mutates history or remote state on the user's behalf — e.g. `git commit`, `git push`,
+`git merge`, branch operations, or `gh` commands that create/edit/close things (PRs, issues,
+releases, comments). Even when asked to "commit," default to preparing the change and letting
+the user perform the git step themselves.
+
+Read-only work is fine and encouraged: inspecting local state (`git status`, `git diff`,
+`git log`) and GitHub *research* via `gh` (e.g. `gh pr view`, `gh pr list`, `gh issue view`,
+`gh run list`, `gh api` GET requests) to gather context.
+
+When work is at a natural commit point: remind the user that it's ready, summarize what
+changed, and offer to help (e.g. draft a commit message or PR description, show the diff).
+Wait for the user to do the actual commit/push/PR.
+
+Keep suggested commit messages brief — a short one-line summary is usually enough. Don't
+spend many tokens overthinking them.
+
 ## Documentation
 
 - **Companion package (astrodb-utils)**: <https://astrodb-utils.readthedocs.io/en/latest/>
