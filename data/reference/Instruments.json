@@ -16,7 +16,7 @@
     {
         "instrument": "SDSS",
         "mode": "Imaging",
-        "telescope": "SLOAN",
+        "telescope": "SDSS",
         "description": null,
         "reference": null
     },
@@ -24,20 +24,6 @@
         "instrument": "WISE",
         "mode": "Imaging",
         "telescope": "WISE",
-        "description": null,
-        "reference": null
-    },
-    {
-        "instrument": "Johnson",
-        "mode": "Imaging",
-        "telescope": "Generic",
-        "description": null,
-        "reference": null
-    },
-    {
-        "instrument": "Cousins",
-        "mode": "Imaging",
-        "telescope": "Generic",
         "description": null,
         "reference": null
     },
