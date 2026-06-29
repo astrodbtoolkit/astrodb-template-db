@@ -20,6 +20,9 @@ Acknowledgements
   - Rodrigo, C., Solano, E., 2020, *The SVO Filter Profile Service*, [2020sea..confE.182R](https://ui.adsabs.harvard.edu/abs/2020sea..confE.182R/abstract)
   - Rodrigo, C., Solano, E., Bayo, A., 2012, *The SVO Filter Profile Service*, [2012ivoa.rept.1015R](https://ui.adsabs.harvard.edu/abs/2012ivoa.rept.1015R/abstract)
 
+- The telescope and instrument data are based on the Weizmann Interactive Supernova Data Repository (WISeREP), <https://www.wiserep.org>.
+Yaron, O. & Gal-Yam, A. 2012, PASP, 124, 668 ([2012PASP..124..668Y](https://ui.adsabs.harvard.edu/abs/2012PASP..124..668Y)).
+
 ---
 <!-- Do not delete this line. It is used to identify repositories based on this template. -->
 This repository is based on the [astrodb-template](https://github.com/astrodbtoolkit/astrodb-template-db) template repository, which is part of the [AstroDB Toolkit](https://github.com/astrodbtoolkit).
