@@ -111,6 +111,17 @@ tables are "lookup tables" (reference tables that must be loaded before tables t
 - [data/reference/](data/reference/) — JSON files for lookup/reference tables (Publications, Instruments,
   PhotometryFilters, etc.) shared across all objects
 
+`PhotometryFilters.band` values use the SVO Filter Profile Service naming convention,
+`Facility/Instrument.Filter` (e.g. `2MASS/2MASS.J`, `WISE/WISE.W1`, `JWST/MIRI.F1000W`) — see
+<https://svo2.cab.inta-csic.es/theory/fps/>. Don't hand-type wavelengths/widths/UCDs: get them from
+`astrodb_utils.photometry.fetch_svo(telescope, instrument, filter_name)` (returns filter_id, effective
+wavelength, FWHM, and effective width — `width_angstroms` is the *effective* width) and
+`assign_ucd(wave_eff)`. To discover the exact filter IDs for a facility, query SVO in bulk:
+`http://svo2.cab.inta-csic.es/svo/theory/fps3/fps.php?Facility=<Facility>` returns a VOTable of every filter
+(note: some facility names differ from the band prefix — e.g. PS1 lives under `Facility=PAN-STARRS`, VISTA/NACO
+under `Paranal`, UFTI/WFCAM/UKIDSS under `UKIRT`). `tests/scheduled_checks.py::test_filters_resolvable_in_svo`
+re-validates every band against SVO in the monthly suite.
+
 **The build pipeline** (`astrodb_utils.build_db_from_json`, called from `tests/conftest.py` and CI) reads
 `schema.yaml` + `database.toml`, creates a fresh SQLite database, and loads every JSON file in `data/` into it,
 honoring the lookup-table load order. This produces `astrodb-template.sqlite`. The `db` fixture in
