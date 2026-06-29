@@ -5,13 +5,273 @@
         "reference": "Cutr03"
     },
     {
-        "telescope": "Gaia",
-        "description": "Gaia",
+        "telescope": "SDSS",
+        "description": "Sloan Digital Sky Survey, Apache Point",
         "reference": null
     },
     {
-        "telescope": "SLOAN",
-        "description": "The Sloan Digital Sky Survey",
+        "telescope": "Arecibo",
+        "description": "Arecibo Radio Telescope",
+        "reference": null
+    },
+    {
+        "telescope": "ASKAP",
+        "description": "Australian Square Kilometre Array Pathfinder",
+        "reference": null
+    },
+    {
+        "telescope": "CHIME",
+        "description": "CHIME/FRB",
+        "reference": null
+    },
+    {
+        "telescope": "FAST",
+        "description": "Five-hundred-meter Aperture Spherical Telescope",
+        "reference": null
+    },
+    {
+        "telescope": "GBT",
+        "description": "Green Bank Radio Telescope",
+        "reference": null
+    },
+    {
+        "telescope": "GMRT",
+        "description": "Giant Metrewave Radio Telescope",
+        "reference": null
+    },
+    {
+        "telescope": "PS-1",
+        "description": "Pan-STARRS1, Haleakala",
+        "reference": null
+    },
+    {
+        "telescope": "PS-2",
+        "description": "Pan-STARRS2, Haleakala",
+        "reference": null
+    },
+    {
+        "telescope": "Mayall-4m",
+        "description": "Nicholas U. Mayall 4m Telescope, Kitt Peak",
+        "reference": null
+    },
+    {
+        "telescope": "GTC",
+        "description": "Gran Telescopio Canarias 10.4m, La Palma",
+        "reference": null
+    },
+    {
+        "telescope": "WHT-4.2m",
+        "description": "William Herschel Telescope, La Palma",
+        "reference": null
+    },
+    {
+        "telescope": "Magellan-Baade",
+        "description": "Walter Baade Magellan 6.5-m telescope, Las Campanas",
+        "reference": null
+    },
+    {
+        "telescope": "Magellan-Clay",
+        "description": "Landon T. Clay Magellan 6.5-m telescope, Las Campanas",
+        "reference": null
+    },
+    {
+        "telescope": "LPA",
+        "description": "Large Phased Array Pushchino",
+        "reference": null
+    },
+    {
+        "telescope": "CFHT",
+        "description": "Canada-France-Hawaii Telescope, Mauna Kea",
+        "reference": null
+    },
+    {
+        "telescope": "Gemini-N",
+        "description": "Gemini North, Mauna Kea",
+        "reference": null
+    },
+    {
+        "telescope": "IRTF",
+        "description": "Infrared Telescope Facility, Mauna Kea",
+        "reference": null
+    },
+    {
+        "telescope": "Keck-1",
+        "description": "Keck I 10m, Mauna Kea",
+        "reference": null
+    },
+    {
+        "telescope": "Keck-2",
+        "description": "Keck II 10m, Mauna Kea",
+        "reference": null
+    },
+    {
+        "telescope": "Subaru",
+        "description": "Subaru, Mauna Kea",
+        "reference": null
+    },
+    {
+        "telescope": "UKIRT",
+        "description": "United Kingdom Infra-Red Telescope, Mauna Kea",
+        "reference": null
+    },
+    {
+        "telescope": "HET",
+        "description": "Hobby-Eberly Telescope, McDonald",
+        "reference": null
+    },
+    {
+        "telescope": "MOST",
+        "description": "Molonglo Observatory Synthesis Telescope",
+        "reference": null
+    },
+    {
+        "telescope": "LBT",
+        "description": "Large Binocular Telescope, Mount Graham",
+        "reference": null
+    },
+    {
+        "telescope": "MMT",
+        "description": "MMT Observatory 6.5m, Mount Hopkins",
+        "reference": null
+    },
+    {
+        "telescope": "DSA-110",
+        "description": "DSA-110, OVRO",
+        "reference": null
+    },
+    {
+        "telescope": "Gemini-S",
+        "description": "Gemini South, Pachon",
+        "reference": null
+    },
+    {
+        "telescope": "Rubin",
+        "description": "Rubin Observatory, Simonyi Survey Telescope, Pachon",
+        "reference": null
+    },
+    {
+        "telescope": "SOAR",
+        "description": "Southern Astrophysical Research Telescope, Pachon",
+        "reference": null
+    },
+    {
+        "telescope": "Hale-5.1m",
+        "description": "Palomar 5.1m Hale, Palomar",
+        "reference": null
+    },
+    {
+        "telescope": "Palomar-48",
+        "description": "Palomar 1.2m Oschin, Palomar",
+        "reference": null
+    },
+    {
+        "telescope": "VLT-UT1",
+        "description": "The Very Large Telescope - UT1, Paranal",
+        "reference": null
+    },
+    {
+        "telescope": "VLT-UT2",
+        "description": "The Very Large Telescope - UT2, Paranal",
+        "reference": null
+    },
+    {
+        "telescope": "VLT-UT3",
+        "description": "The Very Large Telescope - UT3, Paranal",
+        "reference": null
+    },
+    {
+        "telescope": "VLT-UT4",
+        "description": "The Very Large Telescope - UT4, Paranal",
+        "reference": null
+    },
+    {
+        "telescope": "Parkes",
+        "description": "Parkes Radio Telescope, Parkes",
+        "reference": null
+    },
+    {
+        "telescope": "SALT",
+        "description": "Southern African Large Telescope, SAAO",
+        "reference": null
+    },
+    {
+        "telescope": "Euclid",
+        "description": "Euclid, Satellite/Spacecraft",
+        "reference": null
+    },
+    {
+        "telescope": "Gaia",
+        "description": "Galaxy Evolution Explorer 50 cm, Satellite/Spacecraft",
+        "reference": null
+    },
+    {
+        "telescope": "GALEX",
+        "description": "Galaxy Evolution Explorer 50 cm, Satellite/Spacecraft",
+        "reference": null
+    },
+    {
+        "telescope": "HST",
+        "description": "Hubble Space Telescope, Satellite/Spacecraft",
+        "reference": null
+    },
+    {
+        "telescope": "IUE",
+        "description": "International Ultraviolet Explorer, Satellite/Spacecraft",
+        "reference": null
+    },
+    {
+        "telescope": "JWST",
+        "description": "James Webb Space Telescope, Satellite/Spacecraft",
+        "reference": null
+    },
+    {
+        "telescope": "SST",
+        "description": "The Spitzer Space Telescope, Satellite/Spacecraft",
+        "reference": null
+    },
+    {
+        "telescope": "Kepler",
+        "description": "Kepler Space Telescope, Satellite/Spacecraft",
+        "reference": null
+    },
+    {
+        "telescope": "TESS",
+        "description": "Transiting Exoplanet Survey Satellite, Satellite/Spacecraft",
+        "reference": null
+    },
+    {
+        "telescope": "Swift-UVOT",
+        "description": "UV/Optical Telescope on Swift, Satellite/Spacecraft",
+        "reference": null
+    },
+    {
+        "telescope": "AAT",
+        "description": "Anglo-Australian Telescope, Siding Spring (SSO)",
+        "reference": null
+    },
+    {
+        "telescope": "SkyMapper",
+        "description": "SkyMapper wide-field survey telescope, Siding Spring (SSO)",
+        "reference": null
+    },
+    {
+        "telescope": "Blanco-4m",
+        "description": "CTIO 4-m Victor M. Blanco Telescope, Tololo",
+        "reference": null
+    },
+    {
+        "telescope": "UTMOST-EW",
+        "description": "UTMOST-EW",
+        "reference": null
+    },
+    {
+        "telescope": "UTMOST-NS",
+        "description": "UTMOST-NS",
+        "reference": null
+    },
+    {
+        "telescope": "VLA",
+        "description": "The Karl G. Jansky Very Large Array",
         "reference": null
     },
     {
@@ -20,13 +280,23 @@
         "reference": "Wrig10"
     },
     {
-        "telescope": "Generic",
-        "description": "Generic telescope",
+        "telescope": "WSRT",
+        "description": "Westerbork Synthesis Radio Telescope",
         "reference": null
     },
     {
-        "telescope": "IRTF",
-        "description": "Infrared Telescope Facility, Mauna Kea, Hawaii",
+        "telescope": "Generic",
+        "description": "Generic or non-physical telescope (e.g. a standard photometric system)",
+        "reference": null
+    },
+    {
+        "telescope": "Other",
+        "description": "Telescope not otherwise listed",
+        "reference": null
+    },
+    {
+        "telescope": "Unknown",
+        "description": "Unknown or unspecified telescope",
         "reference": null
     }
 ]
