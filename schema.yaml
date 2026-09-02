@@ -785,7 +785,7 @@ tables:
       ivoa:ucd: pos.parallax
       nullable: false
     - name: parallax_error
-      "@id": "#Parallaxes.magnitude_error"
+      "@id": "#Parallaxes.parallax_error"
       datatype: double
       description: Uncertainty of the parallax value
       fits:tunit: mas
