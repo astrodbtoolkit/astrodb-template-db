@@ -182,6 +182,20 @@
         "reference": null
     },
     {
+        "instrument": "VISTA",
+        "mode": "imaging",
+        "telescope": "Paranal",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "NACO",
+        "mode": "imaging",
+        "telescope": "Paranal",
+        "description": null,
+        "reference": null
+    },
+    {
         "instrument": "ISIS",
         "mode": "spectroscopy",
         "telescope": "WHT-4.2m",
@@ -205,6 +219,27 @@
     {
         "instrument": "CGS4",
         "mode": "spectroscopy",
+        "telescope": "UKIRT",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "UFTI",
+        "mode": "imaging",
+        "telescope": "UKIRT",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "WFCAM",
+        "mode": "imaging",
+        "telescope": "UKIRT",
+        "description": null,
+        "reference": null
+    },
+    {
+        "instrument": "UKIDSS",
+        "mode": "imaging",
         "telescope": "UKIRT",
         "description": null,
         "reference": null
