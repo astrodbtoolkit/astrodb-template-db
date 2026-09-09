@@ -185,6 +185,11 @@
         "reference": null
     },
     {
+        "telescope": "Paranal",
+        "description": "Paranal Observatory site telescopes (e.g. VISTA, NACO), Paranal",
+        "reference": null
+    },
+    {
         "telescope": "Parkes",
         "description": "Parkes Radio Telescope, Parkes",
         "reference": null
