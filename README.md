@@ -23,7 +23,7 @@ Acknowledgements
 - The telescope and instrument data are based on the Weizmann Interactive Supernova Data Repository (WISeREP), <https://www.wiserep.org>.
 Yaron, O. & Gal-Yam, A. 2012, PASP, 124, 668 ([2012PASP..124..668Y](https://ui.adsabs.harvard.edu/abs/2012PASP..124..668Y)).
 
-- The AstroDB Toolkit is supported by a NASA High Priority Open Source Software grant, award number 80NSSC25K7547.
+- The development of the AstroDB Toolkit was supported by a NASA High Priority Open Source Software grant, award number 80NSSC25K7547.
 
 ---
 <!-- Do not delete this line. It is used to identify repositories based on this template. -->
